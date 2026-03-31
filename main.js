@@ -6,8 +6,8 @@
 
 // ─── BACK4APP CONFIG ───────────────────────────────────────
 // Replace with your actual Back4App keys from dashboard
-const B4A_APP_ID     = 'YOUR_BACK4APP_APP_ID';
-const B4A_JS_KEY     = 'YOUR_BACK4APP_JS_KEY';
+const B4A_APP_ID     = 'ixIM4zqufPHkk64t05Om6DJC17oL6LyPt46bSYhw';
+const B4A_JS_KEY     = 'V7FR7h3tpevohgrpIC6KC3XqnFe9zyGCg03eFO7a';
 const B4A_SERVER_URL = 'https://parseapi.back4app.com/';
 
 // IMGBB
