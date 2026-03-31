@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="theme-color" content="#0a0a0a"/>
+<title>Track Order — Tempura Potato</title>
+<link rel="manifest" href="manifest.json"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<style>
+body{cursor:auto!important;}#tp-cur{display:none!important;}
+.track-page{max-width:720px;margin:0 auto;padding:110px 24px 80px;}
+.order-id-bar{background:var(--black3);border:1px solid rgba(255,255,255,.07);border-radius:var(--radius-s);padding:11px 18px;display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;font-size:13px;}
+.order-id-bar strong{color:var(--yellow);}
+.order-id-bar span{color:var(--gray);font-size:11px;}
+
+/* ETA */
+.eta-card{background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.2);border-radius:var(--radius);padding:20px 24px;margin-bottom:22px;display:flex;align-items:center;gap:18px;}
+.eta-icon{font-size:38px;}
+.eta-lbl{font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;}
+.eta-val{font-family:var(--font);font-size:30px;color:var(--yellow);}
+
+/* STATUS STEPS */
+.steps-card{background:var(--black3);border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);padding:32px;margin-bottom:22px;}
+.steps-card h2{font-family:var(--font);font-size:24px;color:var(--white);letter-spacing:1px;margin-bottom:28px;}
+.steps{display:flex;flex-direction:column;gap:0;}
+.step{display:flex;align-items:flex-start;gap:20px;position:relative;padding-bottom:28px;}
+.step:last-child{padding-bottom:0;}
+.step::before{content:'';position:absolute;left:19px;top:42px;bottom:0;width:2px;background:rgba(255,255,255,.07);}
+.step:last-child::before{display:none;}
+.step-icon{width:40px;height:40px;border-radius:50%;background:var(--black4);border:2px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;position:relative;z-index:1;transition:all .5s ease;}
+.step.done .step-icon{background:rgba(245,200,66,.12);border-color:var(--yellow);}
+.step.active .step-icon{background:var(--yellow);border-color:var(--yellow);box-shadow:0 0 22px var(--yellow-g);animation:iconPulse 1.5s ease-in-out infinite;}
+@keyframes iconPulse{0%,100%{box-shadow:0 0 22px var(--yellow-g);}50%{box-shadow:0 0 44px rgba(245,200,66,.6);}}
+.step-info{flex:1;padding-top:6px;}
+.step-name{font-family:var(--font);font-size:22px;color:rgba(255,255,255,.25);letter-spacing:1px;transition:color .4s;}
+.step.done .step-name,.step.active .step-name{color:var(--white);}
+.step-desc{font-size:13px;color:var(--gray2);margin-top:2px;}
+.step.active .step-desc{color:var(--gray);}
+.step-time{font-size:12px;color:var(--yellow);margin-top:5px;display:none;}
+.step.done .step-time,.step.active .step-time{display:block;}
+
+/* RIDER CARD */
+.rider-card{background:var(--black3);border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);padding:24px;margin-bottom:22px;display:none;}
+.rider-card.show{display:block;}
+.rider-card h2{font-family:var(--font);font-size:22px;color:var(--white);letter-spacing:1px;margin-bottom:18px;}
+.rider-inner{display:flex;align-items:center;gap:18px;}
+.rider-avatar{width:56px;height:56px;background:var(--yellow);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.rider-details{flex:1;}
+.rider-name{font-weight:700;font-size:17px;color:var(--white);}
+.rider-vehicle{font-size:13px;color:var(--gray);margin-top:2px;}
+.rider-call{display:flex;align-items:center;gap:8px;background:rgba(245,200,66,.1);border:1px solid rgba(245,200,66,.3);color:var(--yellow);padding:10px 18px;border-radius:25px;font-weight:700;font-size:14px;text-decoration:none;transition:var(--tr);}
+.rider-call:hover{background:rgba(245,200,66,.2);}
+.rider-time{margin-top:14px;font-size:14px;color:rgba(255,255,255,.6);}
+.rider-time strong{color:var(--yellow);}
+
+/* LIVE MAP */
+.map-card{background:var(--black3);border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);overflow:hidden;margin-bottom:22px;display:none;}
+.map-card.show{display:block;}
+.map-card iframe{width:100%;height:240px;border:none;}
+.map-label{padding:11px 18px;font-size:12px;color:var(--gray);display:flex;align-items:center;gap:8px;}
+.live-dot{width:8px;height:8px;background:#4CAF50;border-radius:50%;animation:blink 1s ease-in-out infinite;flex-shrink:0;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.25;}}
+
+/* ORDER ITEMS */
+.items-card{background:var(--black3);border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);padding:24px;margin-bottom:22px;}
+.items-card h2{font-family:var(--font);font-size:22px;color:var(--white);letter-spacing:1px;margin-bottom:16px;}
+.oi-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:14px;}
+.oi-row:last-child{border-bottom:none;}
+.oi-name{color:var(--white);}
+.oi-price{color:var(--yellow);font-family:var(--font);font-size:19px;}
+.oi-total{display:flex;justify-content:space-between;padding:14px 0 0;font-weight:700;font-size:16px;color:var(--white);border-top:1px solid rgba(255,255,255,.08);margin-top:4px;}
+.oi-total span:last-child{color:var(--yellow);font-family:var(--font);font-size:26px;}
+
+/* DELIVERED CELEBRATION */
+.celebrate{text-align:center;padding:20px 0;}
+.celebrate-icon{font-size:64px;margin-bottom:10px;animation:bounce .8s ease-in-out infinite alternate;}
+@keyframes bounce{from{transform:translateY(0);}to{transform:translateY(-12px);}}
+.celebrate h2{font-family:var(--font);font-size:32px;color:var(--yellow);letter-spacing:1px;margin-bottom:8px;}
+.celebrate p{font-size:15px;color:var(--gray);}
+</style>
+</head>
+<body style="background:var(--black)">
+<nav class="navbar scrolled">
+  <div class="nav-logo" onclick="location.href='index.html'" style="cursor:pointer">
+    <div class="nav-logo-icon tp-logo">🥔</div>
+    <div class="nav-brand-text"><span class="nav-brand-name tp-brand">TEMPURA</span><span class="nav-brand-sub">POTATO</span></div>
+  </div>
+  <div class="nav-links"><a href="index.html">← Back to Menu</a></div>
+</nav>
+
+<div class="track-page">
+  <div style="margin-bottom:28px;">
+    <div class="sh-tag">LIVE ORDER</div>
+    <h1 style="font-family:var(--font);font-size:clamp(36px,7vw,60px);color:var(--white);">Track Your <span style="color:var(--yellow)">Order</span></h1>
+  </div>
+
+  <div class="order-id-bar">
+    <div>Order ID: <strong id="disp-oid">—</strong></div>
+    <span id="order-ts">—</span>
+  </div>
+
+  <div class="eta-card">
+    <div class="eta-icon">⏱️</div>
+    <div>
+      <div class="eta-lbl">Estimated Delivery</div>
+      <div class="eta-val" id="eta-val">25–35 mins</div>
+    </div>
+  </div>
+
+  <div class="steps-card">
+    <h2>Order Status</h2>
+    <div class="steps">
+      <div class="step" id="step-accepted">
+        <div class="step-icon">✅</div>
+        <div class="step-info">
+          <div class="step-name">Order Accepted</div>
+          <div class="step-desc">Your order has been confirmed by the restaurant</div>
+          <div class="step-time" id="t-accepted">—</div>
+        </div>
+      </div>
+      <div class="step" id="step-preparing">
+        <div class="step-icon">👨‍🍳</div>
+        <div class="step-info">
+          <div class="step-name">Preparing</div>
+          <div class="step-desc">Our chefs are cooking your food fresh right now</div>
+          <div class="step-time" id="t-preparing">—</div>
+        </div>
+      </div>
+      <div class="step" id="step-onway">
+        <div class="step-icon">🛵</div>
+        <div class="step-info">
+          <div class="step-name">On the Way</div>
+          <div class="step-desc">Your rider is heading to your location</div>
+          <div class="step-time" id="t-onway">—</div>
+        </div>
+      </div>
+      <div class="step" id="step-delivered">
+        <div class="step-icon">🎉</div>
+        <div class="step-info">
+          <div class="step-name">Delivered</div>
+          <div class="step-desc">Enjoy your meal! Thank you for ordering.</div>
+          <div class="step-time" id="t-delivered">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rider-card" id="rider-card">
+    <h2>Your Rider</h2>
+    <div class="rider-inner">
+      <div class="rider-avatar">🛵</div>
+      <div class="rider-details">
+        <div class="rider-name" id="rider-name">—</div>
+        <div class="rider-vehicle" id="rider-vehicle">—</div>
+      </div>
+      <a class="rider-call" id="rider-call" href="#">📞 Call Rider</a>
+    </div>
+    <div class="rider-time" id="rider-time"></div>
+  </div>
+
+  <div class="map-card" id="map-card">
+    <iframe id="map-frame" src="https://maps.google.com/maps?q=31.5204,74.3587&z=14&output=embed" allowfullscreen loading="lazy"></iframe>
+    <div class="map-label"><div class="live-dot"></div> Rider location updating live</div>
+  </div>
+
+  <div class="items-card" id="items-card">
+    <h2>Your Items</h2>
+    <div id="items-list"><p style="color:var(--gray);font-size:14px">Loading...</p></div>
+  </div>
+
+  <div style="text-align:center;margin-top:28px;">
+    <a href="index.html#menu" class="btn-s" style="display:inline-flex">Order Again 🍔</a>
+  </div>
+</div>
+
+<script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+<script src="main.js"></script>
+<script>
+const params  = new URLSearchParams(location.search);
+const orderId = params.get('order') || 'demo';
+document.getElementById('disp-oid').textContent = '#' + orderId.slice(-8);
+
+const statusLevel = { pending:0, accepted:1, preparing:2, onway:3, delivered:4, declined:-1 };
+const stepIds     = ['step-accepted','step-preparing','step-onway','step-delivered'];
+const timeIds     = ['t-accepted','t-preparing','t-onway','t-delivered'];
+
+function updateSteps(status, logs) {
+  const level = statusLevel[status] || 0;
+  stepIds.forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.classList.remove('done','active');
+    if (i < level)      el.classList.add('done');
+    else if (i === level - 1) el.classList.add('active');
+  });
+  if (logs) {
+    const statusKeys = ['accepted','preparing','onway','delivered'];
+    statusKeys.forEach((k,i) => {
+      const el = document.getElementById(timeIds[i]);
+      if (logs[k]) el.textContent = new Date(logs[k]).toLocaleTimeString('en-PK',{hour:'2-digit',minute:'2-digit'});
+    });
+  }
+  if (level >= 3) { document.getElementById('rider-card').classList.add('show'); document.getElementById('map-card').classList.add('show'); }
+  if (status === 'delivered') {
+    document.getElementById('eta-val').textContent = 'Delivered! 🎉';
+    document.getElementById('map-card').classList.remove('show');
+    celebrateDelivery();
+  }
+  if (status === 'declined') {
+    document.getElementById('eta-val').textContent = 'Order Declined';
+    document.getElementById('eta-card')?.style && (document.querySelector('.eta-card').style.borderColor = '#F44336');
+  }
+}
+
+function celebrateDelivery() {
+  const ic = document.getElementById('items-card');
+  const div = document.createElement('div'); div.className='celebrate';
+  div.innerHTML = '<div class="celebrate-icon">🎉</div><h2>Order Delivered!</h2><p>Enjoy your meal. Come back soon!</p>';
+  ic.insertAdjacentElement('beforebegin', div);
+}
+
+function setRider(rider) {
+  if (!rider) return;
+  document.getElementById('rider-name').textContent    = rider.name    || 'Rider';
+  document.getElementById('rider-vehicle').textContent = rider.vehicle || 'Motorcycle';
+  const ca = document.getElementById('rider-call');
+  if (rider.phone) ca.href = 'tel:' + rider.phone;
+  if (rider.estimatedTime) document.getElementById('rider-time').innerHTML = `Estimated arrival: <strong>${rider.estimatedTime}</strong>`;
+  if (rider.lat && rider.lng) {
+    document.getElementById('map-frame').src = `https://maps.google.com/maps?q=${rider.lat},${rider.lng}&z=15&output=embed`;
+  }
+}
+
+function renderItems(order) {
+  const list = document.getElementById('items-list');
+  const items = order.items || [];
+  if (!items.length) { list.innerHTML = '<p style="color:var(--gray)">No items found.</p>'; return; }
+  list.innerHTML = items.map(i =>
+    `<div class="oi-row"><span class="oi-name">${i.name} ×${i.qty}</span><span class="oi-price">Rs.${i.price * i.qty}</span></div>`
+  ).join('') + `<div class="oi-total"><span>Total</span><span>Rs. ${order.total || order.subtotal || 0}</span></div>`;
+  if (order.timestamp) {
+    document.getElementById('order-ts').textContent = new Date(order.timestamp).toLocaleString('en-PK',{dateStyle:'medium',timeStyle:'short'});
+  }
+}
+
+// Demo mode — cycles through statuses automatically
+function runDemo() {
+  const savedCart = JSON.parse(localStorage.getItem('tp_cart_v4') || '[]');
+  const demoOrder = { items: savedCart, total: savedCart.reduce((s,c) => s+c.price*c.qty, 0) + 60, timestamp: Date.now() };
+  renderItems(demoOrder);
+  const statuses = ['accepted','preparing','onway','delivered'];
+  let i = 0;
+  function advance() {
+    updateSteps(statuses[i]);
+    document.getElementById('t-'+statuses[i]).textContent = new Date().toLocaleTimeString('en-PK',{hour:'2-digit',minute:'2-digit'});
+    if (statuses[i] === 'onway') {
+      setRider({ name:'Ahmed Khan', vehicle:'Honda 125 · ABC-789', phone:'+923001234567', lat:31.5204, lng:74.3587, estimatedTime:'10–15 mins' });
+    }
+    if (i < statuses.length - 1) { i++; setTimeout(advance, 4000 + Math.random() * 2000); }
+  }
+  setTimeout(advance, 1500);
+}
+
+// Real Back4App order listener
+async function listenOrder(id) {
+  if (id === 'demo' || typeof Parse === 'undefined') { runDemo(); return; }
+  try {
+    const q = new Parse.Query('Orders'); q.equalTo('orderId', id);
+    const result = await q.first();
+    if (!result) { runDemo(); return; }
+    const data = result.toJSON();
+    updateSteps(data.status, data.statusLog);
+    renderItems(data);
+    if (data.rider) setRider(data.rider);
+    // Subscribe to live updates
+    try {
+      const subscription = await q.subscribe();
+      subscription.on('update', obj => {
+        const d = obj.toJSON();
+        updateSteps(d.status, d.statusLog);
+        if (d.rider) setRider(d.rider);
+        if (d.status === 'delivered') document.getElementById('eta-val').textContent = 'Delivered! 🎉';
+      });
+    } catch(e) {
+      // Fallback: poll every 5s
+      setInterval(async () => {
+        try {
+          const r = await q.first();
+          if (r) { const d = r.toJSON(); updateSteps(d.status, d.statusLog); if (d.rider) setRider(d.rider); }
+        } catch(e2) {}
+      }, 5000);
+    }
+  } catch(e) { runDemo(); }
+}
+
+listenOrder(orderId);
+</script>
+</body>
+</html>
