@@ -33,7 +33,7 @@ self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   // Skip Back4App and CDN requests (always need fresh data)
   const url = e.request.url;
-  if (url.includes('parseapi.back4app.com') ||
+  if (url.includes('firebaseio.com') ||
       url.includes('googleapis.com') ||
       url.includes('unpkg.com') ||
       url.includes('imgbb.com') ||
