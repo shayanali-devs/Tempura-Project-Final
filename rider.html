@@ -50,35 +50,16 @@
   .manual-box{background:var(--black3);border-radius:20px;padding:26px;max-width:420px;width:100%;text-align:left;display:none;}
   .manual-step{display:flex;gap:14px;margin-bottom:16px;}
   .ms-num{width:30px;height:30px;background:var(--yellow);color:var(--black);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;}
-  #order-alert-popup {
-    position: fixed;
-    inset: 0;
-    z-index: 10000;
-    background: rgba(0,0,0,0.9);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(8px);
-  }
-  #order-alert-popup > div {
-    background: var(--black3);
-    border: 2px solid var(--yellow);
-    border-radius: 24px;
-    padding: 30px;
-    max-width: 380px;
-    width: 90%;
-    text-align: center;
-  }
 </style>
 </head>
 <body>
 
-<div id="order-alert-popup">
-  <div>
+<div id="order-alert-popup" style="position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:var(--black3);border:2px solid var(--yellow);border-radius:24px;padding:36px;max-width:380px;text-align:center;">
     <div style="font-size:52px;margin-bottom:12px">🔔</div>
     <div style="font-family:var(--font);font-size:28px;color:var(--yellow);margin-bottom:8px">New Order!</div>
     <div id="alert-details" style="font-size:14px;color:var(--gray);margin-bottom:20px">Loading...</div>
-    <button onclick="dismissAlert()" style="background:#4CAF50;color:#fff;border:none;padding:12px 24px;border-radius:25px;font-weight:700;cursor:pointer;">✅ OK</button>
+    <button onclick="dismissAlert()" style="background:#4CAF50;color:#fff;border:none;padding:13px 26px;border-radius:25px;font-weight:700;font-size:15px;cursor:pointer;">✅ Got it</button>
   </div>
 </div>
 
@@ -126,7 +107,7 @@
   </div>
 </div>
 
-<!-- Firebase SDK with correct config (same as main.js) -->
+<!-- Firebase SDK -->
 <script type="importmap">
   {
     "imports": {
@@ -139,38 +120,54 @@
   import { initializeApp } from 'firebase/app';
   import { getDatabase, ref, get, update, onValue } from 'firebase/database';
 
-  // CRITICAL: Use the SAME Firebase config as your admin panel and main.js
+  // Firebase config (same as main.js)
   const firebaseConfig = {
-    apiKey: "AIzaSyDdwoxZEnbhqk92V5LqW9NdfGlXwyIjUC4",
-    authDomain: "tempura-final.firebaseapp.com",
-    databaseURL: "https://tempura-final-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "tempura-final",
-    storageBucket: "tempura-final.firebasestorage.app",
-    messagingSenderId: "103063903953",
-    appId: "1:103063903953:web:377b5caecf0a59f6f5aff0"
+    apiKey: "AIzaSyAE7DJcybRsxQ6SgWloS8Mm26f3L9X-_bo",
+    authDomain: "tempura-potato-64253.firebaseapp.com",
+    projectId: "tempura-potato-64253",
+    storageBucket: "tempura-potato-64253.firebasestorage.app",
+    messagingSenderId: "634699810323",
+    appId: "1:634699810323:web:38bf8d712e6e1c5a75e1e6",
+    measurementId: "G-LS2JPXTPPE"
   };
 
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
+
+  // Make db available globally for non-module functions
   window._db = db;
-  window._fbGet = async (path) => { const snap = await get(ref(db, path)); return snap.exists() ? snap.val() : null; };
-  window._fbUpdate = async (path, data) => { await update(ref(db, path), data); };
-  window._fbListen = (path, cb) => onValue(ref(db, path), snap => cb(snap.exists() ? snap.val() : null));
-  window._updateOrderStatus = async (orderId, status, extra = {}) => {
+
+  // Expose necessary Firebase functions globally
+  window._fbGet = async (path) => {
+    const snap = await get(ref(db, path));
+    return snap.exists() ? snap.val() : null;
+  };
+  window._fbUpdate = async (path, data) => {
+    await update(ref(db, path), data);
+  };
+  window._fbListen = (path, callback) => {
+    return onValue(ref(db, path), (snap) => callback(snap.exists() ? snap.val() : null));
+  };
+  window._fbUpdateOrderStatus = async (orderId, status, extra = {}) => {
     const updates = { status, [`statusLog/${status}`]: Date.now(), ...extra };
     await update(ref(db, `orders/${orderId}`), updates);
   };
+
+  // Signal that Firebase is ready
   window.firebaseReady = true;
 </script>
 
 <script>
+  // This script runs after the module above, so window._fbGet etc are available
   (function() {
+    // Global variables
     let _dip = null;
     let riderData = null;
     let isOnline = true;
     let ordersListener = null;
     let knownOrderIds = new Set();
 
+    // Helper toast
     function showToast(msg, type = 'success') {
       let t = document.getElementById('tp-toast');
       if (!t) {
@@ -191,6 +188,7 @@
       }, 2800);
     }
 
+    // PWA install
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       _dip = e;
@@ -212,6 +210,7 @@
       }
     });
 
+    // Check saved session
     const savedCode = localStorage.getItem('tp_rider_code');
     const savedName = localStorage.getItem('tp_rider_name');
     if (savedCode && savedName) {
@@ -220,19 +219,29 @@
       startOrdersListener();
     }
 
+    // Sign In
     window.signInRider = async function() {
       const code = document.getElementById('rider-code').value.trim().toUpperCase();
       const errDiv = document.getElementById('code-error');
-      if (code.length !== 6) { errDiv.style.display = 'block'; return; }
+      if (code.length !== 6) {
+        errDiv.style.display = 'block';
+        return;
+      }
       errDiv.style.display = 'none';
 
+      // Wait for Firebase to be ready
       let tries = 0;
-      while (!window._fbGet && tries < 30) { await new Promise(r => setTimeout(r, 100)); tries++; }
-      if (!window._fbGet) { showToast('Connection error', 'error'); return; }
+      while (!window._fbGet && tries < 30) {
+        await new Promise(r => setTimeout(r, 100));
+        tries++;
+      }
+      if (!window._fbGet) {
+        showToast('Connection error. Try again.', 'error');
+        return;
+      }
 
       try {
         const ridersData = await window._fbGet('riders');
-        console.log('Fetched riders:', ridersData); // Debug
         if (!ridersData) throw new Error('No riders found');
         const foundEntry = Object.entries(ridersData).find(([k, v]) => v.code === code);
         if (!foundEntry) throw new Error('Code not found');
@@ -245,7 +254,7 @@
         showDash();
         startOrdersListener();
       } catch(e) {
-        console.error('Sign in error:', e);
+        console.error(e);
         errDiv.style.display = 'block';
         showToast('Login failed: ' + e.message, 'error');
       }
@@ -273,28 +282,41 @@
     window.setOnline = async function(online) {
       isOnline = online;
       setOnlineUI(online);
-      if (riderData?._fbKey) await window._fbUpdate(`riders/${riderData._fbKey}`, { online });
+      if (riderData?._fbKey) {
+        await window._fbUpdate(`riders/${riderData._fbKey}`, { online });
+      }
       showToast(online ? 'You are now Online 🟢' : 'You are now Offline ⚫');
-      if (online) startOrdersListener();
-      else { if (ordersListener) ordersListener(); ordersListener = null; renderRiderOrders([]); }
+      if (online) {
+        startOrdersListener();
+      } else {
+        if (ordersListener) ordersListener();
+        ordersListener = null;
+        renderRiderOrders([]);
+      }
     };
 
     function setOnlineUI(online) {
-      const onBtn = document.getElementById('online-btn');
-      const offBtn = document.getElementById('offline-btn');
-      if (onBtn) onBtn.style.opacity = online ? '1' : '0.4';
-      if (offBtn) offBtn.style.opacity = online ? '0.4' : '1';
+      const onlineBtn = document.getElementById('online-btn');
+      const offlineBtn = document.getElementById('offline-btn');
+      if (onlineBtn) onlineBtn.style.opacity = online ? '1' : '0.4';
+      if (offlineBtn) offlineBtn.style.opacity = online ? '0.4' : '1';
     }
 
     function startOrdersListener() {
       if (!riderData || !isOnline) return;
       if (ordersListener) ordersListener();
-      if (!window._fbListen) { setTimeout(startOrdersListener, 500); return; }
+      if (!window._fbListen) {
+        setTimeout(startOrdersListener, 500);
+        return;
+      }
       ordersListener = window._fbListen('orders', (ordersData) => {
-        if (!ordersData) { renderRiderOrders([]); return; }
+        if (!ordersData) {
+          renderRiderOrders([]);
+          return;
+        }
         const myOrders = Object.entries(ordersData)
           .map(([key, order]) => ({ ...order, _fbKey: key, orderId: order.orderId || key }))
-          .filter(order => order.riderCode === riderData.code)
+          .filter(order => order.riderCode === riderData.code || order.riderName === riderData.name)
           .sort((a,b) => (b.timestamp||0) - (a.timestamp||0));
         renderRiderOrders(myOrders);
         myOrders.forEach(order => {
@@ -317,6 +339,7 @@
         📍 ${order.address || 'Pickup'}
       `;
       alertDiv.style.display = 'flex';
+      // Play beep
       try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = ctx.createOscillator();
@@ -364,16 +387,22 @@
     }
 
     window.updateOrderStatus = async function(orderId, newStatus) {
-      if (!window._updateOrderStatus) { showToast('Not connected', 'error'); return; }
+      if (!window._fbUpdateOrderStatus) {
+        showToast('Not connected', 'error');
+        return;
+      }
       try {
-        await window._updateOrderStatus(orderId, newStatus);
+        await window._fbUpdateOrderStatus(orderId, newStatus);
         showToast(`Order #${orderId.slice(-6)} → ${newStatus} ✅`);
       } catch(e) {
         showToast('Update failed: ' + e.message, 'error');
       }
     };
 
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
   })();
 </script>
 </body>
