@@ -205,8 +205,7 @@ body{cursor:auto!important;}#tp-cur{display:none!important;}
   </div>
 </div>
 
-<script src="https://unpkg.com/parse/dist/parse.min.js"></script>
-<script src="main.js"></script>
+<script type="module" src="main.js"></script>
 <script>
 // ============================================================
 //  TRACKING PAGE — FULLY FIXED
@@ -334,57 +333,45 @@ function showDeclined() {
   document.getElementById('eta-val').textContent = 'Order Declined';
 }
 
-// ─── MAIN: fetch and track order ──────────────────────────
-async function startTracking() {
-  // Wait for Parse SDK
-  const ready = await TP.waitForParse(8000);
-  if (!ready) {
-    setConn('err', 'Connection failed');
-    document.getElementById('loading-state').innerHTML = '<p style="color:#F44336">Could not connect to server. Check your internet connection.</p>';
-    return;
-  }
-  setConn('ok', 'Connected');
+// ─── MAIN: real-time tracking via Firebase ────────────────
+let _unsubscribe = null;
 
-  // If no orderId, show a demo/waiting state
+async function startTracking() {
+  setConn('loading', 'Connecting...');
+
   if (!orderId || orderId === 'demo') {
+    setConn('ok', 'Waiting for order...');
     showDemoState();
     return;
   }
 
-  // Fetch order from Back4App
-  await fetchAndRender();
+  // Wait for TP to be ready (module loads async)
+  let tries = 0;
+  while (!window.TP?.listenOrder && tries < 50) {
+    await new Promise(r => setTimeout(r, 100));
+    tries++;
+  }
+  if (!window.TP?.listenOrder) {
+    setConn('err', 'Connection failed. Refresh the page.');
+    return;
+  }
 
-  // Poll every 5 seconds for updates
-  // FIX: This only updates steps when admin changes status — no auto-advance
-  pollInterval = setInterval(fetchAndRender, 5000);
-}
+  setConn('ok', 'Live tracking active 🟢');
 
-async function fetchAndRender() {
-  try {
-    const order = await TP.b4aGetOrder(orderId);
+  // Firebase real-time listener — updates instantly when admin changes status
+  _unsubscribe = window.TP.listenOrder(orderId, order => {
     if (!order) {
-      // Order not found — might still be saving, show pending
       showTrackContent();
       updateSteps('pending', {});
       setConn('ok', 'Waiting for restaurant...');
       return;
     }
-    setConn('ok', 'Live tracking active');
     showTrackContent();
     updateSteps(order.status || 'pending', order.statusLog || {});
     renderItems(order);
     setRider(order);
-    if (order.status === 'declined') {
-      showDeclined();
-      clearInterval(pollInterval);
-    }
-    if (order.status === 'delivered') {
-      clearInterval(pollInterval); // Stop polling after delivery
-    }
-  } catch(e) {
-    setConn('err', 'Error: ' + e.message);
-    console.error('[Track]', e);
-  }
+    if (order.status === 'declined') showDeclined();
+  });
 }
 
 // Demo/no-order state
@@ -396,8 +383,8 @@ function showDemoState() {
   setConn('ok', 'Waiting for order acceptance...');
 }
 
-// Start tracking on page load
-document.addEventListener('DOMContentLoaded', startTracking);
+// Start tracking — wait for ES module to load
+window.addEventListener('load', startTracking);
 </script>
 </body>
 </html>
