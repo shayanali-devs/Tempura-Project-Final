@@ -148,8 +148,7 @@ body{cursor:auto!important;}#tp-cur{display:none!important;}
   </div>
 </div>
 
-<script src="https://unpkg.com/parse/dist/parse.min.js"></script>
-<script src="main.js"></script>
+<script type="module" src="main.js"></script>
 <script>
 let _dip = null, riderData = null, alertOrder = null, isOnline = true;
 let alertAudio = null;
@@ -205,7 +204,7 @@ window.signInRider = async function() {
   }
 
   try {
-    const q = new Parse.Query('Riders'); q.equalTo('code', code);
+    // Firebase lookup by code
     const result = await q.first();
     if (!result) { err.style.display = 'block'; return; }
     riderData = result.toJSON();
@@ -242,7 +241,23 @@ window.setOnline = function(online) {
   document.getElementById('online-btn').style.opacity  = online ? '1' : '.4';
   document.getElementById('offline-btn').style.opacity = online ? '.4' : '1';
   if (typeof Parse !== 'undefined' && riderData?.objectId) {
-    try { const q = new Parse.Query('Riders'); q.get(riderData.objectId).then(r => { r.set('online', online); r.save(); }); } catch(e) {}
+    try { // Firebase rider lookup
+    const ridersData = await TP.fbGet('riders');
+    if (ridersData) {
+      const found = Object.entries(ridersData).find(([k,v]) => v.code === code);
+      if (found) {
+        riderData = { ...found[1], _fbKey: found[0] };
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('rider-app').style.display = 'block';
+        localStorage.setItem('tp_rider', JSON.stringify(riderData));
+        initRiderApp();
+      } else {
+        document.getElementById('rider-err').style.display = 'block';
+      }
+    } else {
+      document.getElementById('rider-err').style.display = 'block';
+    }
+    } catch(e) {}
   }
   TP.showToast(online ? 'You are now Online 🟢' : 'You are now Offline ⚫');
 };
@@ -258,21 +273,15 @@ async function pollOrders() {
   if (!isOnline || !riderData) return;
   if (typeof Parse === 'undefined') { renderDemoOrders(); return; }
   try {
-    const q = new Parse.Query('Orders');
-    q.equalTo('riderCode', riderData.code);
-    q.containedIn('status', ['onway','preparing','accepted']);
-    const results = await q.find();
-    const orders = results.map(r => r.toJSON());
-    renderRiderOrders(orders);
-    // Check for new
-    orders.forEach(o => {
-      if (!knownOrderIds.has(o.orderId||o.objectId)) {
-        knownOrderIds.add(o.orderId||o.objectId);
-        if (knownOrderIds.size > 1) triggerOrderAlert(o);
-      }
-      knownOrderIds.add(o.orderId||o.objectId);
-    });
-  } catch(e) { console.warn('Poll:', e); }
+    // Get current active orders from Firebase
+    const ordersData = await TP.fbGet('orders');
+    if (ordersData) {
+      const activeOrders = Object.entries(ordersData)
+        .map(([k,v]) => ({...v, _fbKey:k}))
+        .filter(o => o.status === 'onway' || o.status === 'accepted' || o.status === 'preparing');
+      renderRiderOrders(activeOrders);
+    }
+    } catch(e) { console.warn('Poll:', e); }
 }
 
 function triggerOrderAlert(order) {
@@ -326,18 +335,10 @@ function renderRiderOrders(orders) {
 window.updateStatus = async function(orderId, status) {
   if (typeof Parse === 'undefined') { TP.showToast('Status updated (demo)'); return; }
   try {
-    const q = new Parse.Query('Orders'); q.equalTo('orderId', orderId);
-    const result = await q.first();
-    if (result) {
-      result.set('status', status);
-      const log = result.get('statusLog') || {};
-      log[status] = Date.now();
-      result.set('statusLog', log);
-      await result.save();
-      TP.showToast('Status → ' + status + ' ✅');
-      pollOrders();
-    }
-  } catch(e) { TP.showToast('Update failed', 'error'); }
+    // Firebase order fetch
+    const order = await window.TP?.getOrder(orderId);
+    if (order) renderOrder(order);
+    } catch(e) { TP.showToast('Update failed', 'error'); }
 };
 
 // Demo orders for testing
