@@ -15,20 +15,14 @@ body{cursor:auto!important;}#tp-cur{display:none!important;}
 .rider-page h1{font-family:var(--font);font-size:clamp(36px,8vw,62px);color:var(--white);margin-bottom:10px;letter-spacing:2px;}
 .rider-page h1 span{color:var(--yellow);}
 .rider-page .sub{font-size:15px;color:var(--gray);max-width:340px;line-height:1.7;margin-bottom:32px;}
-
-/* INSTALL BTN */
 .install-btn{background:var(--yellow);color:var(--black);border:none;padding:16px 32px;border-radius:30px;font-weight:800;font-size:16px;cursor:pointer;transition:var(--tr);margin-bottom:10px;display:inline-block;}
 .install-btn:hover{background:var(--yellow-d);transform:scale(1.03);}
 .install-status{font-size:13px;color:var(--gray);margin-bottom:26px;}
-
-/* LOGIN CARD */
 .rider-login-card{background:var(--black3);border:1px solid rgba(245,200,66,.22);border-radius:20px;padding:32px;max-width:400px;width:100%;margin-bottom:24px;}
 .rider-login-card h2{font-family:var(--font);font-size:24px;color:var(--white);margin-bottom:20px;letter-spacing:1px;}
 .code-input{width:100%;background:var(--black4);border:2px solid rgba(245,200,66,.3);color:var(--yellow);padding:16px;border-radius:12px;font-size:28px;font-family:var(--font);text-align:center;letter-spacing:10px;outline:none;text-transform:uppercase;margin-bottom:16px;transition:border-color .3s;}
 .code-input:focus{border-color:var(--yellow);}
 .code-error{color:#F44336;font-size:13px;margin-top:8px;display:none;}
-
-/* DASHBOARD */
 .rider-dash{display:none;width:100%;max-width:600px;}
 .rider-header{background:var(--black3);border:1px solid rgba(245,200,66,.2);border-radius:16px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
 .rider-header-left{display:flex;align-items:center;gap:14px;}
@@ -39,8 +33,6 @@ body{cursor:auto!important;}#tp-cur{display:none!important;}
 .st-btn{padding:8px 16px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer;border:none;transition:var(--tr);}
 .st-btn.online{background:#4CAF50;color:#fff;}
 .st-btn.offline{background:var(--black4);color:var(--gray);border:1px solid rgba(255,255,255,.1);}
-
-/* ORDERS */
 .orders-section{text-align:left;}
 .orders-section h3{font-family:var(--font);font-size:22px;color:var(--white);letter-spacing:1px;margin-bottom:16px;}
 .no-orders{background:var(--black3);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:40px;text-align:center;color:var(--gray);}
@@ -55,15 +47,10 @@ body{cursor:auto!important;}#tp-cur{display:none!important;}
 .roc-total{font-family:var(--font);font-size:24px;color:var(--yellow);margin-bottom:14px;}
 .roc-btns{display:flex;gap:10px;flex-wrap:wrap;}
 .roc-btn{padding:11px 20px;border-radius:25px;font-weight:700;font-size:14px;cursor:pointer;border:none;transition:var(--tr);}
-.roc-btn.accept{background:#4CAF50;color:#fff;}
 .roc-btn.onway{background:var(--yellow);color:var(--black);}
 .roc-btn.deliver{background:#2196F3;color:#fff;}
 .roc-btn.call{background:var(--black4);color:var(--white);border:1px solid rgba(255,255,255,.1);}
 .roc-btn:hover{transform:scale(1.04);}
-.roc-alert{animation:alertShake .5s ease;}
-@keyframes alertShake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
-
-/* MANUAL INSTALL */
 .manual-box{background:var(--black3);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:26px;max-width:420px;width:100%;text-align:left;display:none;}
 .manual-box h3{font-family:var(--font);font-size:22px;color:var(--white);text-align:center;margin-bottom:18px;}
 .manual-step{display:flex;gap:14px;margin-bottom:16px;align-items:flex-start;}
@@ -81,8 +68,7 @@ body{cursor:auto!important;}#tp-cur{display:none!important;}
     <div style="font-family:var(--font);font-size:28px;color:var(--yellow);margin-bottom:8px">New Order!</div>
     <div id="alert-details" style="font-size:14px;color:var(--gray);margin-bottom:20px">Loading...</div>
     <div style="display:flex;gap:12px;justify-content:center;">
-      <button onclick="acceptFromAlert()" style="background:#4CAF50;color:#fff;border:none;padding:13px 26px;border-radius:25px;font-weight:700;font-size:15px;cursor:pointer;">✅ Accept</button>
-      <button onclick="dismissAlert()" style="background:transparent;border:1px solid rgba(255,255,255,.15);color:var(--gray);padding:13px 26px;border-radius:25px;font-weight:700;font-size:15px;cursor:pointer;">Later</button>
+      <button onclick="dismissAlert()" style="background:#4CAF50;color:#fff;border:none;padding:13px 26px;border-radius:25px;font-weight:700;font-size:15px;cursor:pointer;">✅ Got it</button>
     </div>
   </div>
 </div>
@@ -93,11 +79,9 @@ body{cursor:auto!important;}#tp-cur{display:none!important;}
   <h1>Rider <span>Portal</span></h1>
   <p class="sub">Install the app and sign in with your 6-digit code to start receiving delivery orders.</p>
 
-  <!-- INSTALL PROMPT -->
   <button class="install-btn" id="install-btn">📱 Install Rider App</button>
   <div class="install-status" id="install-status"></div>
 
-  <!-- LOGIN -->
   <div class="rider-login-card" id="login-card">
     <h2>Sign In with Rider Code</h2>
     <input class="code-input" id="rider-code" type="text" maxlength="6" placeholder="XXXXXX" autocapitalize="characters"/>
@@ -105,7 +89,6 @@ body{cursor:auto!important;}#tp-cur{display:none!important;}
     <div class="code-error" id="code-error">Invalid code. Contact your admin.</div>
   </div>
 
-  <!-- MANUAL INSTALL GUIDE -->
   <div class="manual-box" id="manual-box">
     <h3>How to Install Manually</h3>
     <div class="manual-step"><div class="ms-num">1</div><div class="ms-text">Open this page in <strong>Chrome</strong> (Android) or <strong>Safari</strong> (iPhone/iPad)</div></div>
@@ -115,7 +98,6 @@ body{cursor:auto!important;}#tp-cur{display:none!important;}
   </div>
 </div>
 
-<!-- RIDER DASHBOARD -->
 <div class="rider-page" id="rider-dash" style="display:none;justify-content:flex-start;padding-top:80px;">
   <div class="rider-dash">
     <div class="rider-header">
@@ -148,17 +130,23 @@ body{cursor:auto!important;}#tp-cur{display:none!important;}
   </div>
 </div>
 
-<script type="module" src="main.js"></script>
+<script src="main.js" type="module"></script>
 <script>
-let _dip = null, riderData = null, alertOrder = null, isOnline = true;
-let alertAudio = null;
+// ============================================================
+//  RIDER APP — Firebase Version (No Parse)
+//  All functions attached to window for inline onclick
+// ============================================================
 
-// Try to create alert audio
-try { alertAudio = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAA=='); } catch(e) {}
+let _dip = null;
+let riderData = null;        // { code, name, phone, vehicle, _fbKey }
+let isOnline = true;
+let ordersListener = null;
+let knownOrderIds = new Set();
 
-// PWA INSTALL
+// ─── PWA Install ───────────────────────────────────────────
 window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault(); _dip = e;
+  e.preventDefault();
+  _dip = e;
   document.getElementById('install-status').textContent = '✅ App ready to install!';
 });
 
@@ -177,47 +165,61 @@ document.getElementById('install-btn').addEventListener('click', async () => {
   }
 });
 
-// CHECK SAVED SESSION
+// ─── Check saved session ───────────────────────────────────
 const savedCode = localStorage.getItem('tp_rider_code');
 const savedName = localStorage.getItem('tp_rider_name');
 if (savedCode && savedName) {
   riderData = { code: savedCode, name: savedName };
   showDash();
-  startPolling();
+  startOrdersListener();
 }
 
-// SIGN IN
+// ─── Sign In ───────────────────────────────────────────────
 window.signInRider = async function() {
   const code = document.getElementById('rider-code').value.trim().toUpperCase();
-  const err  = document.getElementById('code-error');
-  if (code.length !== 6) { err.style.display = 'block'; return; }
-  err.style.display = 'none';
+  const errDiv = document.getElementById('code-error');
+  if (code.length !== 6) {
+    errDiv.style.display = 'block';
+    return;
+  }
+  errDiv.style.display = 'none';
 
-  if (typeof Parse === 'undefined') {
-    // Demo mode
-    riderData = { code, name: 'Demo Rider', vehicle: 'Honda 125' };
-    localStorage.setItem('tp_rider_code', code);
-    localStorage.setItem('tp_rider_name', 'Demo Rider');
-    showDash();
-    startPolling();
+  // Wait for TP module to be ready
+  let tries = 0;
+  while (!window.TP?.fbGet && tries < 30) {
+    await new Promise(r => setTimeout(r, 100));
+    tries++;
+  }
+  if (!window.TP?.fbGet) {
+    TP.showToast('Connection error. Try again.', 'error');
     return;
   }
 
   try {
-    // Firebase lookup by code
-    const result = await q.first();
-    if (!result) { err.style.display = 'block'; return; }
-    riderData = result.toJSON();
+    const ridersData = await window.TP.fbGet('riders');
+    if (!ridersData) {
+      errDiv.style.display = 'block';
+      return;
+    }
+    // Find rider by code
+    const foundEntry = Object.entries(ridersData).find(([key, val]) => val.code === code);
+    if (!foundEntry) {
+      errDiv.style.display = 'block';
+      return;
+    }
+    const [fbKey, rider] = foundEntry;
+    riderData = { ...rider, _fbKey: fbKey, code };
     localStorage.setItem('tp_rider_code', code);
-    localStorage.setItem('tp_rider_name', riderData.name);
-    // Mark rider as online
-    result.set('online', true); await result.save();
-    TP.showToast(`Welcome, ${riderData.name}! 🛵`);
+    localStorage.setItem('tp_rider_name', rider.name);
+    // Mark rider as online in Firebase
+    await window.TP.fbUpdate(`riders/${fbKey}`, { online: true });
+    TP.showToast(`Welcome, ${rider.name}! 🛵`);
     showDash();
-    startPolling();
+    startOrdersListener();
   } catch(e) {
-    err.textContent = 'Connection error. Try again.';
-    err.style.display = 'block';
+    console.error(e);
+    errDiv.style.display = 'block';
+    TP.showToast('Login failed', 'error');
   }
 };
 
@@ -225,82 +227,105 @@ function showDash() {
   document.getElementById('rider-page').style.display = 'none';
   document.getElementById('rider-dash').style.display = 'flex';
   document.getElementById('dash-name').textContent = 'Welcome, ' + (riderData.name || 'Rider');
-  document.getElementById('dash-code').textContent  = 'Code: ' + (riderData.code || '——');
+  document.getElementById('dash-code').textContent = 'Code: ' + (riderData.code || '——');
+  // Update online/offline buttons appearance
+  setOnlineUI(isOnline);
 }
 
 function riderLogout() {
+  if (ordersListener) ordersListener();
   localStorage.removeItem('tp_rider_code');
   localStorage.removeItem('tp_rider_name');
   riderData = null;
+  knownOrderIds.clear();
   document.getElementById('rider-page').style.display = 'flex';
   document.getElementById('rider-dash').style.display = 'none';
+  TP.showToast('Signed out');
 }
 
-window.setOnline = function(online) {
+window.setOnline = async function(online) {
   isOnline = online;
-  document.getElementById('online-btn').style.opacity  = online ? '1' : '.4';
-  document.getElementById('offline-btn').style.opacity = online ? '.4' : '1';
-  if (typeof Parse !== 'undefined' && riderData?.objectId) {
-    try { // Firebase rider lookup
-    const ridersData = await TP.fbGet('riders');
-    if (ridersData) {
-      const found = Object.entries(ridersData).find(([k,v]) => v.code === code);
-      if (found) {
-        riderData = { ...found[1], _fbKey: found[0] };
-        document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('rider-app').style.display = 'block';
-        localStorage.setItem('tp_rider', JSON.stringify(riderData));
-        initRiderApp();
-      } else {
-        document.getElementById('rider-err').style.display = 'block';
-      }
-    } else {
-      document.getElementById('rider-err').style.display = 'block';
-    }
-    } catch(e) {}
+  setOnlineUI(online);
+  if (riderData?._fbKey) {
+    await window.TP.fbUpdate(`riders/${riderData._fbKey}`, { online });
   }
   TP.showToast(online ? 'You are now Online 🟢' : 'You are now Offline ⚫');
+  if (online) {
+    startOrdersListener();
+  } else {
+    if (ordersListener) ordersListener();
+    ordersListener = null;
+    renderRiderOrders([]);
+  }
 };
 
-// POLL FOR ASSIGNED ORDERS
-let knownOrderIds = new Set();
-function startPolling() {
-  pollOrders();
-  setInterval(pollOrders, 6000);
+function setOnlineUI(online) {
+  const onlineBtn = document.getElementById('online-btn');
+  const offlineBtn = document.getElementById('offline-btn');
+  if (onlineBtn) onlineBtn.style.opacity = online ? '1' : '0.4';
+  if (offlineBtn) offlineBtn.style.opacity = online ? '0.4' : '1';
 }
 
-async function pollOrders() {
-  if (!isOnline || !riderData) return;
-  if (typeof Parse === 'undefined') { renderDemoOrders(); return; }
-  try {
-    // Get current active orders from Firebase
-    const ordersData = await TP.fbGet('orders');
-    if (ordersData) {
-      const activeOrders = Object.entries(ordersData)
-        .map(([k,v]) => ({...v, _fbKey:k}))
-        .filter(o => o.status === 'onway' || o.status === 'accepted' || o.status === 'preparing');
-      renderRiderOrders(activeOrders);
+// ─── Real-time orders listener ─────────────────────────────
+function startOrdersListener() {
+  if (!riderData || !isOnline) return;
+  if (ordersListener) ordersListener();
+
+  // Wait for TP module
+  if (!window.TP?.fbListen) {
+    setTimeout(startOrdersListener, 500);
+    return;
+  }
+
+  // Listen to all orders (we filter by riderCode on client side)
+  ordersListener = window.TP.fbListen('orders', (ordersData) => {
+    if (!ordersData) {
+      renderRiderOrders([]);
+      return;
     }
-    } catch(e) { console.warn('Poll:', e); }
+    const myOrders = Object.entries(ordersData)
+      .map(([key, order]) => ({ ...order, _fbKey: key, orderId: order.orderId || key }))
+      .filter(order => order.riderCode === riderData.code || order.riderName === riderData.name)
+      .sort((a,b) => (b.timestamp||0) - (a.timestamp||0));
+
+    renderRiderOrders(myOrders);
+    // Check for new orders (those not in knownOrderIds)
+    myOrders.forEach(order => {
+      const id = order.orderId;
+      if (!knownOrderIds.has(id) && order.status !== 'delivered' && order.status !== 'declined') {
+        knownOrderIds.add(id);
+        triggerOrderAlert(order);
+      }
+    });
+  });
 }
 
 function triggerOrderAlert(order) {
-  alertOrder = order;
-  document.getElementById('alert-details').textContent =
-    `${order.customerName||'Customer'} · ${(order.items||[]).length} items · Rs. ${order.total||0} · ${order.address||''}`;
-  document.getElementById('order-alert-popup').style.display = 'flex';
-  // Play alert sound repeatedly until dismissed
-  if (alertAudio) { alertAudio.loop = true; try { alertAudio.play(); } catch(e) {} }
+  const alertDiv = document.getElementById('order-alert-popup');
+  const details = document.getElementById('alert-details');
+  details.innerHTML = `
+    <strong>${order.customerName || 'Customer'}</strong><br/>
+    ${(order.items || []).map(i => `${i.name} ×${i.qty}`).join(', ')}<br/>
+    <span style="color:var(--yellow)">Rs. ${order.total || 0}</span><br/>
+    📍 ${order.address || 'Pickup'}
+  `;
+  alertDiv.style.display = 'flex';
+  // Play beep sound (Web Audio)
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.frequency.value = 880;
+    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.5);
+  } catch(e) {}
 }
 
-window.acceptFromAlert = function() {
-  document.getElementById('order-alert-popup').style.display = 'none';
-  if (alertAudio) { alertAudio.loop = false; alertAudio.pause(); }
-  TP.showToast('Order accepted! Head to restaurant 🛵');
-};
 window.dismissAlert = function() {
   document.getElementById('order-alert-popup').style.display = 'none';
-  if (alertAudio) { alertAudio.loop = false; alertAudio.pause(); }
 };
 
 function renderRiderOrders(orders) {
@@ -312,44 +337,43 @@ function renderRiderOrders(orders) {
   list.innerHTML = orders.map(o => {
     const items = (o.items || []).map(i => `${i.name} ×${i.qty}`).join(', ');
     const st = o.status || 'pending';
-    const stColor = {accepted:'var(--yellow)',preparing:'#2196F3',onway:'#9C27B0',delivered:'#4CAF50'}[st]||'#888';
-    return `<div class="rider-order-card ${!knownOrderIds.has(o.orderId) ? 'roc-alert' : ''}">
+    const stColor = {accepted:'var(--yellow)', preparing:'#2196F3', onway:'#9C27B0', delivered:'#4CAF50', pending:'#FFA500'}[st] || '#888';
+    return `<div class="rider-order-card">
       <div class="roc-header">
-        <div class="roc-id">#${(o.orderId||o.objectId||'—').slice(-6)}</div>
-        <span class="roc-status" style="background:${stColor}22;color:${stColor}">${st}</span>
+        <div class="roc-id">#${(o.orderId || o._fbKey || '—').slice(-6)}</div>
+        <span class="roc-status" style="background:${stColor}22; color:${stColor}">${st}</span>
       </div>
-      <div class="roc-cust">${o.customerName||'Customer'}</div>
-      <div class="roc-addr">📍 ${o.address||'Pickup only'}</div>
+      <div class="roc-cust">${o.customerName || 'Customer'}</div>
+      <div class="roc-addr">📍 ${o.address || 'Pickup only'}</div>
       <div class="roc-items">${items}</div>
-      <div class="roc-total">Rs. ${o.total||0}</div>
+      <div class="roc-total">Rs. ${o.total || 0}</div>
       <div class="roc-btns">
-        ${st==='accepted'?`<button class="roc-btn onway" onclick="updateStatus('${o.orderId||o.objectId}','onway')">🛵 Start Delivery</button>`:''}
-        ${st==='onway'?`<button class="roc-btn deliver" onclick="updateStatus('${o.orderId||o.objectId}','delivered')">✅ Mark Delivered</button>`:''}
-        ${o.phone?`<a href="tel:${o.phone}" class="roc-btn call">📞 Call Customer</a>`:''}
-        ${o.location?`<a href="https://maps.google.com/?q=${o.location.lat},${o.location.lng}" target="_blank" class="roc-btn call">📍 Navigate</a>`:''}
+        ${st === 'accepted' ? `<button class="roc-btn onway" onclick="updateOrderStatus('${o.orderId}','onway')">🛵 Start Delivery</button>` : ''}
+        ${st === 'onway' ? `<button class="roc-btn deliver" onclick="updateOrderStatus('${o.orderId}','delivered')">✅ Mark Delivered</button>` : ''}
+        ${o.phone ? `<a href="tel:${o.phone}" class="roc-btn call">📞 Call Customer</a>` : ''}
+        ${o.location ? `<a href="https://maps.google.com/?q=${o.location.lat},${o.location.lng}" target="_blank" class="roc-btn call">📍 Navigate</a>` : ''}
       </div>
     </div>`;
   }).join('');
 }
 
-window.updateStatus = async function(orderId, status) {
-  if (typeof Parse === 'undefined') { TP.showToast('Status updated (demo)'); return; }
+window.updateOrderStatus = async function(orderId, newStatus) {
+  if (!window.TP?.updateOrderStatus) {
+    TP.showToast('Not connected', 'error');
+    return;
+  }
   try {
-    // Firebase order fetch
-    const order = await window.TP?.getOrder(orderId);
-    if (order) renderOrder(order);
-    } catch(e) { TP.showToast('Update failed', 'error'); }
+    await window.TP.updateOrderStatus(orderId, newStatus);
+    TP.showToast(`Order #${orderId.slice(-6)} → ${newStatus} ✅`);
+  } catch(e) {
+    TP.showToast('Update failed: ' + e.message, 'error');
+  }
 };
 
-// Demo orders for testing
-function renderDemoOrders() {
-  const demo = [{orderId:'demo001',customerName:'Hassan Raza',address:'Gulberg, Lahore',phone:'+923001234567',items:[{name:'Zinger Burger',qty:2},{name:'Loaded Fries',qty:1}],total:880,status:'accepted',location:{lat:31.5204,lng:74.3587}}];
-  if (!knownOrderIds.has('demo001')) { knownOrderIds.add('demo001'); if (knownOrderIds.size > 1) triggerOrderAlert(demo[0]); }
-  renderRiderOrders(demo);
+// Register service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
 }
-
-// Register SW for Rider PWA
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
 </script>
 </body>
 </html>
