@@ -1,1613 +1,569 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tempura Potato — Fast. Fresh. Fired Up.</title>
-<script src="tempura-config.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="theme-color" content="#0a0a0a"/>
+<meta name="description" content="Tempura Potato — Lahore's finest burgers, wraps & deals. Premium fast food at unbeatable prices."/>
+<meta property="og:title" content="Tempura Potato — Lahore's Best Burgers"/>
+<meta property="og:description" content="Premium burgers, wraps & deals. Fast food done right in Lahore."/>
+<title>Tempura Potato — Lahore's Finest</title>
+<link rel="manifest" href="manifest.json"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥔</text></svg>"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
 <style>
-:root{
-  --red:#D42B2B;--red-deep:#A01E1E;--red-glow:rgba(212,43,43,.35);
-  --dark:#0A0404;--surface:#140808;--surface-alt:#1E0C0C;--card:#1A0A0A;
-  --text:#FFF5F0;--muted:#8A6060;--gold:#E8A000;--border:rgba(212,43,43,.2);
-  --green:#22c55e;
+.star-select{display:flex;gap:6px;font-size:28px;margin-bottom:8px;}
+.star-select span{cursor:pointer;color:var(--gray2);transition:.2s;}
+.star-select span.on{color:var(--yellow);}
+.food-section{padding:80px 48px;}
+.food-row{display:flex;align-items:center;gap:64px;max-width:1180px;margin:0 auto 80px;}
+.food-row.rev{flex-direction:row-reverse;}
+.fr-img{flex:1;border-radius:20px;overflow:hidden;position:relative;box-shadow:0 30px 70px rgba(0,0,0,.5);}
+.fr-img img{width:100%;height:340px;object-fit:cover;display:block;transition:transform .6s ease;}
+.fr-img:hover img{transform:scale(1.04);}
+.fr-img-glow{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.7),transparent);pointer-events:none;}
+.fr-text{flex:1;}
+.fr-tag{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--yellow);margin-bottom:16px;}
+.fr-title{font-family:var(--font);font-size:clamp(38px,5vw,60px);color:var(--white);line-height:1;margin-bottom:20px;}
+.fr-title em{color:var(--yellow);font-style:normal;}
+.fr-desc{font-size:16px;color:rgba(255,255,255,.6);line-height:1.8;margin-bottom:20px;}
+.fr-price{font-family:var(--font);font-size:32px;color:var(--yellow);margin-bottom:22px;}
+.menu-section{padding:80px 48px;}
+.menu-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px;}
+.menu-tab{padding:10px 24px;border-radius:25px;background:var(--black3);border:1px solid rgba(255,255,255,.08);color:var(--gray);font-size:13px;font-weight:700;cursor:pointer;transition:.3s;letter-spacing:.5px;}
+.menu-tab.active,.menu-tab:hover{background:var(--yellow);color:var(--black);border-color:var(--yellow);}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;}
+.menu-card{background:var(--black3);border:1px solid rgba(255,255,255,.06);border-radius:16px;overflow:hidden;cursor:pointer;transition:.35s cubic-bezier(.4,0,.2,1);}
+.menu-card:hover{transform:translateY(-6px);border-color:rgba(245,200,66,.25);box-shadow:0 20px 50px rgba(0,0,0,.5);}
+.mc-img{position:relative;height:170px;overflow:hidden;}
+.mc-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+.menu-card:hover .mc-img img{transform:scale(1.06);}
+.mc-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.7),transparent);}
+.mc-tag{position:absolute;top:10px;left:10px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+.mc-tag.hot{background:rgba(255,80,50,.85);color:#fff;}
+.mc-tag.best{background:rgba(245,200,66,.85);color:var(--black);}
+.mc-body{padding:16px;}
+.mc-name{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:5px;}
+.mc-desc{font-size:12px;color:var(--gray);line-height:1.5;margin-bottom:12px;}
+.mc-foot{display:flex;align-items:center;justify-content:space-between;}
+.mc-price{font-family:var(--font);font-size:22px;color:var(--yellow);}
+.mc-add{width:34px;height:34px;border-radius:50%;background:var(--yellow);color:var(--black);border:none;font-size:20px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.3s;}
+.mc-add:hover{background:var(--yellow-d);transform:rotate(90deg);}
+.deals-section{padding:80px 48px;background:var(--black2);}
+.deals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px;}
+.deal-card{background:var(--black3);border:1px solid rgba(255,255,255,.06);border-radius:16px;overflow:hidden;cursor:pointer;transition:.35s;position:relative;}
+.deal-card:hover{transform:translateY(-6px);border-color:rgba(245,200,66,.3);box-shadow:0 20px 55px rgba(0,0,0,.5);}
+.deal-badge{position:absolute;top:14px;right:14px;background:var(--yellow);color:var(--black);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:800;z-index:2;letter-spacing:.5px;}
+.deal-img{height:180px;overflow:hidden;position:relative;}
+.deal-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+.deal-card:hover .deal-img img{transform:scale(1.06);}
+.deal-img-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.75),transparent);}
+.deal-body{padding:20px;}
+.deal-name{font-family:var(--font);font-size:24px;color:var(--white);letter-spacing:1px;margin-bottom:10px;}
+.deal-inc{display:flex;flex-direction:column;gap:3px;margin-bottom:14px;}
+.deal-inc span{font-size:13px;color:var(--gray);}
+.deal-foot{display:flex;align-items:center;justify-content:space-between;}
+.deal-price{font-family:var(--font);font-size:28px;color:var(--yellow);}
+.stats-bar{background:var(--black);border-top:1px solid rgba(245,200,66,.1);border-bottom:1px solid rgba(245,200,66,.1);padding:52px 48px;}
+.stats-bar-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;max-width:960px;margin:0 auto;text-align:center;}
+.sbi-num{font-family:var(--font);font-size:52px;color:var(--yellow);line-height:1;}
+.sbi-lbl{font-size:12px;color:var(--gray);text-transform:uppercase;letter-spacing:2px;margin-top:5px;}
+.reviews-section{padding:80px 0 60px;overflow:hidden;}
+.reviews-section .sh{padding:0 48px;}
+.reviews-track-wrap{overflow:hidden;margin:40px 0;}
+.reviews-track{display:flex;gap:22px;animation:revScroll 40s linear infinite;width:max-content;}
+.reviews-track:hover{animation-play-state:paused;}
+@keyframes revScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.review-card{background:var(--black3);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:26px;min-width:320px;max-width:340px;flex-shrink:0;}
+.rc-quote{font-family:var(--font);font-size:60px;color:rgba(245,200,66,.15);line-height:.6;margin-bottom:14px;}
+.rc-text{font-size:14px;color:rgba(255,255,255,.75);line-height:1.75;margin-bottom:16px;}
+.rc-header{display:flex;align-items:center;gap:12px;}
+.rc-avatar{width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;}
+.rc-avatar img{width:100%;height:100%;object-fit:cover;}
+.rc-name{font-weight:700;font-size:14px;color:var(--white);}
+.rc-loc{font-size:12px;color:var(--gray);}
+.rc-stars{color:var(--yellow);font-size:13px;margin-top:2px;}
+.review-form{max-width:560px;margin:0 auto;padding:40px 48px 0;}
+.par-banner{position:relative;padding:120px 48px;text-align:center;overflow:hidden;}
+.par-bg{position:absolute;inset:-20%;background:url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=1600&q=60') center/cover;opacity:.18;will-change:transform;}
+.par-content{position:relative;z-index:1;}
+.about-section{padding:80px 48px;}
+.about-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1200px;margin:0 auto;}
+.about-text h2{font-family:var(--font);font-size:clamp(38px,5vw,60px);color:var(--white);line-height:1;margin:14px 0 22px;}
+.about-text h2 em{color:var(--yellow);font-style:normal;}
+.about-text p{font-size:16px;color:rgba(255,255,255,.6);line-height:1.8;margin-bottom:14px;}
+.about-feats{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;}
+.af{background:var(--black3);border:1px solid rgba(255,255,255,.08);padding:8px 16px;border-radius:20px;font-size:13px;font-weight:600;}
+.team-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:36px;max-width:1200px;margin-left:auto;margin-right:auto;}
+.team-card{background:var(--black3);border:1px solid rgba(255,255,255,.06);border-radius:16px;overflow:hidden;transition:.35s;}
+.team-card:hover{transform:translateY(-4px);border-color:rgba(245,200,66,.2);}
+.team-img{height:180px;position:relative;overflow:hidden;}
+.team-img img{width:100%;height:100%;object-fit:cover;}
+.team-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.8),transparent);}
+.team-body{padding:14px;}
+.team-name{font-family:var(--font);font-size:18px;color:var(--white);letter-spacing:.5px;}
+.team-role{font-size:12px;color:var(--yellow);margin-top:3px;font-weight:600;}
+.team-desc{font-size:12px;color:var(--gray);margin-top:6px;line-height:1.5;}
+.story-section{padding:80px 48px;background:var(--black2);text-align:center;}
+.story-inner{max-width:740px;margin:0 auto;}
+.story-typing{font-family:var(--font);font-size:clamp(22px,3vw,36px);color:var(--white);line-height:1.4;letter-spacing:.5px;min-height:100px;}
+.dev-ad{background:var(--black3);border:1px solid rgba(245,200,66,.15);border-radius:20px;padding:40px;text-align:center;margin:0 48px 40px;}
+.sh{text-align:center;margin-bottom:46px;}
+.sh-tag{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--yellow);margin-bottom:14px;}
+.sh-title{font-family:var(--font);font-size:clamp(36px,5vw,62px);color:var(--white);line-height:1;letter-spacing:1px;}
+.sh-sub{font-size:16px;color:var(--gray);margin-top:12px;line-height:1.7;}
+.btn-p{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--yellow);color:var(--black);padding:13px 30px;border-radius:28px;font-size:14px;font-weight:800;letter-spacing:.5px;text-decoration:none;border:none;cursor:pointer;transition:.3s;white-space:nowrap;}
+.btn-p:hover{background:var(--yellow-d);transform:translateY(-2px);box-shadow:0 10px 30px var(--yellow-g);}
+.btn-s{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--white);padding:13px 28px;border-radius:28px;font-size:14px;font-weight:700;letter-spacing:.5px;text-decoration:none;border:2px solid rgba(255,255,255,.2);transition:.3s;}
+.btn-s:hover{border-color:var(--yellow);color:var(--yellow);}
+@media(max-width:960px){
+  .food-row,.food-row.rev{flex-direction:column;padding:0 22px;}
+  .fr-img{width:100%;height:220px;}
+  .team-grid{grid-template-columns:repeat(2,1fr);}
+  .about-inner{grid-template-columns:1fr;gap:40px;}
+  .food-section,.menu-section,.deals-section,.about-section,.story-section{padding:60px 22px;}
+  .stats-bar{padding:40px 22px;}
+  .stats-bar-inner{grid-template-columns:repeat(2,1fr);}
+  .dev-ad{margin:0 22px 36px;}
+  .review-form{padding:36px 22px 0;}
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{font-family:'Outfit',sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden;}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(212,43,43,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(212,43,43,.025) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;z-index:0;}
-
-/* ── SCROLL PROGRESS ── */
-.scroll-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--red),var(--gold),var(--red));background-size:200%;animation:barShift 2s linear infinite;z-index:9999;width:0%;box-shadow:0 0 12px var(--red-glow);}
-@keyframes barShift{0%{background-position:0%;}100%{background-position:200%;}}
-
-/* ── CURSOR ── */
-.cur-dot{position:fixed;width:8px;height:8px;background:var(--red);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;}
-.cur-ring{position:fixed;width:34px;height:34px;border:1.5px solid rgba(212,43,43,.55);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .12s,top .12s,width .3s,height .3s,border-color .3s;}
-
-/* ── THEME BANNER ── */
-.theme-banner{display:none;padding:.55rem 1rem;text-align:center;font-size:.78rem;font-weight:600;z-index:199;letter-spacing:.04em;}
-.theme-banner.on{display:block;}
-
-/* ── TICKER ── */
-.ticker{overflow:hidden;padding:.5rem 0;background:var(--red-deep);border-bottom:1px solid rgba(212,43,43,.4);display:none;}
-.ticker.on{display:block;}
-.ticker-inner{display:flex;align-items:center;white-space:nowrap;}
-.ticker-lbl{background:var(--gold);color:var(--dark);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;padding:.28rem .8rem;font-weight:800;flex-shrink:0;margin-right:1rem;}
-.ticker-txt{color:#fff;font-size:.88rem;animation:tickRun 30s linear infinite;font-weight:500;}
-@keyframes tickRun{from{transform:translateX(100vw);}to{transform:translateX(-100%);}}
-
-/* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 5rem;transition:all .4s;border-bottom:1px solid transparent;}
-nav.stuck{background:rgba(10,4,4,.96);backdrop-filter:blur(24px);border-color:var(--border);padding:1rem 5rem;}
-nav.stuck::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--red),var(--gold),transparent);}
-.nav-logo{text-decoration:none;display:flex;align-items:center;gap:.8rem;}
-.logo-arabic{font-family:'Noto Naskh Arabic','Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--red);line-height:1;transition:all .3s;direction:rtl;}
-.logo-eng{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);display:block;margin-top:.1rem;font-weight:600;}
-.nav-logo:hover .logo-arabic{color:var(--gold);text-shadow:0 0 25px var(--red-glow);}
-.nav-links{display:flex;gap:2.5rem;list-style:none;}
-.nav-links a{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;position:relative;font-weight:600;}
-.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:linear-gradient(90deg,var(--red),var(--gold));transition:width .3s;}
-.nav-links a:hover{color:var(--text);}
-.nav-links a:hover::after{width:100%;}
-.nav-right{display:flex;align-items:center;gap:.8rem;}
-.order-btn{background:var(--red);color:#fff;border:none;padding:.58rem 1.4rem;font-family:'Outfit',sans-serif;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:.5rem;clip-path:polygon(0 0,92% 0,100% 25%,100% 100%,8% 100%,0 75%);font-weight:700;position:relative;overflow:hidden;}
-.order-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.12),transparent);opacity:0;transition:opacity .3s;}
-.order-btn:hover{background:var(--red-deep);box-shadow:0 0 25px var(--red-glow),0 0 50px rgba(212,43,43,.2);transform:translateY(-1px);}
-.order-btn:hover::before{opacity:1;}
-.cart-cnt{background:var(--gold);color:var(--dark);border-radius:50%;width:17px;height:17px;font-size:.6rem;font-weight:800;display:flex;align-items:center;justify-content:center;position:absolute;top:-6px;right:-6px;transform:scale(0);transition:transform .3s cubic-bezier(.175,.885,.32,1.275);}
-.cart-cnt.on{transform:scale(1);animation:cntPop .3s ease;}
-@keyframes cntPop{0%{transform:scale(0);}70%{transform:scale(1.3);}100%{transform:scale(1);}}
-
-/* ── HERO SLIDER ── */
-.hero{position:relative;height:100vh;overflow:hidden;}
-.slide{position:absolute;inset:0;display:flex;align-items:center;padding:0 5rem;opacity:0;transition:opacity .9s,transform .9s,filter .9s;transform:scale(1.04);z-index:1;filter:blur(3px);}
-.slide.active{opacity:1;transform:scale(1);z-index:2;filter:blur(0);}
-.slide.exit{opacity:0;transform:scale(.97);z-index:1;}
-.slide-bg{position:absolute;inset:-15%;background-size:cover;background-position:center;will-change:transform;transition:transform 8s ease;}
-.slide.active .slide-bg{transform:scale(1.08);}
-.slide-overlay{position:absolute;inset:0;background:linear-gradient(105deg,rgba(10,4,4,.95) 0%,rgba(10,4,4,.7) 50%,rgba(10,4,4,.35) 100%);}
-/* Red side accent */
-.slide-accent{position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(to bottom,transparent,var(--red),var(--gold),var(--red),transparent);}
-.slide-content{position:relative;z-index:2;max-width:680px;}
-.slide-badge{display:inline-flex;align-items:center;gap:.6rem;background:rgba(212,43,43,.15);border:1px solid rgba(212,43,43,.4);padding:.3rem 1rem;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:1.8rem;font-weight:700;}
-.slide-badge::before{content:'';width:6px;height:6px;background:var(--gold);border-radius:50%;animation:badgePulse 1.5s infinite;}
-@keyframes badgePulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
-.slide-title{font-family:'Playfair Display',serif;font-size:clamp(3.5rem,7.5vw,8rem);font-weight:900;line-height:.88;letter-spacing:-.02em;margin-bottom:1.4rem;}
-.slide-title .t1{color:var(--text);display:block;}
-.slide-title .t2{color:var(--red);font-style:italic;display:block;animation:colorPulse 3s ease-in-out infinite;}
-@keyframes colorPulse{0%,100%{color:var(--red);}50%{color:var(--gold);}}
-.slide-desc{font-size:.92rem;color:rgba(255,245,240,.65);line-height:1.78;max-width:480px;margin-bottom:2.5rem;}
-.slide-actions{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;}
-.btn-red{background:var(--red);color:#fff;padding:.9rem 2.2rem;font-family:'Outfit',sans-serif;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:.55rem;border:none;cursor:pointer;transition:all .3s;clip-path:polygon(0 0,92% 0,100% 25%,100% 100%,8% 100%,0 75%);position:relative;overflow:hidden;}
-.btn-red::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.12),transparent);opacity:0;transition:.3s;}
-.btn-red:hover{background:var(--red-deep);box-shadow:0 0 35px var(--red-glow);transform:translateY(-2px);}
-.btn-red:hover::before{opacity:1;}
-.btn-outline{background:transparent;color:var(--text);padding:.9rem 2.2rem;font-family:'Outfit',sans-serif;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:.55rem;border:1px solid rgba(255,245,240,.2);transition:all .3s;}
-.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
-/* Slider UI */
-.slider-dots{position:absolute;bottom:2.5rem;left:5rem;display:flex;gap:.6rem;z-index:10;}
-.sdot{width:28px;height:3px;background:rgba(255,245,240,.15);cursor:pointer;transition:all .3s;position:relative;overflow:hidden;}
-.sdot.on{background:var(--red);box-shadow:0 0 8px var(--red-glow);}
-.sdot.on::after{content:'';position:absolute;inset:0;background:var(--gold);animation:dotFill 6s linear forwards;}
-@keyframes dotFill{from{transform:scaleX(0);transform-origin:left;}to{transform:scaleX(1);}}
-.slider-arrows{position:absolute;bottom:2.5rem;right:5rem;display:flex;gap:.5rem;z-index:10;}
-.sarr{width:44px;height:44px;background:rgba(212,43,43,.1);border:1px solid var(--border);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:all .3s;}
-.sarr:hover{background:var(--red);border-color:var(--red);box-shadow:0 0 18px var(--red-glow);}
-/* Arabic text watermark */
-.hero-watermark{position:absolute;right:-2%;top:50%;transform:translateY(-50%);font-family:'Noto Naskh Arabic','Playfair Display',serif;direction:rtl;font-size:clamp(8rem,18vw,22rem);font-weight:900;color:rgba(212,43,43,.04);pointer-events:none;z-index:1;white-space:nowrap;line-height:1;user-select:none;}
-
-/* ── MARQUEE ── */
-.mq{overflow:hidden;padding:.65rem 0;background:var(--red-deep);border-bottom:1px solid rgba(212,43,43,.3);position:relative;}
-.mq::before,.mq::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;}
-.mq::before{left:0;background:linear-gradient(to right,var(--red-deep),transparent);}
-.mq::after{right:0;background:linear-gradient(to left,var(--red-deep),transparent);}
-.mq-track{display:flex;gap:2.8rem;width:max-content;animation:mq 22s linear infinite;}
-.mq-item{display:flex;align-items:center;gap:.65rem;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,245,240,.75);white-space:nowrap;font-weight:600;}
-.mq-item .em{font-size:1rem;}
-.mq-sep{width:4px;height:4px;background:var(--gold);border-radius:50%;opacity:.7;}
-@keyframes mq{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-
-/* ── STATS STRIP ── */
-.stats-strip{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr);position:relative;z-index:1;}
-.stat{text-align:center;padding:2rem 1rem;border-right:1px solid var(--border);transition:background .3s;cursor:default;}
-.stat:last-child{border-right:none;}
-.stat:hover{background:rgba(212,43,43,.04);}
-.stat-v{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--red);line-height:1;}
-.stat:hover .stat-v{color:var(--gold);text-shadow:0 0 25px rgba(232,184,75,.4);}
-.stat-l{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:.35rem;font-weight:600;}
-
-/* ── SECTIONS ── */
-section{padding:7rem 5rem;position:relative;z-index:1;}
-.eyebrow{display:inline-flex;align-items:center;gap:.7rem;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--red);margin-bottom:.9rem;font-weight:700;}
-.eyebrow::before{content:'';width:22px;height:2px;background:var(--red);}
-h2.sec-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:700;line-height:1.05;letter-spacing:-.01em;margin-bottom:.5rem;}
-h2.sec-title em{font-style:italic;color:var(--red);}
-h2.sec-title .gold{color:var(--gold);}
-.sec-sub{font-size:.88rem;color:var(--muted);line-height:1.75;max-width:540px;margin-top:.6rem;}
-
-/* ── ABOUT SECTION ── */
-.about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:center;max-width:1260px;margin:0 auto;}
-.about-visual{position:relative;}
-.about-big{height:420px;background:linear-gradient(135deg,var(--surface-alt),var(--card));display:flex;align-items:center;justify-content:center;font-size:6rem;border:1px solid var(--border);position:relative;overflow:hidden;}
-.about-big::after{content:'تیمپورا';position:absolute;bottom:-1rem;right:-1rem;font-family:'Playfair Display',serif;font-size:8rem;color:rgba(212,43,43,.06);font-weight:900;pointer-events:none;}
-.about-big img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;}
-.about-small{position:absolute;bottom:-2rem;right:-2rem;width:180px;height:180px;background:var(--red);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:3;}
-.about-small-v{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:#fff;line-height:1;}
-.about-small-l{font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.75);margin-top:.2rem;font-weight:700;}
-.about-text{padding-top:1rem;}
-.about-body{font-size:.9rem;line-height:2;color:var(--muted);margin:1.5rem 0 2rem;}
-.about-tags{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2rem;}
-.atag{background:rgba(212,43,43,.08);border:1px solid var(--border);padding:.38rem .85rem;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--red);font-weight:700;}
-.about-stats{display:flex;gap:2.5rem;padding-top:2rem;border-top:1px solid var(--border);}
-.ast-v{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--gold);}
-.ast-l{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:.2rem;}
-
-/* ── MENU SECTION ── */
-.menu-tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2.5rem;}
-.tab{padding:.55rem 1.3rem;background:transparent;border:1px solid var(--border);font-family:'Outfit',sans-serif;font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:all .25s;font-weight:600;}
-.tab.on{background:var(--red);color:#fff;border-color:var(--red);box-shadow:0 0 15px var(--red-glow);}
-.tab:hover:not(.on){border-color:var(--red);color:var(--red);}
-.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;}
-.mcard{background:var(--card);border:1px solid var(--border);overflow:hidden;transition:all .4s;cursor:pointer;position:relative;transform-style:preserve-3d;}
-.mcard:hover{border-color:rgba(212,43,43,.45);transform:translateY(-6px);box-shadow:0 20px 50px rgba(212,43,43,.15);}
-.mcard-img{width:100%;height:200px;background:linear-gradient(135deg,var(--surface-alt),var(--card));display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;overflow:hidden;}
-.mcard-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;transition:transform .5s;}
-.mcard:hover .mcard-img img{transform:scale(1.07);}
-.mcard-emoji{z-index:0;}
-/* Shine sweep */
-.mcard::after{content:'';position:absolute;top:-50%;left:-60%;width:35%;height:200%;background:linear-gradient(to right,transparent,rgba(255,255,255,.06),transparent);transform:skewX(-15deg);transition:left .7s;pointer-events:none;z-index:4;}
-.mcard:hover::after{left:140%;}
-.badge-pill{position:absolute;top:10px;left:10px;padding:.22rem .65rem;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800;z-index:2;}
-.pill-best{background:var(--gold);color:var(--dark);}
-.pill-spicy{background:var(--red);color:#fff;box-shadow:0 0 10px var(--red-glow);}
-.pill-prem{background:linear-gradient(135deg,var(--gold),#b8860b);color:var(--dark);}
-.pill-deal{background:var(--green);color:#fff;}
-.sold-overlay{position:absolute;inset:0;background:rgba(10,4,4,.75);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--muted);z-index:3;}
-.mcard-body{padding:1.3rem;}
-.mcard-cat{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:.38rem;font-weight:700;}
-.mcard-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:.38rem;line-height:1.25;}
-.mcard-desc{font-size:.74rem;color:var(--muted);line-height:1.6;margin-bottom:1rem;}
-.mcard-foot{display:flex;align-items:center;justify-content:space-between;padding-top:.9rem;border-top:1px solid var(--border);}
-.mcard-price{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--gold);}
-.mcard-price .rs{font-size:.75rem;color:var(--muted);font-family:'Outfit',sans-serif;font-weight:400;margin-right:.2rem;}
-.add-btn{background:var(--red);border:none;color:#fff;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:700;transition:all .3s;clip-path:polygon(0 0,80% 0,100% 20%,100% 100%,20% 100%,0 80%);}
-.add-btn:hover{background:var(--gold);color:var(--dark);transform:scale(1.12) rotate(90deg);box-shadow:0 0 18px var(--red-glow);}
-.add-btn:disabled{background:var(--muted);cursor:not-allowed;clip-path:none;transform:none;}
-
-/* ── FLAME DIVIDER ── */
-.flame-div{position:relative;overflow:hidden;height:320px;display:flex;align-items:center;justify-content:center;background:var(--dark);}
-.flame-div::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(212,43,43,.12) 0%,transparent 70%);}
-.flame-canvas{position:absolute;inset:0;width:100%;height:100%;}
-.flame-text{position:relative;z-index:2;text-align:center;}
-.flame-text h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,5rem);font-weight:900;color:var(--text);}
-.flame-text h2 em{font-style:italic;color:var(--red);text-shadow:0 0 30px var(--red-glow);}
-.flame-text p{color:var(--muted);font-size:.88rem;margin-top:.8rem;}
-
-/* ── SPECIALS (floating trays) ── */
-.specials-sec{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-.spec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.4rem;max-width:1260px;margin:2.5rem auto 0;}
-.spec-card{background:var(--card);border:1px solid rgba(232,184,75,.2);position:relative;overflow:hidden;transition:all .4s;cursor:pointer;}
-.spec-card:hover{transform:translateY(-7px);box-shadow:0 20px 55px rgba(212,43,43,.2);border-color:var(--gold);}
-.spec-ribbon{position:absolute;top:14px;right:-8px;background:var(--red);color:#fff;font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;padding:.28rem .9rem .28rem .65rem;font-weight:800;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,8% 50%);z-index:3;}
-/* Chef badge */
-.chef-badge{position:absolute;top:10px;left:10px;background:linear-gradient(135deg,var(--gold),#b8860b);color:var(--dark);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .65rem;font-weight:800;z-index:3;display:flex;align-items:center;gap:.3rem;animation:badgePulse2 2s ease-in-out infinite;}
-@keyframes badgePulse2{0%,100%{box-shadow:0 0 0 0 rgba(232,184,75,.4);}50%{box-shadow:0 0 0 6px rgba(232,184,75,0);}}
-/* Countdown timer */
-.spec-timer{background:rgba(10,4,4,.75);border-top:1px solid rgba(212,43,43,.25);padding:.55rem 1rem;display:flex;align-items:center;gap:.6rem;font-size:.72rem;}
-.spec-timer-label{color:var(--muted);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;}
-.spec-timer-val{font-family:'Space Mono',monospace;font-weight:700;color:var(--gold);}
-.spec-timer-sep{color:var(--muted);}
-/* Sold out overlay anim */
-.spec-sold-overlay{position:absolute;inset:0;background:rgba(10,4,4,.82);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:5;gap:.5rem;}
-.spec-sold-icon{font-size:2.5rem;animation:lockShake .5s ease-in-out;}
-@keyframes lockShake{0%,100%{transform:rotate(0);}25%{transform:rotate(-8deg);}75%{transform:rotate(8deg);}}
-.spec-sold-text{font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--muted);}
-.spec-img{height:220px;background:linear-gradient(135deg,var(--surface-alt),var(--surface));display:flex;align-items:center;justify-content:center;font-size:5rem;position:relative;overflow:hidden;}
-.spec-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;transition:transform .5s;}
-.spec-card:hover .spec-img img{transform:scale(1.06);}
-.spec-body{padding:1.5rem;}
-.spec-name{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--text);margin-bottom:.5rem;}
-.spec-desc{font-size:.78rem;color:var(--muted);line-height:1.65;margin-bottom:1.2rem;}
-.spec-foot{display:flex;align-items:center;justify-content:space-between;}
-.spec-price{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--gold);}
-.spec-price .rs{font-size:.78rem;color:var(--muted);font-family:'Outfit',sans-serif;font-weight:400;}
-
-/* ── EXPERIENCE SECTION ── */
-.exp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2.5rem;max-width:1260px;}
-.exp-card{background:var(--card);border:1px solid var(--border);padding:2.2rem 1.8rem;transition:all .35s;position:relative;overflow:hidden;}
-.exp-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--gold));transform:scaleX(0);transition:transform .4s;}
-.exp-card:hover::before{transform:scaleX(1);}
-.exp-card:hover{border-color:rgba(212,43,43,.3);background:rgba(212,43,43,.03);}
-.exp-ico{font-size:2.2rem;margin-bottom:1rem;display:block;transition:transform .3s;}
-.exp-card:hover .exp-ico{transform:scale(1.15) rotate(-6deg);}
-.exp-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:.55rem;}
-.exp-desc{font-size:.8rem;color:var(--muted);line-height:1.7;}
-
-/* ── GALLERY ── */
-.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:220px 220px;gap:3px;max-width:1260px;margin:2.5rem auto 0;}
-.gal-item{overflow:hidden;position:relative;cursor:pointer;background:var(--surface-alt);display:flex;align-items:center;justify-content:center;font-size:3rem;transition:filter .3s;}
-.gal-item:nth-child(1){grid-column:span 2;}
-.gal-item:nth-child(4){grid-column:span 2;}
-.gal-item img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;transition:transform .6s;}
-.gal-item:hover img{transform:scale(1.06);}
-.gal-cap{position:absolute;bottom:0;left:0;right:0;padding:.9rem 1.1rem;background:linear-gradient(to top,rgba(10,4,4,.9),transparent);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;opacity:0;transition:.3s;z-index:2;color:var(--gold);font-weight:700;}
-.gal-item:hover .gal-cap{opacity:1;}
-
-/* ── TESTIMONIALS ── */
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2.5rem;max-width:1260px;}
-.tc{background:var(--card);border:1px solid var(--border);padding:2rem;transition:border-color .3s;position:relative;}
-.tc::before{content:'"';position:absolute;top:.8rem;right:1.2rem;font-size:4.5rem;color:rgba(212,43,43,.08);font-family:'Playfair Display',serif;line-height:1;}
-.tc:hover{border-color:rgba(212,43,43,.3);}
-.tc:hover::before{color:rgba(212,43,43,.15);}
-.stars{color:var(--gold);font-size:.8rem;margin-bottom:.9rem;}
-.tq{font-family:'Playfair Display',serif;font-style:italic;font-size:.92rem;line-height:1.75;color:rgba(255,245,240,.82);margin-bottom:1.2rem;}
-.tn{font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--red);font-weight:700;}
-.tr{font-size:.6rem;color:var(--muted);margin-top:.15rem;}
-
-/* ── ORDER SECTION (WhatsApp CTA) ── */
-.order-sec{background:var(--red-deep);border-top:1px solid rgba(212,43,43,.4);border-bottom:1px solid rgba(212,43,43,.4);position:relative;overflow:hidden;}
-.order-sec::before{content:'تیمپورا';position:absolute;right:-2%;top:50%;transform:translateY(-50%);font-family:'Playfair Display',serif;font-size:clamp(8rem,15vw,18rem);font-weight:900;color:rgba(255,255,255,.03);pointer-events:none;line-height:1;}
-.order-inner{max-width:700px;text-align:center;margin:0 auto;position:relative;z-index:2;}
-.order-inner h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.8rem);font-weight:900;color:#fff;margin-bottom:.8rem;line-height:1.1;}
-.order-inner h2 em{font-style:italic;color:var(--gold);}
-.order-inner p{font-size:.9rem;color:rgba(255,255,255,.7);margin-bottom:2.2rem;line-height:1.75;}
-.wa-btn{display:inline-flex;align-items:center;gap:.75rem;background:#25D366;color:#fff;padding:1rem 2.8rem;font-family:'Outfit',sans-serif;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;text-decoration:none;transition:all .3s;clip-path:polygon(0 0,95% 0,100% 25%,100% 100%,5% 100%,0 75%);margin-bottom:.9rem;}
-.wa-btn:hover{background:#128C7E;transform:translateY(-2px);box-shadow:0 10px 30px rgba(37,211,102,.3);}
-.fp-btn{display:inline-flex;align-items:center;gap:.7rem;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2);padding:.85rem 2rem;font-family:'Outfit',sans-serif;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;text-decoration:none;transition:all .3s;margin-left:.8rem;}
-.fp-btn:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.4);}
-
-/* ── FOOTER ── */
-footer{background:#070202;border-top:1px solid var(--border);padding:5rem 5rem 2.5rem;position:relative;z-index:1;}
-footer::before{content:'';display:block;position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--red),var(--gold),transparent);}
-.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border);}
-.footer-logo-arabic{font-family:'Noto Naskh Arabic','Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--red);margin-bottom:.3rem;direction:rtl;}
-.footer-logo-eng{font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:1rem;}
-.footer-desc{font-size:.8rem;color:var(--muted);line-height:1.85;margin-bottom:1.8rem;max-width:280px;}
-.footer-socials{display:flex;gap:.6rem;}
-.soc{width:36px;height:36px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);text-decoration:none;font-size:.68rem;font-weight:700;transition:all .3s;font-family:'Space Mono',monospace;}
-.soc:hover{border-color:var(--red);color:var(--red);background:rgba(212,43,43,.06);}
-.fh{font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:var(--red);margin-bottom:1.3rem;font-weight:700;}
-.flinks{list-style:none;display:flex;flex-direction:column;gap:.65rem;}
-.flinks a{font-size:.8rem;color:var(--muted);text-decoration:none;transition:color .2s;}
-.flinks a:hover{color:var(--text);}
-.fhr{display:flex;justify-content:space-between;font-size:.76rem;margin-bottom:.5rem;}
-.fhr span:first-child{color:var(--muted);}
-.fhr span:last-child{color:var(--text);}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:2rem;font-size:.65rem;color:var(--muted);}
-.footer-bottom a{color:var(--red);text-decoration:none;}
-
-/* ── CART DRAWER ── */
-.cart-overlay{position:fixed;inset:0;background:rgba(10,4,4,.88);z-index:2000;opacity:0;pointer-events:none;transition:opacity .4s;backdrop-filter:blur(8px);}
-.cart-overlay.on{opacity:1;pointer-events:all;}
-.cart-drawer{position:fixed;top:0;right:0;bottom:0;width:430px;background:var(--surface);z-index:2001;transform:translateX(100%);transition:transform .4s cubic-bezier(.25,.46,.45,.94);display:flex;flex-direction:column;border-left:1px solid var(--border);box-shadow:-20px 0 60px rgba(0,0,0,.6);}
-.cart-drawer.on{transform:translateX(0);}
-.cart-hd{padding:1.8rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.cart-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;}
-.cart-close{background:transparent;border:1px solid var(--border);color:var(--muted);width:36px;height:36px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:all .2s;}
-.cart-close:hover{border-color:var(--red);color:var(--red);}
-.cart-items{flex:1;overflow-y:auto;padding:1.2rem;}
-.cart-items::-webkit-scrollbar{width:3px;}
-.cart-items::-webkit-scrollbar-thumb{background:var(--red);}
-.cart-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:.8rem;color:var(--muted);}
-.ci{display:flex;gap:.9rem;padding:1rem 0;border-bottom:1px solid var(--border);animation:ciIn .3s ease;}
-@keyframes ciIn{from{opacity:0;transform:translateX(18px);}to{opacity:1;transform:translateX(0);}}
-.ci-thumb{width:62px;height:62px;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;position:relative;overflow:hidden;}
-.ci-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;}
-.ci-info{flex:1;}
-.ci-name{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;margin-bottom:.22rem;}
-.ci-price{font-size:.78rem;color:var(--gold);font-family:'Space Mono',monospace;}
-.ci-ctrl{display:flex;align-items:center;gap:.5rem;margin-top:.55rem;}
-.qty-btn{background:rgba(212,43,43,.1);border:1px solid var(--border);color:var(--red);width:28px;height:28px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:all .2s;}
-.qty-btn:hover{background:var(--red);color:#fff;border-color:var(--red);}
-.qty-n{font-size:.82rem;min-width:18px;text-align:center;font-family:'Space Mono',monospace;}
-.ci-rm{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:.7rem;margin-left:auto;transition:color .2s;}
-.ci-rm:hover{color:var(--red);}
-.cart-ft{padding:1.3rem 1.8rem;border-top:1px solid var(--border);}
-.sr{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-bottom:.42rem;}
-.sr.tot{color:var(--text);font-size:1rem;font-weight:700;padding-top:.7rem;border-top:1px solid var(--border);margin-top:.5rem;}
-.sr.tot span:last-child{color:var(--gold);font-family:'Space Mono',monospace;}
-.co-btn{width:100%;padding:1rem;background:var(--red);border:none;color:#fff;font-family:'Outfit',sans-serif;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;cursor:pointer;transition:all .3s;margin-top:.9rem;clip-path:polygon(0 0,96% 0,100% 25%,100% 100%,4% 100%,0 75%);}
-.co-btn:hover{background:var(--red-deep);box-shadow:0 0 25px var(--red-glow);}
-
-/* ── CHECKOUT MODAL ── */
-.mbg{position:fixed;inset:0;background:rgba(10,4,4,.92);z-index:3000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(10px);}
-.mbg.on{opacity:1;pointer-events:all;}
-.mbox{background:var(--surface);border:1px solid var(--border);padding:2.5rem;max-width:520px;width:94%;transform:translateY(20px);transition:transform .3s;max-height:88vh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,.7);}
-.mbg.on .mbox{transform:translateY(0);}
-.m-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:.3rem;}
-.m-sub{font-size:.74rem;color:var(--muted);margin-bottom:1.5rem;}
-.mtabs{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1.2rem;}
-.mtab{padding:.72rem;background:transparent;border:1px solid var(--border);font-family:'Outfit',sans-serif;font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:all .3s;}
-.mtab.on{background:var(--red);color:#fff;border-color:var(--red);}
-.osum{background:var(--card);padding:1rem;margin-bottom:1.2rem;border:1px solid var(--border);}
-.or{display:flex;justify-content:space-between;font-size:.8rem;padding:.35rem 0;border-bottom:1px solid var(--border);}
-.or:last-child{border:none;font-weight:700;color:var(--gold);padding-top:.6rem;font-family:'Space Mono',monospace;}
-.fg{margin-bottom:.9rem;}
-.fg label{font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;font-weight:700;}
-.fg input,.fg textarea,.fg select{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--border);color:var(--text);padding:.72rem .9rem;font-family:'Outfit',sans-serif;font-size:.83rem;outline:none;transition:border-color .2s;}
-.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(212,43,43,.1);}
-.fg select option{background:var(--surface);}
-.fg textarea{min-height:68px;resize:vertical;}
-.fr2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
-.loc-btn{width:100%;padding:.7rem;background:transparent;border:1px solid rgba(34,197,94,.3);color:var(--green);font-family:'Outfit',sans-serif;font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem;margin-bottom:.9rem;transition:all .3s;}
-.loc-btn.got{border-color:var(--green);color:var(--green);}
-.mbtns{display:flex;gap:.8rem;margin-top:1.2rem;}
-.mcancel{flex:1;padding:.88rem;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:'Outfit',sans-serif;font-size:.63rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:all .2s;}
-.mcancel:hover{border-color:var(--text);color:var(--text);}
-.loy-row{background:rgba(232,184,75,.06);border:1px solid rgba(232,184,75,.18);padding:.85rem 1rem;margin-bottom:1.1rem;display:none;align-items:center;justify-content:space-between;gap:1rem;}
-.loy-row.on{display:flex;}
-
-/* ── SURVEY MODAL ── */
-.survey-prog{height:3px;background:rgba(255,255,255,.06);margin-bottom:1.5rem;}
-.survey-bar{height:100%;background:linear-gradient(90deg,var(--red),var(--gold));transition:width .4s;}
-.survey-q{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.8rem;line-height:1.35;}
-.survey-opts{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;}
-.sopt{padding:.65rem .9rem;background:rgba(255,255,255,.03);border:1px solid var(--border);color:var(--muted);font-size:.78rem;cursor:pointer;transition:all .25s;text-align:left;font-family:'Outfit',sans-serif;}
-.sopt.on,.sopt:hover{border-color:var(--red);color:var(--text);background:rgba(212,43,43,.08);}
-.star-row{display:flex;gap:.5rem;margin-top:.4rem;}
-.star-btn{background:transparent;border:none;font-size:1.9rem;cursor:pointer;transition:transform .2s;color:rgba(255,245,240,.15);}
-.star-btn.on,.star-btn:hover{color:var(--gold);}
-.star-btn:hover{transform:scale(1.18);}
-.survey-done{text-align:center;padding:2rem 0;}
-.survey-done .ico{font-size:3.5rem;margin-bottom:1rem;}
-
-/* ── WHATSAPP FLOAT ── */
-.wa-float{position:fixed;bottom:2rem;left:2rem;z-index:900;background:#25D366;color:#fff;border:none;width:56px;height:56px;border-radius:50%;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 25px rgba(37,211,102,.4);transition:all .3s;text-decoration:none;animation:waPulse 3s ease-in-out infinite;}
-.wa-float:hover{background:#128C7E;transform:scale(1.1);animation:none;}
-@keyframes waPulse{0%,100%{box-shadow:0 6px 25px rgba(37,211,102,.4);}50%{box-shadow:0 6px 25px rgba(37,211,102,.4),0 0 0 12px rgba(37,211,102,.1),0 0 0 22px rgba(37,211,102,.04);}}
-.wa-float-tooltip{position:absolute;left:calc(100% + .6rem);background:rgba(10,4,4,.9);color:#fff;font-size:.68rem;white-space:nowrap;padding:.35rem .7rem;pointer-events:none;opacity:0;transition:opacity .2s;font-family:'Outfit',sans-serif;font-weight:600;border:1px solid rgba(37,211,102,.3);}
-.wa-float:hover .wa-float-tooltip{opacity:1;}
-
-/* ── FLOAT CART ── */
-.float-cart{position:fixed;bottom:2rem;right:2rem;z-index:900;background:var(--red);color:#fff;border:none;width:58px;height:58px;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 28px var(--red-glow);transition:all .3s;opacity:0;transform:scale(0);clip-path:polygon(0 0,80% 0,100% 20%,100% 100%,20% 100%,0 80%);}
-.float-cart.on{opacity:1;transform:scale(1);animation:fcPulse 3s ease-in-out infinite;}
-@keyframes fcPulse{0%,100%{box-shadow:0 6px 28px var(--red-glow);}50%{box-shadow:0 6px 28px var(--red-glow),0 0 0 12px rgba(212,43,43,.08),0 0 0 22px rgba(212,43,43,.04);}}
-.float-cart:hover{background:var(--red-deep);animation:none;}
-.fbadge{position:absolute;top:-4px;right:-4px;background:var(--gold);color:var(--dark);border-radius:50%;width:20px;height:20px;font-size:.62rem;font-weight:800;display:flex;align-items:center;justify-content:center;}
-.btt{position:fixed;bottom:5.8rem;right:2rem;width:44px;height:44px;background:linear-gradient(135deg,var(--red),var(--red-deep));border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.85rem;opacity:0;transform:translateY(14px);transition:all .4s;z-index:800;clip-path:polygon(50% 0%,100% 100%,0% 100%);box-shadow:0 4px 20px var(--red-glow);}
-.btt.on{opacity:1;transform:translateY(0);}
-.btt:hover{transform:translateY(-3px) scale(1.1);}
-
-/* ── ITEM DETAIL SHEET ── */
-.item-sheet-bg{position:fixed;inset:0;background:rgba(10,4,4,.88);z-index:3500;opacity:0;pointer-events:none;transition:opacity .35s;backdrop-filter:blur(8px);}
-.item-sheet-bg.on{opacity:1;pointer-events:all;}
-.item-sheet{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);border-radius:18px 18px 0 0;z-index:3501;transform:translateY(100%);transition:transform .45s cubic-bezier(.25,.46,.45,.94);max-height:88vh;overflow-y:auto;max-width:680px;margin:0 auto;}
-.item-sheet.on{transform:translateY(0);}
-.item-sheet-drag{width:40px;height:4px;background:rgba(255,245,240,.15);border-radius:2px;margin:1rem auto .5rem;}
-.item-sheet-img{width:100%;height:280px;object-fit:cover;background:var(--surface-alt);display:flex;align-items:center;justify-content:center;font-size:5rem;position:relative;}
-.item-sheet-img img{width:100%;height:100%;object-fit:cover;}
-.item-sheet-body{padding:1.5rem;}
-.item-sheet-cat{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:.4rem;}
-.item-sheet-name{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;margin-bottom:.7rem;line-height:1.1;}
-.item-sheet-desc{font-size:.88rem;color:var(--muted);line-height:1.8;margin-bottom:1.5rem;}
-.item-sheet-footer{display:flex;align-items:center;justify-content:space-between;padding-top:1.2rem;border-top:1px solid var(--border);}
-.item-sheet-price{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--gold);}
-.item-sheet-add{background:var(--red);color:#fff;border:none;padding:1rem 2rem;font-family:'Outfit',sans-serif;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;cursor:pointer;clip-path:polygon(0 0,92% 0,100% 25%,100% 100%,8% 100%,0 75%);transition:all .3s;display:flex;align-items:center;gap:.5rem;}
-.item-sheet-add:hover{background:var(--red-deep);box-shadow:0 0 25px var(--red-glow);}
-.item-sheet-badges{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;}
-.item-sheet-nutr{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-top:1rem;margin-bottom:1.5rem;}
-.isn{background:var(--card);border:1px solid var(--border);padding:.7rem;text-align:center;}
-.isn-v{font-family:'Space Mono',monospace;font-size:1rem;font-weight:700;color:var(--text);}
-.isn-l{font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:.15rem;}
-
-/* ── TOAST ── */
-.toast{position:fixed;bottom:2.5rem;left:50%;transform:translateX(-50%) translateY(16px);background:var(--surface);border:1px solid var(--red);border-left:3px solid var(--gold);color:var(--text);padding:.9rem 1.8rem;font-size:.8rem;z-index:9000;opacity:0;transition:all .38s;pointer-events:none;white-space:nowrap;}
-.toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
-
-/* ── SCROLL DOTS ── */
-.sdots{position:fixed;right:1.2rem;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:.6rem;z-index:100;}
-.sdot-item{width:7px;height:7px;border-radius:50%;background:rgba(255,245,240,.15);border:1px solid rgba(212,43,43,.2);cursor:pointer;transition:all .35s;}
-.sdot-item:hover{background:rgba(212,43,43,.4);transform:scale(1.3);}
-.sdot-item.on{background:var(--red);box-shadow:0 0 12px var(--red-glow);height:22px;border-radius:4px;border-color:var(--red);}
-
-/* ── SKELETON LOADER ── */
-.skel-card{background:var(--card);border:1px solid var(--border);overflow:hidden;}
-.skel-img{height:200px;background:linear-gradient(90deg,var(--surface) 25%,rgba(212,43,43,.07) 50%,var(--surface) 75%);background-size:200%;animation:skelShimmer 1.6s infinite;}
-.skel-body{padding:1.3rem;display:flex;flex-direction:column;gap:.6rem;}
-.skel-line{height:10px;border-radius:2px;background:linear-gradient(90deg,var(--surface) 25%,rgba(212,43,43,.07) 50%,var(--surface) 75%);background-size:200%;animation:skelShimmer 1.6s infinite;}
-.skel-line.w80{width:80%;}
-.skel-line.w60{width:60%;}
-.skel-line.w40{width:40%;}
-@keyframes skelShimmer{0%{background-position:-200%;}100%{background-position:200%;}}
-
-/* ── PARALLAX SECTIONS ── */
-.parallax-sec{position:relative;height:480px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.parallax-bg-div{position:absolute;inset:-25%;background-size:cover;background-position:center;will-change:transform;transition:background .5s;}
-.parallax-overlay-div{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,4,4,.88) 0%,rgba(10,4,4,.6) 100%);z-index:1;}
-.parallax-text{position:relative;z-index:2;text-align:center;max-width:680px;padding:0 2rem;}
-@media(max-width:768px){.parallax-sec{height:360px;}.parallax-text h2{font-size:clamp(1.8rem,7vw,3rem);}}
-
-/* ── REVEAL ── */
-.reveal{opacity:0;transform:translateY(26px);transition:opacity .75s,transform .75s;}
-.reveal.on{opacity:1;transform:translateY(0);}
-.reveal-l{opacity:0;transform:translateX(-28px);transition:opacity .75s,transform .75s;}
-.reveal-l.on{opacity:1;transform:translateX(0);}
-.reveal-r{opacity:0;transform:translateX(28px);transition:opacity .75s,transform .75s;}
-.reveal-r.on{opacity:1;transform:translateX(0);}
-
-/* ── RESPONSIVE ── */
-@media(max-width:1100px){nav,nav.stuck{padding:1rem 2rem;}section{padding:5rem 2rem;}.about-wrap{grid-template-columns:1fr;gap:3rem;}.footer-top{grid-template-columns:1fr 1fr;gap:2.5rem;}.testi-grid{grid-template-columns:1fr 1fr;}.exp-grid{grid-template-columns:1fr 1fr;}}
-@media(max-width:768px){
-  .nav-links{display:none;}nav{padding:.9rem 1.2rem;}nav.stuck{padding:.75rem 1.2rem;}
-  .hero{height:100svh;min-height:580px;}.slide{padding:0 1.5rem;align-items:flex-end;padding-bottom:5.5rem;}
-  .slide-title{font-size:clamp(2.5rem,10vw,4rem);}
-  .slide-actions{flex-direction:column;align-items:flex-start;gap:.6rem;}
-  .slider-dots{left:1.5rem;bottom:1.8rem;}.slider-arrows{right:1.5rem;bottom:1.8rem;}
-  .hero-watermark{display:none;}
-  .stats-strip{grid-template-columns:repeat(2,1fr);}
-  .stat:nth-child(2){border-right:none;}.stat:nth-child(3),.stat:nth-child(4){border-top:1px solid var(--border);}
-  .menu-grid{grid-template-columns:1fr 1fr;gap:.8rem;}.mcard-img{height:150px;font-size:2.8rem;}
-  .spec-grid{grid-template-columns:1fr;}
-  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;}.gal-item:nth-child(1),.gal-item:nth-child(4){grid-column:span 1;}.gal-item{height:170px;}
-  .exp-grid{grid-template-columns:1fr;}
-  .testi-grid{grid-template-columns:1fr;}
-  .footer-top{grid-template-columns:1fr;}
-  footer{padding:3rem 1.2rem 2rem;}
-  .cart-drawer{width:100%;}
-  .fr2{grid-template-columns:1fr;}
-  .mbtns{flex-direction:column;}
-  .survey-opts{grid-template-columns:1fr;}
-  .sdots{display:none;}
-  .wa-btn,.fp-btn{display:flex;width:100%;justify-content:center;margin-left:0;margin-bottom:.6rem;}
+@media(max-width:480px){
+  .menu-grid{grid-template-columns:1fr 1fr;gap:12px;}
+  .mc-img{height:130px;}
+  .deals-grid{grid-template-columns:1fr;}
+  .team-grid{grid-template-columns:repeat(2,1fr);}
 }
-@media(max-width:400px){.menu-grid{grid-template-columns:1fr;}.mcard-img{height:190px;}}
 </style>
 </head>
 <body>
 
-<div class="scroll-bar" id="scrollBar"></div>
-<div class="cur-dot" id="curDot"></div>
-<div class="cur-ring" id="curRing"></div>
-<button class="btt" id="bttBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">▲</button>
-<div class="sdots" id="sdots"></div>
+<div id="ann-bar"></div>
 
-<div class="theme-banner" id="themeBanner"></div>
-<div class="ticker" id="ticker"><div class="ticker-inner"><div class="ticker-lbl">🔥 News</div><div class="ticker-txt" id="tickerTxt"></div></div></div>
+<div id="pwa-banner" class="pwa-banner">
+  <span>🎉 Install our app & get <strong>20% OFF</strong> your first order!</span>
+  <button class="pwa-install-btn pwa-btn">Install Free App</button>
+  <button id="pwa-close">✕</button>
+</div>
 
-<!-- NAV -->
-<nav id="nav">
-  <a href="#" class="nav-logo">
-    <div style="display:flex;align-items:center;gap:.5rem;">
-      <svg width="36" height="36" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100" height="100" rx="12" fill="#E8A000"/>
-        <ellipse cx="50" cy="35" rx="30" ry="16" fill="#fff" opacity=".9"/>
-        <rect x="20" y="44" width="60" height="10" rx="3" fill="#D42B2B"/>
-        <rect x="20" y="56" width="60" height="8" rx="3" fill="#8B5E0A"/>
-        <rect x="20" y="66" width="60" height="8" rx="3" fill="#fff" opacity=".9"/>
-        <ellipse cx="50" cy="74" rx="30" ry="12" fill="#fff" opacity=".85"/>
-      </svg>
-      <div><div style="font-family:'Outfit',sans-serif;font-size:1rem;font-weight:800;letter-spacing:.06em;color:var(--primary,#E8A000);line-height:1;">TEMPURA</div><div style="font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted,#888);font-weight:700;">POTATO</div></div></div>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#about">Our Story</a></li>
-    <li><a href="#specials">Specials</a></li>
-    <li><a href="#menu">Menu</a></li>
-    <li><a href="#gallery">Gallery</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <div class="nav-right">
-    <button class="order-btn" onclick="openCart()">🛒 Order Now<span class="cart-cnt" id="cartCnt">0</span></button>
+<nav class="navbar" id="navbar">
+  <div class="nav-logo" onclick="location.href='index.html'">
+    <div class="nav-logo-icon tp-logo">🥔</div>
+    <div class="nav-brand-text">
+      <span class="nav-brand-name tp-brand">TEMPURA</span>
+      <span class="nav-brand-sub tp-tagline">POTATO</span>
+    </div>
   </div>
+  <div class="nav-links">
+    <a href="#menu">Menu</a><a href="#deals">Deals</a>
+    <a href="#reviews">Reviews</a><a href="#about">About</a>
+    <a href="checkout.html" class="nav-cta">Order Now</a>
+  </div>
+  <div class="nav-ham" id="nav-ham"><span></span><span></span><span></span></div>
 </nav>
 
-<!-- HERO -->
-<div class="hero" id="heroEl">
-  <div class="hero-watermark">TEMPURA POTATO</div>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#menu" onclick="closeMenu()">Menu</a>
+  <a href="#deals" onclick="closeMenu()">Deals</a>
+  <a href="#reviews" onclick="closeMenu()">Reviews</a>
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="checkout.html" onclick="closeMenu()" style="color:var(--yellow)">Order Now</a>
 </div>
 
-<!-- MARQUEE -->
-<div class="mq"><div class="mq-track">
-  <div class="mq-item"><span class="em">🍔</span><span>Grill Burger — Rs. 320</span></div>
-  <div class="mq-item"><span class="em">🌯</span><span>Chicken BBQ Wrap — Rs. 300</span></div>
-  <div class="mq-item"><span class="em">🫔</span><span>Dhamaka Roll — Rs. 490</span></div>
-  <div class="mq-item"><span class="em">🥙</span><span>Special Grilled Shawarma — Rs. 380</span></div>
-  <div class="mq-item"><span class="em">🎯</span><span>Zinger Duo Deal — Rs. 600</span></div>
-  <div class="mq-item"><span class="em">👑</span><span>Mega Feast Deal — Rs. 1500</span></div>
-  <div class="mq-item"><span class="em">🍟</span><span>Loaded Fries</span></div>
-  <div class="mq-item"><span class="em">🌶</span><span>Mala Boti Wrap — Rs. 450</span></div>
-  <div class="mq-item"><span class="em">🍔</span><span>Grill Burger — Rs. 320</span></div>
-  <div class="mq-item"><span class="em">🌯</span><span>Chicken BBQ Wrap — Rs. 300</span></div>
-  <div class="mq-item"><span class="em">🫔</span><span>Dhamaka Roll — Rs. 490</span></div>
-  <div class="mq-item"><span class="em">🥙</span><span>Special Grilled Shawarma — Rs. 380</span></div>
-  <div class="mq-item"><span class="em">🎯</span><span>Zinger Duo Deal — Rs. 600</span></div>
-  <div class="mq-item"><span class="em">👑</span><span>Mega Feast Deal — Rs. 1500</span></div>
-  <div class="mq-item"><span class="em">🍟</span><span>Loaded Fries</span></div>
-  <div class="mq-item"><span class="em">🌶</span><span>Mala Boti Wrap — Rs. 450</span></div>
+<section class="hero" id="hero">
+  <div class="hero-slides" id="hero-slides">
+    <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=1600&q=85')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=1600&q=85')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=1600&q=85')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1585109649139-366815a0d713?w=1600&q=85')"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-grid"></div>
+  <div id="hero-particles"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🔥 Lahore's Fastest Growing Restaurant</div>
+    <h1 class="hero-title">
+      <span class="ht1" id="hero-l1">TASTE THE</span>
+      <span class="ht2" id="hero-l2">OBSESSION</span>
+    </h1>
+    <p class="hero-sub" id="hero-sub">Premium burgers. Legendary wraps. Deals that hit different.<br/>Main Bazar Nishat Colony, Milad Chock — Lahore</p>
+    <div class="hero-btns">
+      <a href="#menu" class="btn-p">Explore Menu</a>
+      <a href="checkout.html" class="btn-s">Order Now →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hs"><span class="hs-num" data-count="50" data-suf="+">50+</span><span class="hs-lbl">Menu Items</span></div>
+      <div class="hs-div"></div>
+      <div class="hs"><span class="hs-num">4.9★</span><span class="hs-lbl">Rating</span></div>
+      <div class="hs-div"></div>
+      <div class="hs"><span class="hs-num" data-count="30" data-suf="min">30min</span><span class="hs-lbl">Delivery</span></div>
+      <div class="hs-div"></div>
+      <div class="hs"><span class="hs-num" data-count="1000" data-suf="+">1000+</span><span class="hs-lbl">Customers</span></div>
+    </div>
+  </div>
+  <div class="hero-slide-dots" id="hero-dots"></div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<div class="marquee">
+  <div class="marquee-track">
+    <span>ZINGER BURGER</span><span class="mq-dot">✦</span><span>MALA BOTI WRAP</span><span class="mq-dot">✦</span><span>CHICKEN SHAWARMA</span><span class="mq-dot">✦</span><span>GRILL BURGER</span><span class="mq-dot">✦</span><span>TEMPURA POTATO</span><span class="mq-dot">✦</span><span>SEEKH KABAB ROLL</span><span class="mq-dot">✦</span><span>ZINGER TWISTER</span><span class="mq-dot">✦</span><span>DHAMAKA ROLL</span><span class="mq-dot">✦</span><span>LOADED FRIES</span><span class="mq-dot">✦</span>
+    <span>ZINGER BURGER</span><span class="mq-dot">✦</span><span>MALA BOTI WRAP</span><span class="mq-dot">✦</span><span>CHICKEN SHAWARMA</span><span class="mq-dot">✦</span><span>GRILL BURGER</span><span class="mq-dot">✦</span><span>TEMPURA POTATO</span><span class="mq-dot">✦</span><span>SEEKH KABAB ROLL</span><span class="mq-dot">✦</span><span>ZINGER TWISTER</span><span class="mq-dot">✦</span><span>DHAMAKA ROLL</span><span class="mq-dot">✦</span><span>LOADED FRIES</span><span class="mq-dot">✦</span>
+  </div>
+</div>
+
+<section class="food-section" id="food-scroll">
+  <div class="sh reveal"><div class="sh-tag">WHAT WE MAKE</div><h2 class="sh-title">Crafted with Obsession</h2><p class="sh-sub">Every item fresh. Every bite unforgettable.</p></div>
+  <div class="food-row">
+    <div class="fr-img reveal-l"><img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=800&q=85" alt="Zinger Burger" loading="lazy"/><div class="fr-img-glow"></div></div>
+    <div class="fr-text reveal-r">
+      <div class="fr-tag">OUR SIGNATURE</div>
+      <div class="fr-title">The Zinger<br/><em>Burger</em></div>
+      <div class="fr-desc">Lahore's most talked-about zinger. Crispy-fried chicken patty, crunchy fresh lettuce, our secret zinger sauce.</div>
+      <div class="fr-price">From Rs. 350</div>
+      <button class="btn-p" onclick="TP.addToCart({id:'b2',name:'Zinger Burger',price:350,img:'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=600&q=80',cat:'burgers'},1)">Add to Cart</button>
+    </div>
+  </div>
+  <div class="food-row rev">
+    <div class="fr-img reveal-r"><img src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=800&q=85" alt="Shawarma" loading="lazy"/><div class="fr-img-glow"></div></div>
+    <div class="fr-text reveal-l">
+      <div class="fr-tag">STREET LEGEND</div>
+      <div class="fr-title">Grilled<br/><em>Shawarma</em></div>
+      <div class="fr-desc">Slow-grilled marinated chicken, wrapped tight with garlic sauce, pickles and fresh veggies.</div>
+      <div class="fr-price">From Rs. 280</div>
+      <button class="btn-p" onclick="TP.addToCart({id:'w8',name:'Chicken Shawarma',price:280,img:'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=600&q=80',cat:'wraps'},1)">Add to Cart</button>
+    </div>
+  </div>
+  <div class="food-row">
+    <div class="fr-img reveal-l"><img src="https://images.unsplash.com/photo-1585109649139-366815a0d713?w=800&q=85" alt="Loaded Fries" loading="lazy"/><div class="fr-img-glow"></div></div>
+    <div class="fr-text reveal-r">
+      <div class="fr-tag">CRISPY SIDES</div>
+      <div class="fr-title">Loaded<br/><em>Fries</em></div>
+      <div class="fr-desc">Golden crispy fries drowning in cheese sauce and signature seasonings.</div>
+      <div class="fr-price">Rs. 180</div>
+      <button class="btn-p" onclick="TP.addToCart({id:'s2',name:'Loaded Fries',price:180,img:'https://images.unsplash.com/photo-1585109649139-366815a0d713?w=600&q=80',cat:'sides'},1)">Add to Cart</button>
+    </div>
+  </div>
+  <div class="food-row rev">
+    <div class="fr-img reveal-r"><img src="https://images.unsplash.com/photo-1561043433-aaf687c4cf04?w=800&q=85" alt="Mala Boti Wrap" loading="lazy"/><div class="fr-img-glow"></div></div>
+    <div class="fr-text reveal-l">
+      <div class="fr-tag">SPICE LEVEL 🔥🔥</div>
+      <div class="fr-title">Mala Boti<br/><em>Wrap</em></div>
+      <div class="fr-desc">Tender boti in bold mala spice blend, grilled hot, wrapped with fries and fresh veggies.</div>
+      <div class="fr-price">Rs. 450</div>
+      <button class="btn-p" onclick="TP.addToCart({id:'w3',name:'Mala Boti Wrap',price:450,img:'https://images.unsplash.com/photo-1561043433-aaf687c4cf04?w=600&q=80',cat:'wraps'},1)">Add to Cart</button>
+    </div>
+  </div>
+</section>
+
+<section class="menu-section" id="menu">
+  <div class="sh reveal"><div class="sh-tag">THE MENU</div><h2 class="sh-title">What We Do Best</h2><p class="sh-sub">Every item made fresh. Every order with love.</p></div>
+  <div class="menu-tabs">
+    <button class="menu-tab active" data-cat="all">All Items</button>
+    <button class="menu-tab" data-cat="burgers">Burgers</button>
+    <button class="menu-tab" data-cat="wraps">Wraps & Rolls</button>
+    <button class="menu-tab" data-cat="sides">Sides</button>
+  </div>
+  <div class="menu-grid" id="menu-grid"></div>
+</section>
+
+<section class="deals-section" id="deals">
+  <div class="sh reveal"><div class="sh-tag">🔥 HOT DEALS</div><h2 class="sh-title">Value That Slaps</h2><p class="sh-sub">More food. Less spend. All flavour.</p></div>
+  <div class="deals-grid" id="deals-grid"></div>
+</section>
+
+<div class="stats-bar reveal">
+  <div class="stats-bar-inner">
+    <div class="sbi"><div class="sbi-num" data-count="1000" data-suf="+">1000+</div><div class="sbi-lbl">Happy Customers</div></div>
+    <div class="sbi"><div class="sbi-num" data-count="50" data-suf="+">50+</div><div class="sbi-lbl">Menu Items</div></div>
+    <div class="sbi"><div class="sbi-num" data-count="30" data-suf="min">30min</div><div class="sbi-lbl">Avg Delivery</div></div>
+    <div class="sbi"><div class="sbi-num">4.9★</div><div class="sbi-lbl">Customer Rating</div></div>
+  </div>
+</div>
+
+<section class="reviews-section" id="reviews">
+  <div class="sh reveal"><div class="sh-tag">WHAT PEOPLE SAY</div><h2 class="sh-title">Lahore is Talking</h2><p class="sh-sub">Real customers. Real opinions. Real obsession.</p></div>
+  <div class="reviews-track-wrap"><div class="reviews-track" id="reviews-track"></div></div>
+  <div class="review-form reveal">
+    <p style="font-size:16px;color:var(--gray);margin-bottom:16px">Loved your meal? Leave a review!</p>
+    <div id="review-auth-area"></div>
+    <div id="review-form-area" style="display:none">
+      <textarea id="review-text" style="width:100%;background:var(--black3);border:1px solid rgba(255,255,255,.1);color:var(--white);padding:14px;border-radius:12px;font-family:Barlow,sans-serif;font-size:15px;resize:none;height:100px;outline:none;margin-bottom:12px" placeholder="Tell us about your experience..."></textarea>
+      <div class="star-select" id="star-select"><span onclick="setStar(1)">★</span><span onclick="setStar(2)">★</span><span onclick="setStar(3)">★</span><span onclick="setStar(4)">★</span><span onclick="setStar(5)">★</span></div>
+      <button class="btn-p" style="margin-top:14px" onclick="submitReview()">Submit Review</button>
+    </div>
+  </div>
+</section>
+
+<section class="par-banner">
+  <div class="par-bg" id="par-bg"></div>
+  <div class="par-content reveal-s">
+    <span style="color:var(--yellow);font-size:11px;letter-spacing:5px;text-transform:uppercase;display:block;margin-bottom:18px">CRAFTED IN LAHORE</span>
+    <h2 style="font-family:var(--font);font-size:clamp(52px,9vw,110px);color:var(--white);line-height:.92;letter-spacing:2px;margin-bottom:22px">Food That Hits<br/><span style="color:var(--yellow)">Different.</span></h2>
+    <p style="font-size:18px;color:rgba(255,255,255,.6);line-height:1.75;margin-bottom:36px;max-width:500px;margin-left:auto;margin-right:auto">We started with one mission: make food so good people can't shut up about it.</p>
+    <a href="checkout.html" class="btn-p">Order Now</a>
+  </div>
+</section>
+
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-text reveal-l">
+      <div class="sh-tag">OUR STORY</div>
+      <h2>Born in Lahore.<br/>Built on <em>Flavour.</em></h2>
+      <p>Tempura Potato started with a simple obsession — make food so good that people talk about it for days. No shortcuts. No compromises. Just premium ingredients, bold flavours, and prices that respect your pocket.</p>
+      <p>Located at Main Bazar Nishat Colony, Milad Chock — we've become the go-to spot faster than anyone expected.</p>
+      <div class="about-feats">
+        <div class="af">🔥 Made Fresh Daily</div><div class="af">⚡ 30 Min Delivery</div>
+        <div class="af">💰 Unbeatable Prices</div><div class="af">📍 Milad Chock, Lahore</div>
+        <div class="af">🚫 No Reservation Needed</div><div class="af">📦 Pickup & Delivery</div>
+      </div>
+    </div>
+    <div class="reveal-r" style="display:flex;align-items:center;justify-content:center;">
+      <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=85" alt="About" style="width:100%;max-width:440px;border-radius:20px;box-shadow:0 30px 70px rgba(0,0,0,.6);"/>
+    </div>
+  </div>
+  <div class="sh reveal" style="margin-top:80px"><div class="sh-tag">THE TEAM</div><h2 class="sh-title">The People Behind the Flavour</h2></div>
+  <div class="team-grid">
+    <div class="team-card reveal" style="transition-delay:.05s"><div class="team-img"><img src="https://images.unsplash.com/photo-1607631568010-a87245c0daf8?w=400&q=80" alt="Owner"/><div class="team-img-overlay"></div></div><div class="team-body"><div class="team-name">Shayan Ali</div><div class="team-role">Founder & Owner</div><div class="team-desc">Vision, passion and the person who started it all.</div></div></div>
+    <div class="team-card reveal" style="transition-delay:.1s"><div class="team-img"><img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=400&q=80" alt="Chef"/><div class="team-img-overlay"></div></div><div class="team-body"><div class="team-name">Chef Asad</div><div class="team-role">Head Chef</div><div class="team-desc">The genius behind every recipe and secret sauce.</div></div></div>
+    <div class="team-card reveal" style="transition-delay:.15s"><div class="team-img"><img src="https://images.unsplash.com/photo-1612444530582-fc66183b16f7?w=400&q=80" alt="Chef"/><div class="team-img-overlay"></div></div><div class="team-body"><div class="team-name">Chef Bilal</div><div class="team-role">Master Chef — Grill</div><div class="team-desc">Master of the grill and king of shawarma.</div></div></div>
+    <div class="team-card reveal" style="transition-delay:.2s"><div class="team-img"><img src="https://images.unsplash.com/photo-1583394293214-0b3f963f0d3b?w=400&q=80" alt="Chef"/><div class="team-img-overlay"></div></div><div class="team-body"><div class="team-name">Chef Hamza</div><div class="team-role">Junior Chef — Rolls</div><div class="team-desc">The roll specialist keeping every wrap perfect.</div></div></div>
+    <div class="team-card reveal" style="transition-delay:.25s"><div class="team-img"><img src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=400&q=80" alt="Manager"/><div class="team-img-overlay"></div></div><div class="team-body"><div class="team-name">Usman Tariq</div><div class="team-role">Delivery Manager</div><div class="team-desc">Making sure your food arrives hot and on time.</div></div></div>
+  </div>
+</section>
+
+<section class="story-section">
+  <div class="story-inner">
+    <div class="sh-tag" style="margin-bottom:24px">THE TEMPURA POTATO STORY</div>
+    <div class="story-typing" id="story-typing"></div>
+  </div>
+</section>
+
+<div style="padding:0 48px"><div class="dev-ad reveal-s">
+  <div style="font-size:11px;color:var(--yellow);letter-spacing:4px;text-transform:uppercase;margin-bottom:12px">🚀 Need a website like this?</div>
+  <div style="font-family:var(--font);font-size:clamp(28px,4vw,44px);color:var(--white);margin-bottom:14px">Premium Web Solutions for Your Business</div>
+  <div style="font-size:15px;color:rgba(255,255,255,.65);line-height:1.75;margin-bottom:24px">High-converting restaurant websites with full backend, real-time orders, and stunning design.</div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap">
+    <div><div style="font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Developer</div><div style="font-size:18px;font-weight:700;color:var(--white)">Syed Ali</div></div>
+    <div style="font-family:var(--font);font-size:26px;color:var(--yellow)">📞 0309-6447-7921</div>
+    <a href="tel:03096447921" class="btn-p" style="font-size:14px;padding:12px 24px">Get in Touch</a>
+  </div>
 </div></div>
-  <div class="mq-item"><span class="em">🧆</span><span>Grill Burger</span><div class="mq-sep"></div></div>
-  <div class="mq-item"><span class="em">🌮</span><span>Mexici Tempura Potato</span><div class="mq-sep"></div></div>
-  <div class="mq-item"><span class="em">👑</span><span>Zinger Duo Deal</span><div class="mq-sep"></div></div>
-  <div class="mq-item"><span class="em">🌶</span><span>Dhamaka Roll</span><div class="mq-sep"></div></div>
-  <div class="mq-item"><span class="em">🥩</span><span>Mala Boti Wrap</span><div class="mq-sep"></div></div>
-  <div class="mq-item"><span class="em">🫔</span><span>Seekh Kabab Roll</span><div class="mq-sep"></div></div>
-  <div class="mq-item"><span class="em">🍟</span><span>Loaded Fries</span><div class="mq-sep"></div></div>
-  <div class="mq-item"><span class="em">🔥</span><span>Fast. Fresh. Fired Up.</span><div class="mq-sep"></div></div>
-  <div class="mq-item"><span class="em">🥙</span><span>Afghani Tempura Potato</span><div class="mq-sep"></div></div>
-  <div class="mq-item"><span class="em">🧆</span><span>Grill Burger</span><div class="mq-sep"></div></div>
-  <div class="mq-item"><span class="em">🌮</span><span>Mexici Tempura Potato</span><div class="mq-sep"></div></div>
-  <div class="mq-item"><span class="em">👑</span><span>Zinger Duo Deal</span><div class="mq-sep"></div></div>
-  <div class="mq-item"><span class="em">🌶</span><span>Dhamaka Roll</span><div class="mq-sep"></div></div>
-  <div class="mq-item"><span class="em">🥩</span><span>Mala Boti Wrap</span><div class="mq-sep"></div></div>
-  <div class="mq-item"><span class="em">🫔</span><span>Seekh Kabab Roll</span><div class="mq-sep"></div></div>
-  <div class="mq-item"><span class="em">🍟</span><span>Loaded Fries</span><div class="mq-sep"></div></div>
-  <div class="mq-item"><span class="em">🔥</span><span>Fast. Fresh. Fired Up.</span><div class="mq-sep"></div></div>
-</div></div>
 
-<!-- STATS -->
-<div class="stats-strip">
-  <div class="stat-item"><div class="stat-value">100%</div><div class="stat-label">Halal Certified</div></div>
-  <div class="stat-item"><div class="stat-value">25+</div><div class="stat-label">Menu Items</div></div>
-  <div class="stat-item"><div class="stat-value">4.9★</div><div class="stat-label">Customer Rating</div></div>
-  <div class="stat-item"><div class="stat-value" style="font-size:1rem;">+92-304<br>4888775</div><div class="stat-label">Order by Call</div></div>
-</div>
-  <div class="stat reveal"><div class="stat-v">100%</div><div class="stat-l">Halal Certified</div></div>
-  <div class="stat reveal"><div class="stat-v">⭐4.9</div><div class="stat-l">Customer Rating</div></div>
-  <div class="stat reveal"><div class="stat-v">0309</div><div class="stat-l">009 0123</div></div>
+<div class="contact-strip">
+  <div class="cs-side"><div class="cs-icon">📞</div><div><div class="cs-lbl">Call to Order</div><div class="cs-val tp-phone">+92-3044888775</div></div></div>
+  <a href="checkout.html" class="btn-p">Order Online Now</a>
+  <div class="cs-side"><div class="cs-icon">📍</div><div><div class="cs-lbl">Find Us</div><div class="cs-val tp-address">Milad Chock, Lahore</div></div></div>
 </div>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="about-wrap">
-    <div class="about-visual reveal-l">
-      <div class="about-big" id="aboutBig">
-          <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=85"
-               alt="Tempura Potato Kitchen"
-               loading="eager"
-               onerror="this.src='https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=800&q=85'"
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;transition:transform .5s;">
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,4,4,.6),transparent);z-index:2;"></div>
-        </div>
-      <div class="about-small">
-        <div class="about-small-v" id="aboutYr">2022</div>
-        <div class="about-small-l">Est.</div>
-      </div>
-    </div>
-    <div class="about-text reveal-r">
-      <div class="eyebrow">Our Story</div>
-      <h2 class="sec-title">Where <em>Arabic</em><br>Meets <span class="gold">Desi.</span></h2>
-      <p class="about-body" id="aboutDesc"></p>
-      <div class="about-tags">
-        <span class="atag">100% Halal</span>
-        <span class="atag">Fresh Daily</span>
-        <span class="atag">Dine In</span>
-        <span class="atag">Takeaway</span>
-        <span class="atag">FoodPanda</span>
-        <span class="atag">WhatsApp Order</span>
-      </div>
-      <a href="#menu" class="btn-red">Explore Menu 🔥</a>
-      <div class="about-stats">
-        <div><div class="ast-v">5+</div><div class="ast-l">Tempura Potato Variants</div></div>
-        <div><div class="ast-v">2</div><div class="ast-l">Loaded Trays</div></div>
-        <div><div class="ast-v">🔥</div><div class="ast-l">Always Fresh</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SPECIALS -->
-<section id="specials" class="specials-sec">
-  <div style="max-width:1260px;margin:0 auto;">
-    <div class="eyebrow reveal">Signature Creations</div>
-    <h2 class="sec-title reveal">Our <em>Signature</em> Deals</h2>
-    <p class="sec-sub reveal">Not just a meal — a full-on experience. Our top picks, built for the hungry.</p>
-    <div class="spec-grid" id="specialsGrid">
-      <!-- Default specials from config, overridden by Firebase -->
-      <div class="spec-card reveal">
-        <div class="spec-ribbon">Premium</div>
-        <div class="chef-badge">👨‍🍳 Best Value</div>
-        <div class="spec-img" style="position:relative;overflow:hidden;">
-          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=85"
-               alt="Zinger Duo Deal" loading="eager"
-               onerror="this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=85'"
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;transition:transform .5s;">
-          <span style="position:relative;z-index:0;font-size:4rem;">👑</span>
-        </div>
-        <div class="spec-timer">
-          <span class="spec-timer-label">⏱ Available until midnight</span>
-          <span class="spec-timer-val" id="spec-timer1">--:--:--</span>
-        </div>
-        <div class="spec-body">
-          <div class="spec-name">Zinger Duo Deal</div>
-          <div class="spec-desc">Shish Tawook, Afghani Chicken & Seekh Kabab Roll loaded over fries with BBQ sauce and jalapeños. A true royal feast in every bite.</div>
-          <div class="spec-foot">
-            <div class="spec-price"><span class="rs">Rs. </span>849</div>
-            <button class="btn-red" onclick="addToCart('l1','Zinger Duo Deal',849,'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400','👑')" style="padding:.6rem 1.2rem;font-size:.65rem;">Order 🔥</button>
-          </div>
-        </div>
-      </div>
-      <div class="spec-card reveal">
-        <div class="spec-ribbon">Spicy 🌶</div>
-        <div class="spec-img" style="position:relative;overflow:hidden;">
-          <img src="https://images.unsplash.com/photo-1518013431117-eb1465fa5752?w=800&q=85"
-               alt="Dhamaka Roll" loading="eager"
-               onerror="this.src='https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=800&q=85'"
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;transition:transform .5s;">
-          <span style="position:relative;z-index:0;font-size:4rem;">🌶</span>
-        </div>
-        <div class="spec-timer">
-          <span class="spec-timer-label">⏱ Available until midnight</span>
-          <span class="spec-timer-val" id="spec-timer2">--:--:--</span>
-        </div>
-        <div class="spec-body">
-          <div class="spec-name">Dhamaka Roll</div>
-          <div class="spec-desc">Mexican-masala fries, glazed chicken, garlic sauce, Arabic ranch and spicy jalapeños. The bold one.</div>
-          <div class="spec-foot">
-            <div class="spec-price"><span class="rs">Rs. </span>749</div>
-            <button class="btn-red" onclick="addToCart('l2','Dhamaka Roll',749,'https://images.unsplash.com/photo-1518013431117-eb1465fa5752?w=400','🌶')" style="padding:.6rem 1.2rem;font-size:.65rem;">Order 🔥</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FLAME DIVIDER -->
-<div class="flame-div" style="position:relative;">
-  <div class="flame-bg-img" style="position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=1600&q=80');background-size:cover;background-position:center;opacity:.15;will-change:transform;"></div>
-  <canvas class="flame-canvas" id="flameCanvas"></canvas>
-  <div class="flame-text reveal">
-    <h2>Every Bite Tells a <em>Story</em></h2>
-    <p>Two cultures. One legendary sandwich.</p>
-    <div style="margin-top:1.5rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-      <a href="#menu" class="btn-red">View Full Menu</a>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ PARALLAX 1 — Between flame & menu ═══ -->
-<div class="parallax-sec" id="parallaxSec1">
-  <div class="parallax-bg-div" id="parallaxBg1" style="background:linear-gradient(135deg,#2A0808,#0A0404);background-image:url('https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=1600&q=80');background-size:cover;background-position:center;"></div>
-  <div class="parallax-overlay-div"></div>
-  <div class="parallax-text reveal">
-    <div class="eyebrow" style="justify-content:center;color:var(--gold);">🔥 Our Promise</div>
-    <h2 style="font-family:Playfair Display,serif;font-size:clamp(2rem,5vw,4.5rem);font-weight:900;color:#fff;line-height:1.05;letter-spacing:-.02em;">
-      Fresh. <em style="color:var(--red);font-style:italic;">Authentic.</em><br>Every Day.
-    </h2>
-    <p style="color:rgba(255,245,240,.65);font-size:.9rem;margin-top:1rem;line-height:1.75;max-width:500px;margin-left:auto;margin-right:auto;">
-      Every Tempura Potato is made fresh when you order. No freezers, no shortcuts. That's our promise.
-    </p>
-    <div style="margin-top:1.8rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-      <a href="#menu" class="btn-red">See Our Menu</a>
-    </div>
-  </div>
-</div>
-
-<!-- MENU -->
-<section id="menu">
-  <div style="max-width:1260px;margin:0 auto;">
-    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
-      <div>
-        <div class="eyebrow">Full Menu</div>
-        <h2 class="sec-title">The <em>Tempura Potato</em> Menu</h2>
-      </div>
-      <div class="menu-tabs reveal" id="menuTabs"></div>
-    </div>
-    <div class="menu-grid" id="menuGrid">
-      <div class="skel-card"><div class="skel-img"></div><div class="skel-body"><div class="skel-line w80"></div><div class="skel-line w60"></div><div class="skel-line w40"></div></div></div>
-<div class="skel-card"><div class="skel-img"></div><div class="skel-body"><div class="skel-line w80"></div><div class="skel-line w60"></div><div class="skel-line w40"></div></div></div>
-<div class="skel-card"><div class="skel-img"></div><div class="skel-body"><div class="skel-line w80"></div><div class="skel-line w60"></div><div class="skel-line w40"></div></div></div>
-<div class="skel-card"><div class="skel-img"></div><div class="skel-body"><div class="skel-line w80"></div><div class="skel-line w60"></div><div class="skel-line w40"></div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- EXPERIENCE -->
-<section style="background:var(--surface);border-top:1px solid var(--border);">
-  <div style="max-width:1260px;margin:0 auto;">
-    <div class="eyebrow reveal">Why Tempura Potato</div>
-    <h2 class="sec-title reveal">The <em>Tempura Potato</em> <span class="gold">Difference</span></h2>
-    <div style="width:100%;height:280px;overflow:hidden;margin:1.5rem 0;position:relative;" class="reveal">
-      <img src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=1600&q=85"
-           alt="Tempura Potato Kitchen"
-           loading="lazy"
-           onerror="this.style.display='none'"
-           class="exp-banner-img" style="width:100%;height:120%;object-fit:cover;object-position:center 40%;margin-top:-10%;will-change:transform;">
-      <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(10,4,4,.7) 0%,transparent 40%,transparent 60%,rgba(10,4,4,.7) 100%);"></div>
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-        <div style="font-family:'Noto Naskh Arabic',serif;font-size:clamp(2rem,5vw,4rem);font-weight:700;color:rgba(255,255,255,.08);direction:rtl;letter-spacing:.05em;">تیمپورا</div>
-      </div>
-    </div>
-    <div class="exp-grid reveal">
-      <div class="exp-card"><span class="exp-ico">🌍</span><div class="exp-title">Arabic Meets Desi</div><div class="exp-desc">We are the original fusion — bringing authentic Arabic street food techniques to the bold spices of Pakistani cuisine. Unique. Unforgettable.</div></div>
-      <div class="exp-card"><span class="exp-ico">🔥</span><div class="exp-title">Charcoal Grilled</div><div class="exp-desc">Our kebabs are charcoal-grilled fresh every day. No shortcuts, no frozen stock. That smoky authentic flavor is our signature.</div></div>
-      <div class="exp-card"><span class="exp-ico">🥖</span><div class="exp-title">Signature Bread</div><div class="exp-desc">The Tempura Potato bread is our secret weapon — soft, fresh, baked specially. It's not a sandwich. It's a Tempura Potato.</div></div>
-      <div class="exp-card"><span class="exp-ico">✅</span><div class="exp-title">100% Halal</div><div class="exp-desc">Every single ingredient is halal certified. We never compromise on what goes into our food or how it is prepared.</div></div>
-      <div class="exp-card"><span class="exp-ico">⚡</span><div class="exp-title">Fast Delivery</div><div class="exp-desc">WhatsApp us, order on FoodPanda, or walk in. We get your food to you hot, fresh and fast — every single time.</div></div>
-      <div class="exp-card"><span class="exp-ico">💰</span><div class="exp-title">Great Value</div><div class="exp-desc">Premium quality Arabic-fusion food starting at just Rs. 580. You will not find this quality at this price anywhere else in Lahore.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ PARALLAX 2 — Before gallery ═══ -->
-<div class="parallax-sec" id="parallaxSec2">
-  <div class="parallax-bg-div" id="parallaxBg2" style="background:linear-gradient(135deg,#1E0505,#0A0404);background-image:url('https://images.unsplash.com/photo-1544025162-d76694265947?w=1600&q=80');background-size:cover;background-position:center;"></div>
-  <div class="parallax-overlay-div"></div>
-  <div class="parallax-text reveal">
-    <div class="eyebrow" style="justify-content:center;color:var(--gold);">📍 Find Us</div>
-    <h2 style="font-family:Playfair Display,serif;font-size:clamp(2rem,5vw,4.5rem);font-weight:900;color:#fff;line-height:1.05;letter-spacing:-.02em;">
-      Visit <em style="color:var(--red);font-style:italic;">Tempura Potato.</em>
-    </h2>
-    <p style="color:rgba(255,245,240,.65);font-size:.9rem;margin-top:1rem;line-height:1.75;max-width:500px;margin-left:auto;margin-right:auto;">
-      Walk in, dine in, or order for delivery. We're in Lahore and we're ready for you.
-    </p>
-    <div style="margin-top:1.8rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-      <a href="tel:03090090123" class="btn-red">📞 Call Now</a>
-      <a href="#order" class="btn-outline">Order Online →</a>
-    </div>
-  </div>
-</div>
-
-<!-- GALLERY -->
-<section id="gallery">
-  <div class="eyebrow reveal">Our Visuals</div>
-  <h2 class="sec-title reveal">Inside <em>Tempura Potato</em></h2>
-  <div class="gallery-grid reveal" id="galleryGrid">
-    <div class="gal-item">
-      <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=900&q=85" alt="Afghani Tempura Potato" loading="lazy" onerror="this.style.display='none'">
-      <div class="gal-cap">Afghani Tempura Potato</div>
-    </div>
-    <div class="gal-item">
-      <img src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=700&q=85" alt="Fresh Off The Grill" loading="lazy" onerror="this.style.display='none'">
-      <div class="gal-cap">Fresh Off The Grill</div>
-    </div>
-    <div class="gal-item">
-      <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=700&q=85" alt="Zinger Duo Deal" loading="lazy" onerror="this.style.display='none'">
-      <div class="gal-cap">Zinger Duo Deal</div>
-    </div>
-    <div class="gal-item">
-      <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=900&q=85" alt="Mexici Collection" loading="lazy" onerror="this.style.display='none'">
-      <div class="gal-cap">Mexici Collection</div>
-    </div>
-    <div class="gal-item">
-      <img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=700&q=85" alt="Grill Burger" loading="lazy" onerror="this.style.display='none'">
-      <div class="gal-cap">Grill Burger</div>
-    </div>
-    <div class="gal-item">
-      <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=700&q=85" alt="Loaded Fries" loading="lazy" onerror="this.style.display='none'">
-      <div class="gal-cap">Loaded Trays</div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section style="background:var(--surface);border-top:1px solid var(--border);">
-  <div style="text-align:center;max-width:580px;margin:0 auto 3rem;" class="reveal">
-    <div class="eyebrow" style="justify-content:center;">Guest Reviews</div>
-    <h2 class="sec-title">What People <em>Say</em></h2>
-  </div>
-  <div class="testi-grid" style="max-width:1260px;margin:0 auto;">
-    <div class="tc reveal"><div class="stars">★★★★★</div><div class="tq">"Zinger Duo Deal is absolutely insane. Never tasted anything like it in Lahore. The combination of three kebabs with BBQ sauce — unreal."</div><div class="tn">Ahmad Hassan</div><div class="tr">Regular Customer · Lahore</div></div>
-    <div class="tc reveal"><div class="stars">★★★★★</div><div class="tq">"Ordered the Afghani Tempura Potato on FoodPanda and it arrived hot. The bread is different from everything else. This place is something special."</div><div class="tn">Sana Mirza</div><div class="tr">FoodPanda Order</div></div>
-    <div class="tc reveal"><div class="stars">★★★★★</div><div class="tq">"Rs. 580 for the Grill Burger and it's better than places charging double. The fusion concept actually works — Arabic and desi together perfectly."</div><div class="tn">Umar Siddiqui</div><div class="tr">Walk-in Customer</div></div>
-  </div>
-</section>
-
-<!-- ORDER CTA -->
-<section id="order" class="order-sec" style="background-image:url('https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=1600&q=75');background-size:cover;background-position:center;background-blend-mode:overlay;">
-  <div class="order-inner reveal">
-    <h2>Hungry? <em>Order Now.</em></h2>
-    <p>WhatsApp us directly or order on FoodPanda. Hot, fresh, and delivered to your door — or walk in and experience Tempura Potato yourself.</p>
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:.8rem;">
-      <a href="#" class="wa-btn" id="waOrderBtn">📲 Order on WhatsApp</a>
-      <a href="#" class="fp-btn" id="fpBtn">🐼 Order on FoodPanda</a>
-    </div>
-    <div style="margin-top:1.5rem;font-size:.75rem;color:rgba(255,255,255,.4);">Or add items to cart above and checkout with your delivery details</div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer id="contact">
+<footer class="footer">
   <div class="footer-top">
-    <div>
-      <div class="footer-logo-arabic">تیمپورا</div>
-      <div class="footer-logo-eng">Tempura Potato · Fast. Fresh. Fired Up.</div>
-      <div class="footer-desc" id="footerDesc"></div>
-      <div class="footer-socials">
-        <a class="soc" id="fbLink" href="#" target="_blank">fb</a>
-        <a class="soc" id="igLink" href="#" target="_blank">ig</a>
-        <a class="soc" id="ttLink" href="#" target="_blank">tt</a>
-        <a class="soc" id="waLink" href="#" target="_blank">wa</a>
-      </div>
-    </div>
-    <div>
-      <div class="fh">Menu</div>
-      <ul class="flinks">
-        <li><a href="#menu">Tempura Potato Sandwiches</a></li>
-        <li><a href="#specials">Loaded Trays</a></li>
-        <li><a href="#menu">Sides & Drinks</a></li>
-        <li><a href="#" id="fpFooter">Order on FoodPanda</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="fh">Opening Hours</div>
-      <div id="footerHours"></div>
-    </div>
-    <div>
-      <div class="fh">Contact</div>
-      <ul class="flinks" id="footerContact"></ul>
+    <div class="footer-logo"><span style="font-size:36px" class="tp-logo">🥔</span><div><div class="footer-brand tp-brand">TEMPURA POTATO</div><div class="footer-tagline tp-tagline">Lahore's Finest</div></div></div>
+    <div class="footer-links">
+      <a href="#menu">Menu</a><a href="#deals">Deals</a><a href="#reviews">Reviews</a>
+      <a href="#about">About</a><a href="checkout.html">Order</a><a href="rider.html">Riders</a>
+      <a href="admin.html" style="opacity:.06;font-size:10px">·</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© <span id="footerYear"></span> Tempura Potato · تیمپورا. All rights reserved.</span>
-    <span><a href="admin.html">Admin</a></span>
+    <span>© <span id="yr"></span> Tempura Potato. All rights reserved.</span>
+    <span class="tp-address">Main Bazar Nishat Colony, Milad Chock, Lahore</span>
   </div>
 </footer>
 
-<!-- CART -->
-<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
-<div class="cart-drawer" id="cartDrawer">
-  <div class="cart-hd"><div class="cart-title">Your Order 🛒</div><button class="cart-close" onclick="closeCart()">✕</button></div>
-  <div class="cart-items" id="cartItems"></div>
-  <div class="cart-ft" id="cartFt" style="display:none">
-    <div id="cartSum"></div>
-    <button class="co-btn" onclick="openCheckout()">Checkout 🔥</button>
+<div class="cart-float" id="cart-float" onclick="location.href='checkout.html'">
+  <span class="cart-float-icon">🛒</span><span class="cart-count">0</span>
+</div>
+
+<div id="pwa-overlay">
+  <div class="pwa-box">
+    <button class="pwa-box-close" onclick="closePWA()">✕</button>
+    <div class="pwa-icon tp-logo">🥔</div>
+    <div class="pwa-brand tp-brand">TEMPURA POTATO</div>
+    <h3 class="pwa-title">Get the App</h3>
+    <p class="pwa-desc">Install our free app and get <strong>20% OFF</strong> your first order!</p>
+    <button class="btn-p pwa-btn-main pwa-btn">Install Free App</button>
+    <button onclick="closePWA()" class="pwa-skip">Maybe later</button>
+    <div id="pwa-manual"><p>To install manually:</p><ol><li>Tap <strong>Share</strong> (iPhone) or <strong>⋮</strong> (Android)</li><li>Tap <strong>"Add to Home Screen"</strong></li><li>Tap <strong>"Add"</strong></li></ol></div>
   </div>
 </div>
 
-<!-- CHECKOUT -->
-<div class="mbg" id="checkoutModal">
-  <div class="mbox">
-    <div class="m-title">Confirm Order 🔥</div>
-    <div class="m-sub">Fill in your details to place the order</div>
-    <div class="mtabs">
-      <button class="mtab on" id="mWa" onclick="setMethod('wa')">📲 WhatsApp</button>
-      <button class="mtab" id="mDirect" onclick="setMethod('direct')">📋 Direct</button>
-    </div>
-    <div class="osum" id="modalSum"></div>
-    <div class="loy-row" id="loyaltyRow">
-      <div style="font-size:.8rem;">You have <span id="loyPts" style="color:var(--gold);font-weight:700;">0</span> pts = Rs.<span id="loyDisc" style="color:var(--gold);">0</span> off</div>
-      <label style="display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--muted);cursor:pointer;"><input type="checkbox" id="redeemChk" onchange="toggleRedeem()"> Use points</label>
-    </div>
-    <div class="fr2">
-      <div class="fg"><label>Full Name *</label><input id="cName" placeholder="Muhammad Ahmed"></div>
-      <div class="fg"><label>Phone *</label><input id="cPhone" placeholder="+92 300 1234567" onblur="loadLoyalty()"></div>
-    </div>
-    <button class="loc-btn" id="locBtn" onclick="getLocation()">📍 Add Live Location (optional)</button>
-    <div class="fg"><label>Delivery Address</label><textarea id="cAddr" placeholder="House #, Street, Area — or pick up in store"></textarea></div>
-    <div class="fr2">
-      <div class="fg"><label>Order Type</label><select id="cType"><option value="delivery">Home Delivery</option><option value="pickup">Pickup</option><option value="dine">Dine In</option></select></div>
-      <div class="fg"><label>Special Note</label><input id="cNote" placeholder="Extra sauce, less spicy..."></div>
-    </div>
-    <div class="mbtns">
-      <button class="mcancel" onclick="closeCheckout()">← Back</button>
-      <button class="btn-red" onclick="placeOrder()">Place Order 🔥</button>
-    </div>
+<div id="item-modal">
+  <div class="im-box">
+    <button class="im-close" onclick="closeModal()">✕</button>
+    <div class="im-img"><img id="m-img" src="" alt=""/></div>
+    <div class="im-name" id="m-name"></div>
+    <div class="im-desc" id="m-desc"></div>
+    <div class="im-inc" id="m-includes"></div>
+    <div class="im-price" id="m-price">Rs. 0</div>
+    <div class="im-qty"><button onclick="mQty(-1)">−</button><span id="m-qty">1</span><button onclick="mQty(1)">+</button></div>
+    <button class="btn-p" style="width:100%;font-size:16px" onclick="addModal()">Add to Cart</button>
   </div>
 </div>
 
-<!-- SURVEY -->
-<div class="mbg" id="surveyModal">
-  <div class="mbox">
-    <div class="m-title">Quick Survey 🙏</div>
-    <div class="m-sub">Help us improve — takes 30 seconds!</div>
-    <div class="survey-prog"><div class="survey-bar" id="surveyBar" style="width:20%"></div></div>
-    <div id="surveySteps"></div>
-  </div>
-</div>
+<div id="tp-cur"><div class="cur-d"></div><div class="cur-r"></div></div>
+<div id="tp-toast"></div>
 
-<button class="float-cart" id="floatCart" onclick="openCart()">🛒<span class="fbadge" id="floatBadge">0</span></button>
-<a class="wa-float" id="waFloatBtn" href="#" target="_blank" title="Order on WhatsApp">
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-  <span class="wa-float-tooltip">Order on WhatsApp</span>
-</a>
-<div class="toast" id="toast"></div>
+<script type="module" src="main.js"></script>
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
 
-<!-- ITEM DETAIL SHEET -->
-<div class="item-sheet-bg" id="itemSheetBg" onclick="closeItemSheet()"></div>
-<div class="item-sheet" id="itemSheet">
-  <div class="item-sheet-drag"></div>
-  <div class="item-sheet-img" id="sheetImgWrap"><span id="sheetEmoji" style="font-size:5rem;position:relative;z-index:1;">🥙</span></div>
-  <div class="item-sheet-body">
-    <div class="item-sheet-cat" id="sheetCat"></div>
-    <div class="item-sheet-name" id="sheetName"></div>
-    <div class="item-sheet-badges" id="sheetBadges"></div>
-    <div class="item-sheet-desc" id="sheetDesc"></div>
-    <div class="item-sheet-nutr">
-      <div class="isn"><div class="isn-v">100%</div><div class="isn-l">Halal</div></div>
-      <div class="isn"><div class="isn-v isn-price" id="sheetNutrPrice">—</div><div class="isn-l">Price (Rs.)</div></div>
-      <div class="isn"><div class="isn-v">Fresh</div><div class="isn-l">Daily</div></div>
-    </div>
-    <div class="item-sheet-footer">
-      <div class="item-sheet-price"><span style="font-size:.8rem;color:var(--muted);font-family:Outfit,sans-serif;font-weight:400;">Rs. </span><span id="sheetPrice">0</span></div>
-      <button class="item-sheet-add" id="sheetAddBtn">Add to Cart 🔥</button>
-    </div>
-  </div>
-</div>
-
-<script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getDatabase, ref, onValue, push, update, get }
-  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
-
-const CFG = window.TEMPURA POTATO;
-const app = initializeApp(CFG.firebase);
-const db  = getDatabase(app);
-
-const $ = id => document.getElementById(id);
-
-// ── APPLY CONFIG ─────────────────────────────────────────────
-document.title = CFG.name + ' — ' + CFG.tagline;
-$('footerYear').textContent  = new Date().getFullYear();
-$('footerDesc').textContent  = CFG.description;
-$('aboutDesc').textContent   = CFG.description;
-$('aboutYr').textContent     = CFG.established;
-$('fbLink').href  = CFG.social.facebook  || '#';
-$('igLink').href  = CFG.social.instagram || '#';
-$('ttLink').href  = CFG.social.tiktok    || '#';
-$('waLink').href  = 'https://wa.me/' + CFG.whatsapp;
-$('waOrderBtn').href = 'https://wa.me/' + CFG.whatsapp + '?text=' + encodeURIComponent('Hi! I want to order from Tempura Potato 🔥');
-$('fpBtn').href       = CFG.foodpanda || '#';
-$('fpFooter').href    = CFG.foodpanda || '#';
-$('footerHours').innerHTML = Object.entries(CFG.hours).map(([d,t]) =>
-  `<div class="fhr"><span>${d}</span><span>${t}</span></div>`).join('');
-$('footerContact').innerHTML =
-  `<li><a href="tel:${CFG.phone}">${CFG.phone}</a></li>` +
-  `<li><a href="mailto:${CFG.email}">${CFG.email}</a></li>` +
-  `<li><a href="${CFG.mapsUrl}" target="_blank">${CFG.address}</a></li>`;
-
-// ── BUILD HERO SLIDER ─────────────────────────────────────────
-let currentSlide = 0, slideTimer = null;
-
-function buildSlider(slides) {
-  const hero = $('heroEl');
-  const existing = hero.querySelectorAll('.slide,.slider-dots,.slider-arrows');
-  existing.forEach(e => e.remove());
-
-  slides.forEach((s, i) => {
-    const el = document.createElement('div');
-    el.className = 'slide' + (i===0?' active':'');
-    el.innerHTML = `
-      <div class="slide-bg" style="background:${s.bg||'var(--surface-alt)'};${s.image?`background-image:url('${s.image}');background-size:cover;background-position:center;`:''}" ></div>
-      <div class="slide-overlay"></div>
-      <div class="slide-accent"></div>
-      <div class="slide-content">
-        <div class="slide-badge">${s.emoji||'🔥'} ${s.label||'Tempura Potato'}</div>
-        <div class="slide-title">
-          <span class="t1">${s.headline||'Arabic Meets'}</span>
-          <span class="t2">${s.sub||'Desi.'}</span>
-        </div>
-        <p class="slide-desc">${s.desc||s.description||CFG.description}</p>
-        <div class="slide-actions">
-          <a href="#menu" class="btn-red">Order Now 🔥</a>
-          <a href="#about" class="btn-outline">Our Story →</a>
-        </div>
-      </div>`;
-    hero.insertBefore(el, hero.querySelector('.hero-watermark'));
+// ── Hero slideshow ──
+(function(){
+  const slides = document.querySelectorAll('.hero-slide');
+  const dotsWrap = document.getElementById('hero-dots');
+  let cur = 0;
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'hs-dot' + (i===0?' active':'');
+    d.onclick = () => goSlide(i);
+    dotsWrap.appendChild(d);
   });
-
-  // Dots
-  const dotsEl = document.createElement('div');
-  dotsEl.className = 'slider-dots';
-  dotsEl.innerHTML = slides.map((_,i) =>
-    `<div class="sdot ${i===0?'on':''}" onclick="goSlide(${i})"></div>`).join('');
-  hero.appendChild(dotsEl);
-
-  // Arrows
-  const arrowsEl = document.createElement('div');
-  arrowsEl.className = 'slider-arrows';
-  arrowsEl.innerHTML = `<button class="sarr" onclick="prevSlide()">←</button><button class="sarr" onclick="nextSlide()">→</button>`;
-  hero.appendChild(arrowsEl);
-
-  currentSlide = 0;
-  startSlider();
-}
-
-function goSlide(idx) {
-  const slides = document.querySelectorAll('.slide');
-  slides[currentSlide].classList.remove('active'); slides[currentSlide].classList.add('exit');
-  setTimeout(()=>slides[currentSlide]?.classList.remove('exit'), 900);
-  currentSlide = idx;
-  slides[currentSlide].classList.add('active');
-  document.querySelectorAll('.sdot').forEach((d,i)=>d.classList.toggle('on',i===idx));
-  resetTimer();
-}
-function nextSlide(){ goSlide((currentSlide+1)%document.querySelectorAll('.slide').length); }
-function prevSlide(){ const t=document.querySelectorAll('.slide').length; goSlide((currentSlide-1+t)%t); }
-function startSlider(){ resetTimer(); }
-function resetTimer(){ clearInterval(slideTimer); slideTimer=setInterval(nextSlide,6000); }
-window.goSlide=goSlide; window.nextSlide=nextSlide; window.prevSlide=prevSlide;
-
-// Build with config defaults first
-buildSlider(CFG.heroSlides);
-
-// ── FIREBASE LISTENERS ────────────────────────────────────────
-onValue(ref(db,'settings'), snap => {
-  if (!snap.exists()) return;
-  const s = snap.val();
-
-  // ── HERO SLIDES ─────────────────────────────────────────────
-  if (s.heroSlides?.length) buildSlider(s.heroSlides);
-
-  // ── ACTIVE THEME ────────────────────────────────────────────
-  if (s.activeTheme) {
-    const t = CFG.themes?.[s.activeTheme];
-    if (t && t.banner) {
-      $('themeBanner').textContent = t.banner;
-      $('themeBanner').style.background = t.primary;
-      $('themeBanner').style.color = '#fff';
-      $('themeBanner').classList.add('on');
-    }
+  function goSlide(n) {
+    slides[cur].classList.remove('active');
+    dotsWrap.children[cur].classList.remove('active');
+    cur = (n + slides.length) % slides.length;
+    slides[cur].classList.add('active');
+    dotsWrap.children[cur].classList.add('active');
   }
-
-  // ── GALLERY IMAGES (6 slots) ─────────────────────────────────
-  const galleryLabels = ['Afghani Tempura Potato','Fresh Off The Grill','Zinger Duo Deal','Mexici Collection','Grill Burger','Loaded Trays'];
-  const grid = $('galleryGrid');
-  if (s.galleryImages?.length) {
-    grid.innerHTML = s.galleryImages.slice(0,6).map((url, i) => `
-      <div class="gal-item">
-        <img src="${url}" alt="${galleryLabels[i]||'Tempura Potato'}" loading="lazy" onerror="this.style.display='none'">
-        <div class="gal-cap">${galleryLabels[i]||''}</div>
-      </div>`).join('');
-  }
-
-  // ── ABOUT SECTION IMAGE ──────────────────────────────────────
-  if (s.aboutImage) {
-    const aboutBig = document.querySelector('.about-big');
-    if (aboutBig) {
-      let img = aboutBig.querySelector('img');
-      if (!img) { img = document.createElement('img'); img.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;'; aboutBig.appendChild(img); }
-      img.src = s.aboutImage;
-    }
-  }
-
-  // ── PARALLAX SECTION IMAGES ──────────────────────────────────
-  if (s.parallax1) {
-    const p1 = $('parallaxBg1');
-    if (p1) { p1.style.backgroundImage=`url('${s.parallax1}')`; p1.style.backgroundSize='cover'; p1.style.backgroundPosition='center'; }
-  }
-  if (s.parallax2) {
-    const p2 = $('parallaxBg2');
-    if (p2) { p2.style.backgroundImage=`url('${s.parallax2}')`; p2.style.backgroundSize='cover'; p2.style.backgroundPosition='center'; }
-  }
-
-  // ── ORDER SECTION BACKGROUND ─────────────────────────────────
-  if (s.orderBg) {
-    const orderSec = document.querySelector('.order-sec');
-    if (orderSec) { orderSec.style.backgroundImage=`url('${s.orderBg}')`; orderSec.style.backgroundSize='cover'; orderSec.style.backgroundPosition='center'; }
-  }
-});
-
-onValue(ref(db,'tickers'), snap => {
-  if (!snap.exists()) return;
-  const active = Object.values(snap.val()).find(t => t.active && (!t.expiry||new Date(t.expiry)>Date.now()));
-  if (active) { $('tickerTxt').textContent=active.message; $('ticker').classList.add('on'); }
-});
-
-// ── MENU from Firebase, fallback to config ────────────────────
-let _allItems = {}, _currentCat = '';
-
-onValue(ref(db,'menu'), snap => {
-  if (snap.exists()) {
-    _allItems = snap.val();
-  } else {
-    // Use config menu data as fallback
-    const items = {};
-    CFG.menuData.items.forEach(item => { items[item.id] = { ...item, active: true }; });
-    _allItems = items;
-  }
-  const cats = [...new Set(Object.values(_allItems).filter(i=>i.active!==false&&i.category).map(i=>i.category))];
-  const tabs = $('menuTabs');
-  tabs.innerHTML = cats.map((c,i) => `<button class="tab ${i===0?'on':''}" onclick="switchTab('${c}',this)">${c}</button>`).join('');
-  if (cats.length) { _currentCat=cats[0]; renderMenu(_allItems,cats[0]); }
-});
-
-// Also load specials from Firebase if available
-onValue(ref(db,'specials'), snap => {
-  if (!snap.exists()) return;
-  const grid = $('specialsGrid');
-  const items = Object.entries(snap.val()).filter(([,v])=>v.active!==false);
-  if (!items.length) return;
-  grid.innerHTML = items.map(([id,s]) => `
-    <div class="spec-card reveal">
-      <div class="spec-ribbon">${s.badge==='spicy'?'Spicy 🌶':s.badge==='premium'?'Premium':s.badge||'Special'}</div>
-      <div class="spec-img">${s.emoji||'🔥'}${s.image?`<img src="${s.image}" alt="${s.name}" loading="eager" onerror="this.style.display='none'">`:''}
-      </div>
-      <div class="spec-body">
-        <div class="spec-name">${s.name}</div>
-        <div class="spec-desc">${s.description||''}</div>
-        <div class="spec-foot">
-          <div class="spec-price"><span class="rs">Rs. </span>${Number(s.price).toLocaleString()}</div>
-          <button class="btn-red" onclick="addToCart('${id}','${s.name.replace(/'/g,"\\'")}',${s.price},'${s.image||''}','${s.emoji||'🔥'}')" style="padding:.6rem 1.2rem;font-size:.65rem;">Order 🔥</button>
-        </div>
-      </div>
-    </div>`).join('');
-  revealAll();
-});
-
-window.switchTab = (cat, btn) => {
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on'); _currentCat=cat; renderMenu(_allItems,cat);
-};
-
-function renderMenu(items, cat) {
-  const grid = $('menuGrid');
-  const shown = Object.entries(items).filter(([,i])=>i.category===cat&&i.active!==false);
-  if (!shown.length){ grid.innerHTML='<div style="grid-column:1/-1;padding:3rem;color:var(--muted);text-align:center;">Coming soon!</div>'; return; }
-  grid.innerHTML = shown.map(([id,item]) => menuCardHTML(id,item)).join('');
-  revealAll();
-}
-
-function menuCardHTML(id, item) {
-  const badgeMap = { bestseller:'pill-best', spicy:'pill-spicy', premium:'pill-prem', deal:'pill-deal' };
-  const badgeLabel = { bestseller:'⭐ Best', spicy:'🌶 Spicy', premium:'👑 Premium', deal:'🎯 Deal' };
-  const badge = item.badge && badgeMap[item.badge]
-    ? `<div class="badge-pill ${badgeMap[item.badge]}">${badgeLabel[item.badge]||item.badge}</div>` : '';
-  const sold = item.soldOut ? '<div class="sold-overlay">Sold Out</div>' : '';
-  const img  = item.image ? `<img src="${item.image}" alt="${item.name}" loading="eager" onerror="this.style.display='none'">` : '';
-  const n    = (item.name||'').replace(/'/g,"\\'");
-  return `<div class="mcard reveal" onclick="openItemSheet('${id}',${JSON.stringify(item).replace(/`/g,'\`')})" style="cursor:pointer;">
-    <div class="mcard-img"><span class="mcard-emoji">${item.emoji||'🥙'}</span>${img}${badge}${sold}</div>
-    <div class="mcard-body">
-      <div class="mcard-cat">${item.category||''}</div>
-      <div class="mcard-name">${item.name}</div>
-      <div class="mcard-desc">${item.description||''}</div>
-      <div class="mcard-foot">
-        <div class="mcard-price"><span class="rs">Rs.</span>${Number(item.price).toLocaleString()}</div>
-        <button class="add-btn" ${item.soldOut?'disabled':''}
-          onclick="addToCart('${id}','${n}',${item.price},'${item.image||''}','${item.emoji||'🥙'}')">+</button>
-      </div>
-    </div>
-  </div>`;
-}
-
-// ── CART ─────────────────────────────────────────────────────
-let cart=[], checkoutMethod='wa', liveLocation=null, loyaltyPoints=0, redeemPoints=false;
-
-window.addToCart = (id,name,price,image,emoji) => {
-  const ex=cart.find(i=>i.id===id);
-  if(ex) ex.qty++; else cart.push({id,name,price:Number(price),image,emoji,qty:1});
-  updateCartUI(); toast(name+' added! 🔥');
-};
-window.changeQty = (id,d) => {
-  const item=cart.find(i=>i.id===id); if(!item) return;
-  item.qty+=d; if(item.qty<=0) cart=cart.filter(i=>i.id!==id); updateCartUI();
-};
-window.removeItem = id => { cart=cart.filter(i=>i.id!==id); updateCartUI(); };
-
-function updateCartUI() {
-  const t=cart.reduce((s,i)=>s+i.qty,0);
-  $('cartCnt').textContent=t; $('floatBadge').textContent=t;
-  $('cartCnt').classList.toggle('on',t>0); $('floatCart').classList.toggle('on',t>0);
-  renderCart();
-}
-function renderCart() {
-  const c=$('cartItems'), ft=$('cartFt');
-  if(!cart.length){c.innerHTML='<div class="cart-empty"><div style="font-size:3rem;opacity:.2">🥙</div><p style="font-size:.82rem">Your cart is empty</p></div>';ft.style.display='none';return;}
-  ft.style.display='block';
-  c.innerHTML=cart.map(i=>`
-    <div class="ci">
-      <div class="ci-thumb">${i.emoji||'🥙'}${i.image?`<img src="${i.image}" onerror="this.style.display='none'" loading="eager">`:''}
-      </div>
-      <div class="ci-info">
-        <div class="ci-name">${i.name}</div>
-        <div class="ci-price">Rs. ${i.price.toLocaleString()}</div>
-        <div class="ci-ctrl">
-          <button class="qty-btn" onclick="changeQty('${i.id}',-1)">−</button>
-          <span class="qty-n">${i.qty}</span>
-          <button class="qty-btn" onclick="changeQty('${i.id}',1)">+</button>
-          <button class="ci-rm" onclick="removeItem('${i.id}')">✕ Remove</button>
-        </div>
-      </div>
-    </div>`).join('');
-  const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const disc=redeemPoints?Math.floor(loyaltyPoints/(CFG.loyaltyRedeem||10)):0;
-  const total=Math.max(0,sub-disc);
-  $('cartSum').innerHTML=`
-    <div class="sr"><span>Subtotal</span><span>Rs.${sub.toLocaleString()}</span></div>
-    ${disc?`<div class="sr"><span>Loyalty Discount</span><span style="color:var(--gold)">-Rs.${disc}</span></div>`:''}
-    <div class="sr tot"><span>Total</span><span>Rs.${total.toLocaleString()}</span></div>`;
-}
-window.openCart  = ()=>{ $('cartOverlay').classList.add('on'); $('cartDrawer').classList.add('on'); document.body.style.overflow='hidden'; };
-window.closeCart = ()=>{ $('cartOverlay').classList.remove('on'); $('cartDrawer').classList.remove('on'); document.body.style.overflow=''; };
-
-// ── CHECKOUT ─────────────────────────────────────────────────
-window.setMethod = m=>{ checkoutMethod=m; $('mWa').classList.toggle('on',m==='wa'); $('mDirect').classList.toggle('on',m==='direct'); };
-window.openCheckout = ()=>{
-  if(!cart.length) return;
-  const sub=cart.reduce((t,i)=>t+i.price*i.qty,0);
-  $('modalSum').innerHTML=cart.map(i=>`<div class="or"><span>${i.name} ×${i.qty}</span><span>Rs.${(i.price*i.qty).toLocaleString()}</span></div>`).join('')
-    +`<div class="or"><span>Total</span><span>Rs.${sub.toLocaleString()}</span></div>`;
-  $('checkoutModal').classList.add('on'); document.body.style.overflow='hidden';
-  updateLoyaltyUI();
-};
-window.closeCheckout = ()=>{ $('checkoutModal').classList.remove('on'); document.body.style.overflow=''; };
-
-window.getLocation = ()=>{
-  const btn=$('locBtn'); btn.textContent='📍 Getting location...';
-  navigator.geolocation?.getCurrentPosition(pos=>{
-    liveLocation={lat:pos.coords.latitude,lng:pos.coords.longitude};
-    btn.textContent='✓ Location captured!'; btn.classList.add('got');
-    if(!$('cAddr').value) $('cAddr').value=`📍 ${liveLocation.lat.toFixed(5)}, ${liveLocation.lng.toFixed(5)}`;
-  },()=>{btn.textContent='📍 Add Live Location (optional)';});
-};
-
-window.loadLoyalty = ()=>{
-  const ph=$('cPhone').value.replace(/\D/g,'');
-  if(ph.length<10) return;
-  get(ref(db,'loyalty/'+ph)).then(snap=>{
-    loyaltyPoints=snap.exists()?(snap.val().points||0):0;
-    updateLoyaltyUI();
-  });
-};
-function updateLoyaltyUI(){
-  const disc=Math.floor(loyaltyPoints/(CFG.loyaltyRedeem||10));
-  $('loyPts').textContent=loyaltyPoints; $('loyDisc').textContent=disc;
-  $('loyaltyRow').classList.toggle('on',loyaltyPoints>0);
-}
-window.toggleRedeem=()=>{ redeemPoints=$('redeemChk').checked; renderCart(); };
-
-window.placeOrder = async ()=>{
-  const name=$('cName').value.trim(), phone=$('cPhone').value.trim();
-  if(!name||!phone){toast('Please enter your name and phone 🙏');return;}
-  const sub=cart.reduce((t,i)=>t+i.price*i.qty,0);
-  const disc=redeemPoints?Math.floor(loyaltyPoints/(CFG.loyaltyRedeem||10)):0;
-  const total=Math.max(0,sub-disc);
-  const id=Date.now().toString(36)+Math.random().toString(36).slice(2,5);
-  const order={id,customerName:name,customerPhone:phone,
-    address:$('cAddr').value.trim()||'Pickup/Dine-in',liveLocation,
-    orderType:$('cType').value,note:$('cNote').value.trim(),
-    items:cart.map(i=>({name:i.name,qty:i.qty,price:i.price})),
-    total,discount:disc,status:'new',timestamp:Date.now()};
-  await update(ref(db,'orders/'+id),order);
-  await push(ref(db,'newOrders'),{orderId:id,customerName:name,total,ts:Date.now()});
-  if(checkoutMethod==='wa'){
-    let msg=`🔥 *New Order — Tempura Potato تیمپورا*\n\n`;
-    msg+=`👤 *Name:* ${name}\n📞 *Phone:* ${phone}\n`;
-    if(liveLocation) msg+=`🗺 *Location:* https://maps.google.com/?q=${liveLocation.lat},${liveLocation.lng}\n`;
-    msg+=`📍 *Address:* ${order.address}\n🛒 *Type:* ${order.orderType}\n\n*Items:*\n`;
-    cart.forEach(i=>{msg+=`• ${i.name} ×${i.qty} — Rs.${(i.price*i.qty).toLocaleString()}\n`;});
-    if(disc) msg+=`💫 Loyalty Discount: -Rs.${disc}\n`;
-    msg+=`\n💰 *Total: Rs.${total.toLocaleString()}*`;
-    if(order.note) msg+=`\n📝 *Note:* ${order.note}`;
-    msg+=`\n\n🔗 Order ID: ${id}`;
-    window.open(`https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(msg)}`,'_blank');
-  }
-  // Loyalty points
-  const cleanPh=phone.replace(/\D/g,'');
-  const pts=Math.floor(total/(CFG.loyaltyDivisor||100));
-  if(cleanPh&&pts>0){
-    get(ref(db,'loyalty/'+cleanPh)).then(snap=>{
-      const cur=snap.exists()?snap.val():{points:0,orders:0,redeemed:0};
-      update(ref(db,'loyalty/'+cleanPh),{
-        name,
-        points:redeemPoints?pts:(cur.points||0)+pts,
-        redeemed:redeemPoints?(cur.redeemed||0)+loyaltyPoints:(cur.redeemed||0),
-        orders:(cur.orders||0)+1,lastOrder:Date.now()
-      });
-    });
-  }
-  sessionStorage.setItem('lastOrderId',id);
-  sessionStorage.setItem('lastOrderPhone',phone);
-  cart=[]; updateCartUI(); closeCheckout(); closeCart(); toast('Order placed! 🔥');
-  setTimeout(()=>{ if(CFG.survey?.enabled) openSurvey(); else location.href=`order-status.html?id=${id}&phone=${encodeURIComponent(phone)}`; },1200);
-};
-
-// ── SURVEY ───────────────────────────────────────────────────
-let surveyAnswers={}, surveyStep=0;
-function openSurvey(){
-  surveyAnswers={}; surveyStep=0;
-  buildSurveyUI();
-  $('surveyModal').classList.add('on'); document.body.style.overflow='hidden';
-}
-function buildSurveyUI(){
-  const qs=CFG.survey.questions;
-  $('surveySteps').innerHTML=qs.map((q,i)=>{
-    let inp='';
-    if(q.type==='select') inp=`<div class="survey-opts">${q.options.map(o=>`<button class="sopt" onclick="surveySelect('${q.id}','${o.replace(/'/g,"\\'")}',this)">${o}</button>`).join('')}</div>`;
-    else if(q.type==='stars') inp=`<div class="star-row">${[1,2,3,4,5].map(n=>`<button class="star-btn" onclick="surveyStars(${n},this)">★</button>`).join('')}</div>`;
-    else inp=`<textarea id="sq-ta-${q.id}" style="width:100%;background:rgba(255,255,255,.03);border:1px solid var(--border);color:var(--text);padding:.7rem .9rem;font-family:Outfit,sans-serif;font-size:.82rem;outline:none;min-height:80px;resize:vertical;margin-top:.4rem;" placeholder="Tell us anything..."></textarea>`;
-    return `<div class="survey-step" id="sq-${i}" style="display:${i===0?'block':'none'}">
-      <div class="survey-q">${q.label}</div>${inp}
-      <div style="display:flex;justify-content:space-between;margin-top:1.2rem;gap:.6rem;">
-        ${i>0?`<button class="mcancel" onclick="surveyBack()" style="padding:.65rem 1.2rem;">← Back</button>`:'<div></div>'}
-        <button class="btn-red" onclick="surveyNext(${i})" style="padding:.72rem 1.5rem;font-size:.68rem;">${i===qs.length-1?'Submit 🔥':'Next →'}</button>
-      </div>
-    </div>`;
-  }).join('')+`<div id="sq-done" style="display:none"><div class="survey-done"><div class="ico">🔥</div><h3 style="font-family:Playfair Display,serif;font-size:1.3rem;margin-bottom:.6rem;">Shukria! شکریہ</h3><p style="color:var(--muted);font-size:.85rem;line-height:1.7;">Thank you for your feedback. We read every single response. Your order is being prepared!</p><button class="btn-red" onclick="closeSurveyGo()" style="margin-top:1.5rem;">Track Order 🔥</button></div></div>`;
-}
-window.surveySelect=(id,val,btn)=>{
-  document.querySelectorAll(`#sq-${surveyStep} .sopt`).forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on'); surveyAnswers[id]=val;
-};
-window.surveyStars=(n,btn)=>{
-  document.querySelectorAll(`#sq-${surveyStep} .star-btn`).forEach((s,i)=>s.classList.toggle('on',i<n));
-  surveyAnswers['rating']=n;
-};
-window.surveyNext=i=>{
-  const q=CFG.survey.questions[i];
-  if(q.type==='textarea'){ const ta=$(`sq-ta-${q.id}`); if(ta) surveyAnswers[q.id]=ta.value||''; }
-  $(`sq-${i}`).style.display='none';
-  const total=CFG.survey.questions.length;
-  if(i<total-1){
-    surveyStep=i+1; $(`sq-${surveyStep}`).style.display='block';
-    $('surveyBar').style.width=Math.round((surveyStep+1)/total*100)+'%';
-  } else {
-    const orderId=sessionStorage.getItem('lastOrderId');
-    if(orderId) update(ref(db,'surveys/'+orderId),{...surveyAnswers,orderId,ts:Date.now()});
-    $('surveyBar').style.width='100%'; $('sq-done').style.display='block';
-  }
-};
-window.surveyBack=()=>{
-  $(`sq-${surveyStep}`).style.display='none'; surveyStep--;
-  $(`sq-${surveyStep}`).style.display='block';
-  $('surveyBar').style.width=Math.round((surveyStep+1)/CFG.survey.questions.length*100)+'%';
-};
-window.closeSurveyGo=()=>{
-  $('surveyModal').classList.remove('on'); document.body.style.overflow='';
-  const id=sessionStorage.getItem('lastOrderId'),ph=sessionStorage.getItem('lastOrderPhone');
-  location.href=`order-status.html?id=${id}&phone=${encodeURIComponent(ph||'')}`;
-};
-
-// ── SCROLL ───────────────────────────────────────────────────
-window.addEventListener('scroll',()=>{
-  const y=window.scrollY;
-  $('nav').classList.toggle('stuck',y>60);
-  $('scrollBar').style.width=(y/(document.documentElement.scrollHeight-window.innerHeight)*100)+'%';
-  $('bttBtn').classList.toggle('on',y>400);
-
-  // Hero parallax
-  const hero=$('heroEl');
-  if(hero){ hero.querySelectorAll('.slide-bg').forEach(bg=>{ bg.style.transform=`translateY(${y*.2}px) scale(1.08)`; }); }
-
-  // ── PARALLAX ENGINE — all image sections ─────────────────────
-  function applyParallax(el, img, strength, scale) {
-    if (!el || !img) return;
-    const rect = el.getBoundingClientRect();
-    if (rect.top > window.innerHeight || rect.bottom < 0) return;
-    const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-    const offset   = (progress - .5) * strength;
-    img.style.transform = `translateY(${offset}px) scale(${scale})`;
-  }
-
-  // Parallax sections (big full-screen ones)
-  ['parallaxSec1','parallaxSec2'].forEach(id => {
-    const sec = $(id); if (!sec) return;
-    const bg  = sec.querySelector('.parallax-bg-div'); if (!bg) return;
-    const rect= sec.getBoundingClientRect();
-    if (rect.top < window.innerHeight && rect.bottom > 0) {
-      const p = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-      bg.style.transform = `translateY(${(p-.5)*130}px)`;
-    }
-  });
-
-  // About section image
-  applyParallax($('aboutBig'), $('aboutBig')?.querySelector('img'), 50, 1.1);
-
-  // Gallery images — each moves at slightly different speed
-  document.querySelectorAll('.gal-item').forEach((item, i) => {
-    applyParallax(item, item.querySelector('img'), 25 + i*3, 1.08);
-  });
-
-  // Exp banner image
-  const expBanner = document.querySelector('.exp-banner-img');
-  if (expBanner) applyParallax(expBanner.parentElement, expBanner, 45, 1.1);
-
-  // Spec card images
-  document.querySelectorAll('.spec-img img').forEach(img => {
-    applyParallax(img.closest('.spec-card'), img, 20, 1.06);
-  });
-
-  // Flame divider background
-  const flameBg = document.querySelector('.flame-div .flame-bg-img');
-  if (flameBg) applyParallax(flameBg.parentElement, flameBg, 60, 1.15);
-
-  updateSdots();
-},{passive:true});
-
-// ── SCROLL DOTS ───────────────────────────────────────────────
-const sdotSections=['#about','#specials','#menu','#gallery','#contact'];
-const sdotsEl=$('sdots');
-if(sdotsEl){
-  sdotsEl.innerHTML=sdotSections.map((s,i)=>`<div class="sdot-item" onclick="document.querySelector('${s}')?.scrollIntoView({behavior:'smooth'})" title="${s.slice(1)}"></div>`).join('');
-}
-function updateSdots(){
-  sdotSections.forEach((s,i)=>{
-    const el=document.querySelector(s); if(!el) return;
-    const r=el.getBoundingClientRect();
-    sdotsEl?.querySelectorAll('.sdot-item')[i]?.classList.toggle('on',r.top<=window.innerHeight/2&&r.bottom>0);
-  });
-}
-
-// ── CURSOR ───────────────────────────────────────────────────
-const curDot=$('curDot'),curRing=$('curRing');
-document.addEventListener('mousemove',e=>{
-  curDot.style.left=e.clientX+'px'; curDot.style.top=e.clientY+'px';
-  curRing.style.left=e.clientX+'px'; curRing.style.top=e.clientY+'px';
-});
-document.querySelectorAll('a,button,.mcard,.spec-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{curRing.style.width='48px';curRing.style.height='48px';curRing.style.borderColor='rgba(212,43,43,.8)';});
-  el.addEventListener('mouseleave',()=>{curRing.style.width='34px';curRing.style.height='34px';curRing.style.borderColor='rgba(212,43,43,.55)';});
-});
-
-// ── TOUCH SWIPE ───────────────────────────────────────────────
-let tx=0;
-document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
-document.addEventListener('touchend',e=>{const d=tx-e.changedTouches[0].clientX;if(Math.abs(d)>50){d>0?nextSlide():prevSlide();}},{passive:true});
-
-// ── MOUSE PARALLAX on hero content ───────────────────────────
-document.addEventListener('mousemove',e=>{
-  const x=(e.clientX/window.innerWidth-.5)*10;
-  const y=(e.clientY/window.innerHeight-.5)*10;
-  const c=document.querySelector('.slide.active .slide-content');
-  if(c) c.style.transform=`translate(${x*.3}px,${y*.3}px)`;
-});
-
-// ── 3D TILT on cards ─────────────────────────────────────────
-const tiltObs=new MutationObserver(()=>{
-  document.querySelectorAll('.mcard:not([data-t])').forEach(card=>{
-    card.setAttribute('data-t','1');
-    card.addEventListener('mousemove',e=>{
-      const r=card.getBoundingClientRect();
-      const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
-      card.style.transform=`perspective(600px) rotateY(${x*12}deg) rotateX(${-y*12}deg) translateY(-6px) scale(1.02)`;
-      card.style.boxShadow=`${-x*20}px ${-y*20}px 40px rgba(212,43,43,.2)`;
-    });
-    card.addEventListener('mouseleave',()=>{card.style.transform='';card.style.boxShadow='';});
-  });
-});
-tiltObs.observe($('menuGrid'),{childList:true});
-
-// ── RIPPLE ───────────────────────────────────────────────────
-document.querySelectorAll('.btn-red,.co-btn,.order-btn').forEach(btn=>{
-  btn.addEventListener('click',e=>{
-    const ripple=document.createElement('span'),r=btn.getBoundingClientRect(),sz=Math.max(r.width,r.height);
-    ripple.style.cssText=`position:absolute;width:${sz}px;height:${sz}px;left:${e.clientX-r.left-sz/2}px;top:${e.clientY-r.top-sz/2}px;background:rgba(255,255,255,.25);border-radius:50%;transform:scale(0);animation:rpl .5s linear;pointer-events:none;`;
-    btn.style.position='relative'; btn.style.overflow='hidden';
-    btn.appendChild(ripple); setTimeout(()=>ripple.remove(),500);
-  });
-});
-const rplStyle=document.createElement('style');
-rplStyle.textContent='@keyframes rpl{to{transform:scale(2.5);opacity:0;}}';
-document.head.appendChild(rplStyle);
-
-// ── REVEAL ───────────────────────────────────────────────────
-function revealAll(){
-  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');});},{threshold:.07});
-  document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el=>{if(!el.classList.contains('on'))obs.observe(el);});
-}
-revealAll();
-window.revealAll=revealAll;
-
-// ── TOAST ────────────────────────────────────────────────────
-function toast(msg){
-  const t=$('toast');t.textContent=msg;t.classList.add('on');
-  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),3000);
-}
-window.toast=toast;
-
-// ── WHATSAPP FLOAT SETUP ─────────────────────────────────────
-const waBtn = document.getElementById('waFloatBtn');
-if (waBtn) {
-  waBtn.href = 'https://wa.me/' + CFG.whatsapp + '?text=' + encodeURIComponent('Hi! I want to order from Tempura Potato. Please share what is available today.');
-}
-
-// ── COUNTDOWN TIMER (resets at midnight) ─────────────────────
-function updateCountdown() {
-  const now   = new Date();
-  const midnight = new Date(now); midnight.setHours(24,0,0,0);
-  const diff  = midnight - now;
-  const h = String(Math.floor(diff / 3600000)).padStart(2,'0');
-  const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
-  const s = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
-  const val = `${h}:${m}:${s}`;
-  ['spec-timer1','spec-timer2'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = val;
-  });
-}
-updateCountdown();
-setInterval(updateCountdown, 1000);
-
-// ── ITEM DETAIL SHEET ─────────────────────────────────────────
-window.openItemSheet = (id, item) => {
-  const wrap   = document.getElementById('sheetImgWrap');
-  const emoji  = document.getElementById('sheetEmoji');
-  const imgExisting = wrap.querySelector('img');
-  if (imgExisting) imgExisting.remove();
-
-  if (item.image) {
-    const img = document.createElement('img');
-    img.src = item.image;
-    img.alt = item.name;
-    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;';
-    img.onerror = () => img.remove();
-    wrap.insertBefore(img, emoji);
-    // Dark gradient over image
-    wrap.style.background = 'var(--surface-alt)';
-    wrap.style.position = 'relative';
-    emoji.style.display = 'none';
-  } else {
-    emoji.style.display = 'block';
-    emoji.textContent = item.emoji || '🥙';
-  }
-
-  document.getElementById('sheetCat').textContent    = item.category || '';
-  document.getElementById('sheetName').textContent   = item.name     || '';
-  document.getElementById('sheetDesc').textContent   = item.description || 'A signature Tempura Potato creation made fresh daily.';
-  document.getElementById('sheetPrice').textContent  = Number(item.price || 0).toLocaleString();
-  document.getElementById('sheetNutrPrice').textContent = Number(item.price || 0).toLocaleString();
-
-  // Badges
-  const badgeMap  = { bestseller:'⭐ Best Seller', spicy:'🌶 Spicy', premium:'👑 Premium', deal:'🎯 Deal' };
-  const badgeColor= { bestseller:'background:var(--gold);color:var(--dark)', spicy:'background:var(--red);color:#fff', premium:'background:linear-gradient(135deg,var(--gold),#b8860b);color:var(--dark)', deal:'background:var(--green);color:#fff' };
-  const badgesEl  = document.getElementById('sheetBadges');
-  badgesEl.innerHTML = '';
-  if (item.badge && badgeMap[item.badge]) {
-    const b = document.createElement('span');
-    b.style.cssText = `${badgeColor[item.badge]};font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .65rem;font-weight:800;`;
-    b.textContent = badgeMap[item.badge];
-    badgesEl.appendChild(b);
-  }
-
-  // Add to cart button
-  const addBtn = document.getElementById('sheetAddBtn');
-  if (item.soldOut) {
-    addBtn.disabled = true;
-    addBtn.textContent = 'Sold Out';
-    addBtn.style.background = 'var(--muted)';
-    addBtn.style.clipPath = 'none';
-  } else {
-    addBtn.disabled = false;
-    addBtn.textContent = 'Add to Cart 🔥';
-    addBtn.style.background = '';
-    addBtn.style.clipPath = '';
-    addBtn.onclick = () => {
-      addToCart(id, item.name, item.price, item.image||'', item.emoji||'🥙');
-      closeItemSheet();
-    };
-  }
-
-  document.getElementById('itemSheetBg').classList.add('on');
-  document.getElementById('itemSheet').classList.add('on');
-  document.body.style.overflow = 'hidden';
-};
-window.closeItemSheet = () => {
-  document.getElementById('itemSheetBg').classList.remove('on');
-  document.getElementById('itemSheet').classList.remove('on');
-  document.body.style.overflow = '';
-};
-// Swipe down to close
-let sheetTouchY = 0;
-document.getElementById('itemSheet').addEventListener('touchstart', e => { sheetTouchY = e.touches[0].clientY; }, { passive:true });
-document.getElementById('itemSheet').addEventListener('touchend', e => {
-  if (e.changedTouches[0].clientY - sheetTouchY > 80) closeItemSheet();
-}, { passive:true });
-
-// ── FLAME CANVAS ─────────────────────────────────────────────
-(function initFlame(){
-  const c=document.getElementById('flameCanvas'); if(!c) return;
-  const ctx=c.getContext('2d');
-  function resize(){c.width=c.offsetWidth;c.height=c.offsetHeight;}
-  resize(); window.addEventListener('resize',resize);
-  const particles=[];
-  function spawnFlame(){
-    const cx=c.width/2;
-    for(let i=0;i<3;i++) particles.push({
-      x:cx+(Math.random()-0.5)*120,y:c.height,
-      vx:(Math.random()-0.5)*1.5,vy:-(Math.random()*3+2),
-      life:1,size:Math.random()*18+8,
-      color:Math.random()>.6?[232,184,75]:[212,43,43]
-    });
-  }
-  function drawFlame(){
-    ctx.clearRect(0,0,c.width,c.height);
-    spawnFlame();
-    for(let i=particles.length-1;i>=0;i--){
-      const p=particles[i];
-      p.x+=p.vx; p.y+=p.vy; p.life-=.018; p.size*=.99;
-      if(p.life<=0){particles.splice(i,1);continue;}
-      const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.size);
-      g.addColorStop(0,`rgba(${p.color[0]},${p.color[1]},${p.color[2]},${p.life})`);
-      g.addColorStop(1,`rgba(${p.color[0]},${p.color[1]},${p.color[2]},0)`);
-      ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-      ctx.fillStyle=g;ctx.fill();
-    }
-    requestAnimationFrame(drawFlame);
-  }
-  drawFlame();
+  setInterval(() => goSlide(cur + 1), 5000);
 })();
+
+// ── Parallax scroll ──
+window.addEventListener('scroll', () => {
+  const bg = document.getElementById('par-bg');
+  if (bg) bg.style.transform = `translateY(${window.scrollY * .18}px)`;
+}, {passive:true});
+
+// ── Reviews data ──
+const BASE_REVIEWS = [
+  { name:'Hassan Raza',    loc:'Gulberg, Lahore',    avatar:'https://i.pravatar.cc/100?img=1',  stars:5, text:'Main ne puri Lahore mein itna acha zinger nahi khaya. Tempura Potato ne dil jeet liya! Zaroor try karo!' },
+  { name:'Ayesha Malik',   loc:'Nishat Colony',      avatar:'https://i.pravatar.cc/100?img=5',  stars:5, text:'The Mala Boti Wrap is absolutely insane. I ordered three times in one week. Best value food in Milad Chock.' },
+  { name:'Bilal Ahmed',    loc:'Model Town',         avatar:'https://i.pravatar.cc/100?img=3',  stars:5, text:'Delivery bhi fast thi, food bhi hot tha. Loaded fries ne kamaal kar diya. Family deal at 1000 Rs is unbeatable!' },
+  { name:'Usman Tariq',    loc:'Samanabad',          avatar:'https://i.pravatar.cc/100?img=8',  stars:5, text:'Grill Burger at 320 rupees with this quality? Impossible in Lahore. Fresh ingredients, generous portions.' },
+  { name:'Sana Javed',     loc:'Johar Town',         avatar:'https://i.pravatar.cc/100?img=6',  stars:5, text:'Shawarma sauce waala recipe chahiye tha mujhe seriously. Staff bhi helpful. Coming back every week.' },
+  { name:'Kamran Sheikh',  loc:'DHA Lahore',         avatar:'https://i.pravatar.cc/100?img=11', stars:5, text:'Dhamaka Roll is actually ek dhamaka. For 490 Rs you get a full meal. My new favourite spot.' },
+  { name:'Fatima Noor',    loc:'Gulshan Ravi',       avatar:'https://i.pravatar.cc/100?img=9',  stars:5, text:'Ordered for my family birthday. Everyone loved it. The Mega Deal is ridiculously good value!' },
+  { name:'Ali Hassan',     loc:'Iqbal Town',         avatar:'https://i.pravatar.cc/100?img=13', stars:5, text:'Quick delivery, hot food, amazing taste. Zinger Twister is my new obsession. Best fast food in Lahore!' },
+];
+
+function renderReviews(extra) {
+  const track = document.getElementById('reviews-track');
+  const all = [...BASE_REVIEWS, ...(extra||[])];
+  const doubled = [...all, ...all];
+  track.innerHTML = doubled.map(r => `
+    <div class="review-card">
+      <div class="rc-quote">"</div>
+      <div class="rc-text">${r.text}</div>
+      <div class="rc-header" style="margin-top:16px">
+        <div class="rc-avatar"><img src="${r.avatar||'https://i.pravatar.cc/100'}" alt="${r.name}" loading="lazy"/></div>
+        <div><div class="rc-name">${r.name}</div><div class="rc-loc">${r.loc}</div><div class="rc-stars">${'★'.repeat(r.stars||5)}</div></div>
+      </div>
+    </div>`).join('');
+}
+renderReviews();
+
+// Load Firebase reviews when TP is ready
+async function loadFirebaseReviews() {
+  let tries = 0;
+  while (!window.TP?.fbGet && tries < 40) { await new Promise(r => setTimeout(r,150)); tries++; }
+  if (!window.TP?.fbGet) return;
+  try {
+    const data = await window.TP.fbGet('reviews');
+    if (!data) return;
+    const approved = Object.values(data).filter(r => r.approved !== false);
+    if (approved.length) renderReviews(approved);
+  } catch(e) {}
+}
+setTimeout(loadFirebaseReviews, 1000);
+
+// ── Review form ──
+let selectedStars = 5;
+window.setStar = function(n) {
+  selectedStars = n;
+  document.querySelectorAll('#star-select span').forEach((s,i) => s.classList.toggle('on', i < n));
+};
+setStar(5);
+
+document.getElementById('review-auth-area').innerHTML = `<p style="font-size:13px;color:var(--gray);margin-bottom:12px">Sign in to leave a review:</p>
+  <button class="btn-p" style="font-size:14px;padding:10px 24px;margin-bottom:16px" onclick="showReviewForm()">✓ Write a Review</button>`;
+
+window.showReviewForm = () => {
+  document.getElementById('review-auth-area').style.display = 'none';
+  document.getElementById('review-form-area').style.display = 'block';
+};
+
+window.submitReview = async function() {
+  const text = document.getElementById('review-text').value.trim();
+  if (!text) { window.TP?.showToast('Please write your review','error'); return; }
+  try {
+    if (window.TP?.fbPush) {
+      await window.TP.fbPush('reviews', { text, stars: selectedStars, userName:'Customer', location:'Lahore', avatar:'https://i.pravatar.cc/100?img='+Math.floor(Math.random()*50), timestamp: Date.now(), approved: true });
+    }
+  } catch(e) {}
+  BASE_REVIEWS.unshift({ name:'You', loc:'Lahore', avatar:'https://i.pravatar.cc/100?img='+Math.floor(Math.random()*50), stars:selectedStars, text });
+  renderReviews();
+  document.getElementById('review-text').value = '';
+  window.TP?.showToast('Review submitted! Thank you 🌟');
+};
+
+// ── Live settings listener — reflects admin changes instantly ──
+async function initLiveSettings() {
+  let tries = 0;
+  while (!window.TP?.fbListen && tries < 40) { await new Promise(r => setTimeout(r,150)); tries++; }
+  if (!window.TP?.fbListen) return;
+  window.TP.fbListen('settings', s => {
+    if (!s) return;
+    // Announcement bar
+    const bar = document.getElementById('ann-bar');
+    if (bar) {
+      if (s.announcementBar && s.annShow) { bar.textContent = s.announcementBar; bar.style.display = 'block'; }
+      else bar.style.display = 'none';
+    }
+    // Brand name / tagline / logo
+    if (s.restaurantName)  document.querySelectorAll('.tp-brand').forEach(e => e.textContent = s.restaurantName);
+    if (s.tagline)         document.querySelectorAll('.tp-tagline').forEach(e => e.textContent = s.tagline);
+    if (s.logoEmoji)       document.querySelectorAll('.tp-logo').forEach(e => e.textContent = s.logoEmoji);
+    if (s.phone)           document.querySelectorAll('.tp-phone').forEach(e => e.textContent = s.phone);
+    if (s.address)         document.querySelectorAll('.tp-address').forEach(e => e.textContent = s.address);
+    // Colors
+    if (s.accentColor)     document.documentElement.style.setProperty('--yellow', s.accentColor);
+    if (s.bgColor)         document.documentElement.style.setProperty('--black',  s.bgColor);
+    // Hero content
+    if (s.heroLine1) document.getElementById('hero-l1').textContent = s.heroLine1;
+    if (s.heroLine2) document.getElementById('hero-l2').textContent = s.heroLine2;
+    if (s.heroSub)   document.getElementById('hero-sub').textContent = s.heroSub;
+  });
+}
+initLiveSettings();
+
+// ── Live menu listener — admin menu changes reflect instantly ──
+async function initLiveMenu() {
+  let tries = 0;
+  while (!window.TP?.fbListen && tries < 40) { await new Promise(r => setTimeout(r,150)); tries++; }
+  if (!window.TP?.fbListen) return;
+  window.TP.fbListen('menuItems', data => {
+    if (!data) return;
+    // Override MENU items with admin-edited versions
+    Object.entries(data).forEach(([id, item]) => {
+      const idx = window.TP.MENU.findIndex(m => m.id === id);
+      if (idx >= 0) Object.assign(window.TP.MENU[idx], item);
+      else window.TP.MENU.push(item);
+    });
+    // Re-render active tab
+    const activeTab = document.querySelector('.menu-tab.active');
+    if (activeTab) window.TP.renderMenu(activeTab.dataset.cat);
+    if (document.getElementById('deals-grid')) window.TP.renderDeals();
+  });
+}
+initLiveMenu();
+
+// ── Typing animation ──
+window.addEventListener('load', () => {
+  const el = document.getElementById('story-typing');
+  const text = 'It started with one question: why does Lahore not have premium fast food that actually respects your pocket? We answered it. One zinger at a time.';
+  if (el && window.initTyping) initTyping(el, text, 45);
+});
 </script>
 </body>
 </html>
