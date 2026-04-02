@@ -133,7 +133,7 @@ body{cursor:auto!important;}#tp-cur{display:none!important;}
 <script src="main.js" type="module"></script>
 <script>
 // ============================================================
-//  RIDER APP — Firebase Version (No Parse)
+//  RIDER APP — Firebase Version (Fixed)
 //  All functions attached to window for inline onclick
 // ============================================================
 
@@ -143,8 +143,8 @@ let isOnline = true;
 let ordersListener = null;
 let knownOrderIds = new Set();
 
-// ─── PWA Install ───────────────────────────────────────────
-window.addEventListener('beforeinstallprompt', e => {
+// ─── PWA Install (async callback fixed) ────────────────────
+window.addEventListener('beforeinstallprompt', async (e) => {
   e.preventDefault();
   _dip = e;
   document.getElementById('install-status').textContent = '✅ App ready to install!';
@@ -156,7 +156,7 @@ document.getElementById('install-btn').addEventListener('click', async () => {
     const { outcome } = await _dip.userChoice;
     _dip = null;
     if (outcome === 'accepted') {
-      TP.showToast('Rider App installed! 🎉');
+      if (window.TP?.showToast) TP.showToast('Rider App installed! 🎉');
       document.getElementById('install-status').textContent = '✅ Installed!';
     }
   } else {
@@ -191,7 +191,7 @@ window.signInRider = async function() {
     tries++;
   }
   if (!window.TP?.fbGet) {
-    TP.showToast('Connection error. Try again.', 'error');
+    if (window.TP?.showToast) TP.showToast('Connection error. Try again.', 'error');
     return;
   }
 
@@ -213,13 +213,13 @@ window.signInRider = async function() {
     localStorage.setItem('tp_rider_name', rider.name);
     // Mark rider as online in Firebase
     await window.TP.fbUpdate(`riders/${fbKey}`, { online: true });
-    TP.showToast(`Welcome, ${rider.name}! 🛵`);
+    if (window.TP?.showToast) TP.showToast(`Welcome, ${rider.name}! 🛵`);
     showDash();
     startOrdersListener();
   } catch(e) {
     console.error(e);
     errDiv.style.display = 'block';
-    TP.showToast('Login failed', 'error');
+    if (window.TP?.showToast) TP.showToast('Login failed', 'error');
   }
 };
 
@@ -228,11 +228,10 @@ function showDash() {
   document.getElementById('rider-dash').style.display = 'flex';
   document.getElementById('dash-name').textContent = 'Welcome, ' + (riderData.name || 'Rider');
   document.getElementById('dash-code').textContent = 'Code: ' + (riderData.code || '——');
-  // Update online/offline buttons appearance
   setOnlineUI(isOnline);
 }
 
-function riderLogout() {
+window.riderLogout = function() {
   if (ordersListener) ordersListener();
   localStorage.removeItem('tp_rider_code');
   localStorage.removeItem('tp_rider_name');
@@ -240,8 +239,8 @@ function riderLogout() {
   knownOrderIds.clear();
   document.getElementById('rider-page').style.display = 'flex';
   document.getElementById('rider-dash').style.display = 'none';
-  TP.showToast('Signed out');
-}
+  if (window.TP?.showToast) TP.showToast('Signed out');
+};
 
 window.setOnline = async function(online) {
   isOnline = online;
@@ -249,7 +248,7 @@ window.setOnline = async function(online) {
   if (riderData?._fbKey) {
     await window.TP.fbUpdate(`riders/${riderData._fbKey}`, { online });
   }
-  TP.showToast(online ? 'You are now Online 🟢' : 'You are now Offline ⚫');
+  if (window.TP?.showToast) TP.showToast(online ? 'You are now Online 🟢' : 'You are now Offline ⚫');
   if (online) {
     startOrdersListener();
   } else {
@@ -271,13 +270,11 @@ function startOrdersListener() {
   if (!riderData || !isOnline) return;
   if (ordersListener) ordersListener();
 
-  // Wait for TP module
   if (!window.TP?.fbListen) {
     setTimeout(startOrdersListener, 500);
     return;
   }
 
-  // Listen to all orders (we filter by riderCode on client side)
   ordersListener = window.TP.fbListen('orders', (ordersData) => {
     if (!ordersData) {
       renderRiderOrders([]);
@@ -289,7 +286,7 @@ function startOrdersListener() {
       .sort((a,b) => (b.timestamp||0) - (a.timestamp||0));
 
     renderRiderOrders(myOrders);
-    // Check for new orders (those not in knownOrderIds)
+    // Check for new orders
     myOrders.forEach(order => {
       const id = order.orderId;
       if (!knownOrderIds.has(id) && order.status !== 'delivered' && order.status !== 'declined') {
@@ -310,7 +307,7 @@ function triggerOrderAlert(order) {
     📍 ${order.address || 'Pickup'}
   `;
   alertDiv.style.display = 'flex';
-  // Play beep sound (Web Audio)
+  // Play beep sound
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
     const osc = ctx.createOscillator();
@@ -359,14 +356,14 @@ function renderRiderOrders(orders) {
 
 window.updateOrderStatus = async function(orderId, newStatus) {
   if (!window.TP?.updateOrderStatus) {
-    TP.showToast('Not connected', 'error');
+    if (window.TP?.showToast) TP.showToast('Not connected', 'error');
     return;
   }
   try {
     await window.TP.updateOrderStatus(orderId, newStatus);
-    TP.showToast(`Order #${orderId.slice(-6)} → ${newStatus} ✅`);
+    if (window.TP?.showToast) TP.showToast(`Order #${orderId.slice(-6)} → ${newStatus} ✅`);
   } catch(e) {
-    TP.showToast('Update failed: ' + e.message, 'error');
+    if (window.TP?.showToast) TP.showToast('Update failed: ' + e.message, 'error');
   }
 };
 
