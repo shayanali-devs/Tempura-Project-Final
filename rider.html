@@ -21,7 +21,7 @@
   .code-input{width:100%;background:var(--black4);border:2px solid rgba(245,200,66,.3);color:var(--yellow);padding:16px;border-radius:12px;font-size:28px;font-family:var(--font);text-align:center;letter-spacing:10px;outline:none;text-transform:uppercase;margin-bottom:16px;}
   .code-input:focus{border-color:var(--yellow);}
   .code-error{color:#F44336;font-size:13px;margin-top:8px;display:none;}
-  .rider-dash{display:none;width:100%;max-width:600px;background:var(--black);min-height:100vh;padding:80px 24px 40px;}
+  .rider-dash{display:none;width:100%;max-width:600px;}
   .rider-header{background:var(--black3);border:1px solid rgba(245,200,66,.2);border-radius:16px;padding:20px 24px;display:flex;justify-content:space-between;margin-bottom:20px;}
   .rider-header-left{display:flex;gap:14px;align-items:center;}
   .rider-avatar{width:52px;height:52px;background:var(--yellow);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;}
@@ -50,22 +50,38 @@
   .manual-box{background:var(--black3);border-radius:20px;padding:26px;max-width:420px;width:100%;text-align:left;display:none;}
   .manual-step{display:flex;gap:14px;margin-bottom:16px;}
   .ms-num{width:30px;height:30px;background:var(--yellow);color:var(--black);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;}
-  #order-alert-popup{z-index:10000;}
+  #order-alert-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(0,0,0,0.9);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+  }
+  #order-alert-popup > div {
+    background: var(--black3);
+    border: 2px solid var(--yellow);
+    border-radius: 24px;
+    padding: 30px;
+    max-width: 380px;
+    width: 90%;
+    text-align: center;
+  }
 </style>
 </head>
 <body>
 
-<!-- ORDER ALERT POPUP -->
-<div id="order-alert-popup" style="position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;padding:20px;">
-  <div style="background:var(--black3);border:2px solid var(--yellow);border-radius:24px;padding:36px;max-width:380px;text-align:center;">
+<div id="order-alert-popup">
+  <div>
     <div style="font-size:52px;margin-bottom:12px">🔔</div>
     <div style="font-family:var(--font);font-size:28px;color:var(--yellow);margin-bottom:8px">New Order!</div>
     <div id="alert-details" style="font-size:14px;color:var(--gray);margin-bottom:20px">Loading...</div>
-    <button onclick="dismissAlert()" style="background:#4CAF50;color:#fff;border:none;padding:13px 26px;border-radius:25px;font-weight:700;font-size:15px;cursor:pointer;">✅ Got it</button>
+    <button onclick="dismissAlert()" style="background:#4CAF50;color:#fff;border:none;padding:12px 24px;border-radius:25px;font-weight:700;cursor:pointer;">✅ OK</button>
   </div>
 </div>
 
-<!-- LOGIN SCREEN -->
 <div class="rider-page" id="rider-page">
   <div class="rider-logo">🛵</div>
   <div class="rider-brand">TEMPURA POTATO</div>
@@ -87,29 +103,30 @@
   </div>
 </div>
 
-<!-- DASHBOARD (initially hidden) -->
-<div class="rider-dash" id="rider-dash">
-  <div class="rider-header">
-    <div class="rider-header-left">
-      <div class="rider-avatar">🛵</div>
-      <div>
-        <div class="rider-welcome" id="dash-name">Welcome, Rider</div>
-        <div class="rider-code-badge" id="dash-code">Code: ——</div>
+<div class="rider-page" id="rider-dash" style="display:none;justify-content:flex-start;padding-top:80px;">
+  <div class="rider-dash">
+    <div class="rider-header">
+      <div class="rider-header-left">
+        <div class="rider-avatar">🛵</div>
+        <div>
+          <div class="rider-welcome" id="dash-name">Welcome, Rider</div>
+          <div class="rider-code-badge" id="dash-code">Code: ——</div>
+        </div>
+      </div>
+      <div class="status-toggle">
+        <button class="st-btn online" id="online-btn" onclick="setOnline(true)">🟢 Online</button>
+        <button class="st-btn offline" id="offline-btn" onclick="setOnline(false)">⚫ Offline</button>
       </div>
     </div>
-    <div class="status-toggle">
-      <button class="st-btn online" id="online-btn" onclick="setOnline(true)">🟢 Online</button>
-      <button class="st-btn offline" id="offline-btn" onclick="setOnline(false)">⚫ Offline</button>
+    <div class="orders-section">
+      <h3>Assigned Orders</h3>
+      <div id="rider-orders-list"><div class="no-orders"><div style="font-size:48px;margin-bottom:12px">📭</div><p>No orders assigned yet.<br>Stay online to receive orders.</p></div></div>
     </div>
+    <div style="margin-top:24px;text-align:center;"><button onclick="riderLogout()" style="background:none;border:1px solid rgba(255,255,255,.1);color:var(--gray);padding:10px 22px;border-radius:25px;cursor:pointer;">Sign Out</button></div>
   </div>
-  <div class="orders-section">
-    <h3>Assigned Orders</h3>
-    <div id="rider-orders-list"><div class="no-orders"><div style="font-size:48px;margin-bottom:12px">📭</div><p>No orders assigned yet.<br>Stay online to receive orders.</p></div></div>
-  </div>
-  <div style="margin-top:24px;text-align:center;"><button onclick="riderLogout()" style="background:none;border:1px solid rgba(255,255,255,.1);color:var(--gray);padding:10px 22px;border-radius:25px;cursor:pointer;">Sign Out</button></div>
 </div>
 
-<!-- Firebase SDK -->
+<!-- Firebase SDK with correct config (same as main.js) -->
 <script type="importmap">
   {
     "imports": {
@@ -122,31 +139,24 @@
   import { initializeApp } from 'firebase/app';
   import { getDatabase, ref, get, update, onValue } from 'firebase/database';
 
+  // CRITICAL: Use the SAME Firebase config as your admin panel and main.js
   const firebaseConfig = {
-    apiKey: "AIzaSyAE7DJcybRsxQ6SgWloS8Mm26f3L9X-_bo",
-    authDomain: "tempura-potato-64253.firebaseapp.com",
-    projectId: "tempura-potato-64253",
-    storageBucket: "tempura-potato-64253.firebasestorage.app",
-    messagingSenderId: "634699810323",
-    appId: "1:634699810323:web:38bf8d712e6e1c5a75e1e6",
-    measurementId: "G-LS2JPXTPPE"
+    apiKey: "AIzaSyDdwoxZEnbhqk92V5LqW9NdfGlXwyIjUC4",
+    authDomain: "tempura-final.firebaseapp.com",
+    databaseURL: "https://tempura-final-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "tempura-final",
+    storageBucket: "tempura-final.firebasestorage.app",
+    messagingSenderId: "103063903953",
+    appId: "1:103063903953:web:377b5caecf0a59f6f5aff0"
   };
 
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
-
   window._db = db;
-  window._fbGet = async (path) => {
-    const snap = await get(ref(db, path));
-    return snap.exists() ? snap.val() : null;
-  };
-  window._fbUpdate = async (path, data) => {
-    await update(ref(db, path), data);
-  };
-  window._fbListen = (path, callback) => {
-    return onValue(ref(db, path), (snap) => callback(snap.exists() ? snap.val() : null));
-  };
-  window._fbUpdateOrderStatus = async (orderId, status, extra = {}) => {
+  window._fbGet = async (path) => { const snap = await get(ref(db, path)); return snap.exists() ? snap.val() : null; };
+  window._fbUpdate = async (path, data) => { await update(ref(db, path), data); };
+  window._fbListen = (path, cb) => onValue(ref(db, path), snap => cb(snap.exists() ? snap.val() : null));
+  window._updateOrderStatus = async (orderId, status, extra = {}) => {
     const updates = { status, [`statusLog/${status}`]: Date.now(), ...extra };
     await update(ref(db, `orders/${orderId}`), updates);
   };
@@ -155,7 +165,6 @@
 
 <script>
   (function() {
-    // Global variables
     let _dip = null;
     let riderData = null;
     let isOnline = true;
@@ -182,7 +191,6 @@
       }, 2800);
     }
 
-    // PWA install
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       _dip = e;
@@ -204,7 +212,6 @@
       }
     });
 
-    // Check saved session
     const savedCode = localStorage.getItem('tp_rider_code');
     const savedName = localStorage.getItem('tp_rider_name');
     if (savedCode && savedName) {
@@ -213,28 +220,19 @@
       startOrdersListener();
     }
 
-    // Sign In
     window.signInRider = async function() {
       const code = document.getElementById('rider-code').value.trim().toUpperCase();
       const errDiv = document.getElementById('code-error');
-      if (code.length !== 6) {
-        errDiv.style.display = 'block';
-        return;
-      }
+      if (code.length !== 6) { errDiv.style.display = 'block'; return; }
       errDiv.style.display = 'none';
 
       let tries = 0;
-      while (!window._fbGet && tries < 30) {
-        await new Promise(r => setTimeout(r, 100));
-        tries++;
-      }
-      if (!window._fbGet) {
-        showToast('Connection error. Try again.', 'error');
-        return;
-      }
+      while (!window._fbGet && tries < 30) { await new Promise(r => setTimeout(r, 100)); tries++; }
+      if (!window._fbGet) { showToast('Connection error', 'error'); return; }
 
       try {
         const ridersData = await window._fbGet('riders');
+        console.log('Fetched riders:', ridersData); // Debug
         if (!ridersData) throw new Error('No riders found');
         const foundEntry = Object.entries(ridersData).find(([k, v]) => v.code === code);
         if (!foundEntry) throw new Error('Code not found');
@@ -247,18 +245,15 @@
         showDash();
         startOrdersListener();
       } catch(e) {
-        console.error(e);
+        console.error('Sign in error:', e);
         errDiv.style.display = 'block';
         showToast('Login failed: ' + e.message, 'error');
       }
     };
 
     function showDash() {
-      // Hide login screen, show dashboard
       document.getElementById('rider-page').style.display = 'none';
-      const dashDiv = document.getElementById('rider-dash');
-      dashDiv.style.display = 'block';
-      dashDiv.style.background = 'var(--black)';
+      document.getElementById('rider-dash').style.display = 'flex';
       document.getElementById('dash-name').textContent = 'Welcome, ' + (riderData.name || 'Rider');
       document.getElementById('dash-code').textContent = 'Code: ' + (riderData.code || '——');
       setOnlineUI(isOnline);
@@ -278,41 +273,28 @@
     window.setOnline = async function(online) {
       isOnline = online;
       setOnlineUI(online);
-      if (riderData?._fbKey) {
-        await window._fbUpdate(`riders/${riderData._fbKey}`, { online });
-      }
+      if (riderData?._fbKey) await window._fbUpdate(`riders/${riderData._fbKey}`, { online });
       showToast(online ? 'You are now Online 🟢' : 'You are now Offline ⚫');
-      if (online) {
-        startOrdersListener();
-      } else {
-        if (ordersListener) ordersListener();
-        ordersListener = null;
-        renderRiderOrders([]);
-      }
+      if (online) startOrdersListener();
+      else { if (ordersListener) ordersListener(); ordersListener = null; renderRiderOrders([]); }
     };
 
     function setOnlineUI(online) {
-      const onlineBtn = document.getElementById('online-btn');
-      const offlineBtn = document.getElementById('offline-btn');
-      if (onlineBtn) onlineBtn.style.opacity = online ? '1' : '0.4';
-      if (offlineBtn) offlineBtn.style.opacity = online ? '0.4' : '1';
+      const onBtn = document.getElementById('online-btn');
+      const offBtn = document.getElementById('offline-btn');
+      if (onBtn) onBtn.style.opacity = online ? '1' : '0.4';
+      if (offBtn) offBtn.style.opacity = online ? '0.4' : '1';
     }
 
     function startOrdersListener() {
       if (!riderData || !isOnline) return;
       if (ordersListener) ordersListener();
-      if (!window._fbListen) {
-        setTimeout(startOrdersListener, 500);
-        return;
-      }
+      if (!window._fbListen) { setTimeout(startOrdersListener, 500); return; }
       ordersListener = window._fbListen('orders', (ordersData) => {
-        if (!ordersData) {
-          renderRiderOrders([]);
-          return;
-        }
+        if (!ordersData) { renderRiderOrders([]); return; }
         const myOrders = Object.entries(ordersData)
           .map(([key, order]) => ({ ...order, _fbKey: key, orderId: order.orderId || key }))
-          .filter(order => order.riderCode === riderData.code || order.riderName === riderData.name)
+          .filter(order => order.riderCode === riderData.code)
           .sort((a,b) => (b.timestamp||0) - (a.timestamp||0));
         renderRiderOrders(myOrders);
         myOrders.forEach(order => {
@@ -335,7 +317,6 @@
         📍 ${order.address || 'Pickup'}
       `;
       alertDiv.style.display = 'flex';
-      // Play beep
       try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = ctx.createOscillator();
@@ -383,22 +364,16 @@
     }
 
     window.updateOrderStatus = async function(orderId, newStatus) {
-      if (!window._fbUpdateOrderStatus) {
-        showToast('Not connected', 'error');
-        return;
-      }
+      if (!window._updateOrderStatus) { showToast('Not connected', 'error'); return; }
       try {
-        await window._fbUpdateOrderStatus(orderId, newStatus);
+        await window._updateOrderStatus(orderId, newStatus);
         showToast(`Order #${orderId.slice(-6)} → ${newStatus} ✅`);
       } catch(e) {
         showToast('Update failed: ' + e.message, 'error');
       }
     };
 
-    // Register service worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').catch(() => {});
-    }
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
   })();
 </script>
 </body>
