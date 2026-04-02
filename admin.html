@@ -163,7 +163,6 @@ input:checked+.tog-sl:before{transform:translateX(22px);background:var(--black);
       <div class="sb-item" onclick="showP('menu',this)"><span class="sb-icon">🍔</span>Menu Manager</div>
       <div class="sb-sec">Management</div>
       <div class="sb-item" onclick="showP('promo',this)"><span class="sb-icon">🎟️</span>Promo Codes</div>
-      <div class="sb-item" onclick="showP('riders',this)"><span class="sb-icon">🛵</span>Riders</div>
       <div class="sb-item" onclick="showP('reviews',this)"><span class="sb-icon">⭐</span>Reviews</div>
       <div class="sb-item" onclick="showP('branding',this)"><span class="sb-icon">🎨</span>Branding</div>
       <div class="sb-item" onclick="showP('content',this)"><span class="sb-icon">📝</span>Content</div>
@@ -193,7 +192,7 @@ input:checked+.tog-sl:before{transform:translateX(22px);background:var(--black);
         <div class="sc"><div class="sc-lbl">Total Orders</div><div class="sc-val" id="s-total">0</div><div class="sc-sub">All time</div></div>
         <div class="sc"><div class="sc-lbl">All Revenue</div><div class="sc-val" id="s-allrev">0</div><div class="sc-sub">Rs. all time delivered</div></div>
       </div>
-      <div class="tw"><div class="th"><h3>Recent Orders</h3><button class="ab2" onclick="showP('orders',document.querySelector('[onclick*=orders]'))">View All →</button></div><div class="ts"><table><thead><tr><th>ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Time</th><th>Actions</th></tr></thead><tbody id="dash-tb"><tr><td colspan="7" style="text-align:center;color:var(--gray);padding:24px">Loading orders...</td></tr></tbody></table></div></div>
+      <div class="tw"><div class="th"><h3>Recent Orders</h3><button class="ab2" onclick="showP('orders',document.querySelector('[onclick*=orders]'))">View All →</button></div><div class="ts">\n<table>\n<thead>\n<tr><th>ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Time</th><th>Actions</th></tr>\n</thead>\n<tbody id="dash-tb">\n<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:24px">Loading orders...</td></tr>\n</tbody>\n</table></div></div>
     </div>
 
     <!-- ORDERS -->
@@ -207,7 +206,7 @@ input:checked+.tog-sl:before{transform:translateX(22px);background:var(--black);
         <button class="ab2" onclick="filterOrders('delivered')">Delivered</button>
         <button class="ab2" onclick="filterOrders('declined')">Declined</button>
       </div>
-      <div class="tw"><div class="th"><h3>All Orders</h3><span id="orders-count" style="font-size:12px;color:var(--gray)">0 orders</span></div><div class="ts"><table><thead><tr><th>ID</th><th>Customer</th><th>Phone</th><th>Address</th><th>Type</th><th>Items</th><th>Total</th><th>Status</th><th>Time</th><th>Actions</th></tr></thead><tbody id="all-tb"></tbody></table></div></div>
+      <div class="tw"><div class="th"><h3>All Orders</h3><span id="orders-count" style="font-size:12px;color:var(--gray)">0 orders</span></div><div class="ts">\n<table>\n<thead>\n<tr><th>ID</th><th>Customer</th><th>Phone</th><th>Address</th><th>Type</th><th>Items</th><th>Total</th><th>Status</th><th>Time</th><th>Actions</th></tr>\n</thead>\n<tbody id="all-tb"></tbody>\n</table></div></div>
     </div>
 
     <!-- ANALYTICS -->
@@ -240,7 +239,7 @@ input:checked+.tog-sl:before{transform:translateX(22px);background:var(--black);
         </div>
         <p style="font-size:11px;color:var(--yellow);margin-top:10px">✅ Changes save to Firebase and reflect on main site instantly.</p>
       </div>
-      <div class="tw"><div class="th"><h3>Menu Items</h3><span id="menu-count" style="font-size:12px;color:var(--gray)"></span></div><div class="ts"><table><thead><tr><th>ID</th><th>Name</th><th>Category</th><th>Price</th><th>Actions</th></tr></thead><tbody id="menu-tb"></tbody></table></div></div>
+      <div class="tw"><div class="th"><h3>Menu Items</h3><span id="menu-count" style="font-size:12px;color:var(--gray)"></span></div><div class="ts">\n<table>\n<thead>\n<tr><th>ID</th><th>Name</th><th>Category</th><th>Price</th><th>Actions</th></tr>\n</thead>\n<tbody id="menu-tb"></tbody>\n</table></div></div>
     </div>
 
     <!-- PROMO CODES -->
@@ -255,31 +254,15 @@ input:checked+.tog-sl:before{transform:translateX(22px);background:var(--black);
         </div>
         <button class="sbtn" style="margin-top:6px" onclick="savePromo()">Create Code</button>
       </div>
-      <div class="tw"><div class="th"><h3>Active Codes</h3></div><div class="ts"><table><thead><tr><th>Code</th><th>Discount</th><th>Label</th><th>Expiry</th><th>Action</th></tr></thead><tbody id="promo-tb"></tbody></table></div></div>
-    </div>
-
-    <!-- RIDERS -->
-    <div class="panel" id="panel-riders">
-      <div class="scard" style="margin-bottom:20px">
-        <h3>Register Rider</h3>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-          <div class="fr"><label>Full Name</label><input class="fi" id="rr-name" placeholder="Rider Name"/></div>
-          <div class="fr"><label>Phone</label><input class="fi" id="rr-phone" placeholder="+92 3xx xxxxxxx"/></div>
-          <div class="fr"><label>Vehicle</label><input class="fi" id="rr-veh" placeholder="Honda CD 70" value="Motorcycle"/></div>
-          <div class="fr"><label>CNIC (optional)</label><input class="fi" id="rr-cnic" placeholder="3xxxx-xxxxxxx-x"/></div>
-        </div>
-        <button class="sbtn" style="margin-top:6px" onclick="regRider()">Register Rider</button>
-        <div class="rcode-box" id="rcode-box"><p style="font-size:12px;color:var(--gray)">Share this code with the rider</p><div class="rcode-big" id="rcode-show">——</div></div>
-      </div>
-      <div class="tw"><div class="th"><h3>Registered Riders</h3></div><div class="ts"><table><thead><tr><th>Name</th><th>Phone</th><th>Vehicle</th><th>Code</th><th>Status</th><th>Action</th></tr></thead><tbody id="riders-tb"></tbody></table></div></div>
+      <div class="tw"><div class="th"><h3>Active Codes</h3></div><div class="ts">\n<table>\n<thead>\n<tr><th>Code</th><th>Discount</th><th>Label</th><th>Expiry</th><th>Action</th></tr>\n</thead>\n<tbody id="promo-tb"></tbody>\n</table></div></div>
     </div>
 
     <!-- REVIEWS -->
     <div class="panel" id="panel-reviews">
-      <div class="tw"><div class="th"><h3>Customer Reviews</h3></div><div class="ts"><table><thead><tr><th>Name</th><th>Stars</th><th>Review</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="reviews-tb"></tbody></table></div></div>
+      <div class="tw"><div class="th"><h3>Customer Reviews</h3></div><div class="ts">\n<table>\n<thead>\n<tr><th>Name</th><th>Stars</th><th>Review</th><th>Date</th><th>Status</th><th>Actions</th></tr>\n</thead>\n<tbody id="reviews-tb"></tbody>\n</table></div></div>
     </div>
 
-    <!-- BRANDING — changes apply to ALL pages via Firebase real-time -->
+    <!-- BRANDING -->
     <div class="panel" id="panel-branding">
       <p style="font-size:13px;color:var(--yellow);margin-bottom:20px">⚡ All branding changes are saved to Firebase and reflect on the main site in real time.</p>
       <div class="sgs">
@@ -422,8 +405,7 @@ input:checked+.tog-sl:before{transform:translateX(22px);background:var(--black);
             <h3 style="color:#F44336">Danger Zone</h3>
             <p style="font-size:13px;color:var(--gray);margin-bottom:16px">Permanent and irreversible.</p>
             <button class="dbtn" style="width:100%;margin-bottom:10px" onclick="if(confirm('Clear ALL orders from Firebase?'))clearAllOrders()">Clear All Orders</button>
-            <button class="dbtn" style="width:100%;margin-bottom:10px" onclick="if(confirm('Clear ALL riders?'))clearAllRiders()">Clear All Riders</button>
-            <button class="dbtn" style="width:100%" onclick="if(confirm('Reset ALL settings?'))resetAllSettings()">Reset All Settings</button>
+            <button class="dbtn" style="width:100%;margin-bottom:10px" onclick="if(confirm('Clear ALL settings?'))resetAllSettings()">Reset All Settings</button>
           </div>
         </div>
       </div>
@@ -475,10 +457,9 @@ if (localStorage.getItem('tp_asess')) {
 const PTitles = {
   dashboard:'Dash<span>board</span>', orders:'All <span>Orders</span>',
   analytics:'Ana<span>lytics</span>', menu:'Menu <span>Manager</span>',
-  promo:'Promo <span>Codes</span>',   riders:'Rider <span>Management</span>',
-  reviews:'Customer <span>Reviews</span>', branding:'Brand<span>ing</span>',
-  content:'Con<span>tent</span>',     maintenance:'Main<span>tenance</span>',
-  dev:'Dev <span>Settings</span>'
+  promo:'Promo <span>Codes</span>',   reviews:'Customer <span>Reviews</span>',
+  branding:'Brand<span>ing</span>', content:'Con<span>tent</span>',
+  maintenance:'Main<span>tenance</span>', dev:'Dev <span>Settings</span>'
 };
 function showP(name, el) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
@@ -493,13 +474,12 @@ function showP(name, el) {
 
 // ── State ──
 let allOrders  = {};
-let allRiders  = {};
 let allPromos  = {};
 let alertOId   = null;
 let knownIds   = new Set();
 let orderFilter = 'all';
 let isFirstLoad = true;
-let localMenu   = [];  // admin's local copy of menu
+let localMenu   = [];
 
 // ── Wait for TP module ──
 function waitTP() {
@@ -528,12 +508,10 @@ async function startAdmin() {
   setConnState('ok', 'Firebase Connected ✅');
   logC('Firebase connected ✅', 'info');
 
-  // Load local menu from TP.MENU
   localMenu = [...(window.TP?.MENU || [])];
   renderMenuTable();
 
   // ── REAL-TIME LISTENERS ──
-  // Orders — updates instantly
   window.TP.fbListen('orders', data => {
     if (!data) { allOrders = {}; renderDash(); renderAllOrders(); return; }
     const incoming = Object.entries(data).map(([k,v]) => ({...v, _fbKey:k, orderId:v.orderId||k}));
@@ -548,14 +526,11 @@ async function startAdmin() {
         logC('Order '+key.slice(-6)+' status changed: '+d.status, 'info');
       }
     });
-    // Remove deleted orders
-    Object.keys(allOrders).forEach(k => { if (!data[k]) delete allOrders[k]; });
     isFirstLoad = false;
     renderDash();
     renderAllOrders();
   });
 
-  // Settings — load current values into branding forms
   window.TP.fbListen('settings', s => {
     if (!s) return;
     const f = id => document.getElementById(id);
@@ -574,30 +549,19 @@ async function startAdmin() {
     if (f('h-sub')  && s.heroSub)        f('h-sub').value  = s.heroSub;
     if (f('b-col')  && s.accentColor) { f('b-col').value = s.accentColor; f('b-col-hex').value = s.accentColor; }
     if (f('b-bg')   && s.bgColor)     { f('b-bg').value  = s.bgColor;  f('b-bg-hex').value  = s.bgColor; }
-    // Apply colors to admin panel too
     if (s.accentColor) document.documentElement.style.setProperty('--yellow', s.accentColor);
     if (s.bgColor)     document.documentElement.style.setProperty('--black',  s.bgColor);
   });
 
-  // Riders
-  window.TP.fbListen('riders', data => {
-    allRiders = data ? Object.entries(data).reduce((acc,[k,v]) => { acc[k]={...v,_fbKey:k}; return acc; }, {}) : {};
-    renderRidersTable();
-    document.getElementById('s-rid') && (document.getElementById('s-rid').textContent = Object.keys(allRiders).length);
-  });
-
-  // Promo codes
   window.TP.fbListen('promoCodes', data => {
     allPromos = data || {};
     renderPromoTable();
   });
 
-  // Reviews
   window.TP.fbListen('reviews', data => {
     renderReviewsTable(data ? Object.entries(data).map(([k,v]) => ({...v,_fbKey:k})) : []);
   });
 
-  // Menu items overrides
   window.TP.fbListen('menuItems', data => {
     if (!data) return;
     Object.entries(data).forEach(([id, item]) => {
@@ -650,7 +614,7 @@ function renderAllOrders() {
 function renderOrderRows(tbody, orders, full) {
   if (!tbody) return;
   if (!orders.length) {
-    tbody.innerHTML = `<tr><td colspan="${full?10:7}" style="text-align:center;color:var(--gray);padding:32px">No orders found</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="${full?9:7}" style="text-align:center;color:var(--gray);padding:32px">No orders found</td></tr>`;
     return;
   }
   tbody.innerHTML = orders.map(o => {
@@ -671,7 +635,7 @@ function renderOrderRows(tbody, orders, full) {
       <td style="display:flex;gap:4px;flex-wrap:wrap;min-width:200px">
         ${st==='pending'   ? `<button class="ab2 g" onclick="setOStatus('${id}','accepted')">Accept</button><button class="ab2 r" onclick="setOStatus('${id}','declined')">Decline</button>` : ''}
         ${st==='accepted'  ? `<button class="ab2" onclick="setOStatus('${id}','preparing')">Preparing</button>` : ''}
-        ${st==='preparing' ? `<button class="ab2" onclick="openAssignRider('${id}')">Assign Rider</button>` : ''}
+        ${st==='preparing' ? `<button class="ab2" onclick="setOStatus('${id}','onway')">On Way</button>` : ''}
         ${st==='onway'     ? `<button class="ab2 g" onclick="setOStatus('${id}','delivered')">Delivered</button>` : ''}
         ${locLink}
       </td>
@@ -708,18 +672,6 @@ async function doOAOrder(status) {
   alertOId2 = null;
 }
 
-// ── Assign Rider ──
-function openAssignRider(orderId) {
-  const riders = Object.values(allRiders);
-  if (!riders.length) { showToast('No riders registered','error'); return; }
-  const name = prompt('Rider name:\n'+riders.map(r=>r.name+' ('+r.phone+')').join('\n'));
-  if (!name) return;
-  const r = riders.find(rd => rd.name.toLowerCase().includes(name.toLowerCase())) || riders[0];
-  window.TP.updateOrderStatus(orderId, 'onway', { riderName:r.name, riderPhone:r.phone, riderVehicle:r.vehicle||'Motorcycle' })
-    .then(() => showToast('Rider assigned & status → On Way ✅'))
-    .catch(e => showToast('Failed: '+e.message,'error'));
-}
-
 // ── Menu Manager ──
 function renderMenuTable() {
   const tb = document.getElementById('menu-tb'); if (!tb) return;
@@ -751,11 +703,7 @@ async function saveMenuItem() {
   if (!id||!name) { showToast('ID and Name required','error'); return; }
   const item = { id, name, cat, price, desc, img, badge, hot:badge==='hot', bestseller:badge==='bestseller' };
   if (incRaw) item.includes = incRaw.split(',').map(s=>s.trim()).filter(Boolean);
-
-  // Save to Firebase menuItems — index.html listens and updates live
   await window.TP.fbUpdate('menuItems/'+id, item);
-
-  // Also update TP.MENU in memory
   const idx = localMenu.findIndex(m => m.id === id);
   if (idx >= 0) Object.assign(localMenu[idx], item); else localMenu.push(item);
   renderMenuTable();
@@ -824,38 +772,6 @@ async function deletePromo(code) {
   showToast('Code deleted ✅');
 }
 
-// ── Riders ──
-async function regRider() {
-  const name  = document.getElementById('rr-name').value.trim();
-  const phone = document.getElementById('rr-phone').value.trim();
-  if (!name||!phone) { showToast('Name and phone required','error'); return; }
-  const code = Math.random().toString(36).substring(2,8).toUpperCase();
-  const data = { name, phone, vehicle:document.getElementById('rr-veh').value.trim()||'Motorcycle', cnic:document.getElementById('rr-cnic').value.trim(), code, status:'active', timestamp:Date.now() };
-  await window.TP.fbPush('riders', data);
-  document.getElementById('rcode-show').textContent = code;
-  document.getElementById('rcode-box').style.display = 'block';
-  showToast('Rider registered! Code: '+code+' ✅');
-  ['rr-name','rr-phone','rr-cnic'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
-}
-
-function renderRidersTable() {
-  const tb = document.getElementById('riders-tb'); if (!tb) return;
-  const list = Object.values(allRiders);
-  if (!list.length) { tb.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:24px">No riders registered</td></tr>'; return; }
-  tb.innerHTML = list.map(r => `<tr>
-    <td>${r.name}</td><td>${r.phone}</td><td>${r.vehicle||'—'}</td>
-    <td style="font-family:monospace;color:var(--yellow);font-size:16px;letter-spacing:3px">${r.code}</td>
-    <td><span class="bd bde">${r.status||'active'}</span></td>
-    <td><button class="ab2 r" onclick="removeRider('${r._fbKey}')">Remove</button></td>
-  </tr>`).join('');
-}
-
-async function removeRider(fbKey) {
-  if (!confirm('Remove rider?')) return;
-  await window.TP.fbDelete('riders/'+fbKey);
-  showToast('Rider removed ✅');
-}
-
 // ── Reviews ──
 function renderReviewsTable(revs) {
   const tb = document.getElementById('reviews-tb'); if (!tb) return;
@@ -876,7 +792,7 @@ function renderReviewsTable(revs) {
 async function approveReview(key) { await window.TP.fbUpdate('reviews/'+key, {approved:true}); showToast('Review approved ✅'); }
 async function deleteReview(key)  { if(!confirm('Delete review?'))return; await window.TP.fbDelete('reviews/'+key); showToast('Review deleted ✅'); }
 
-// ── Branding — ALL changes save to Firebase & reflect on main site ──
+// ── Branding ──
 async function saveBrand() {
   const s = {
     restaurantName: document.getElementById('b-name').value.trim(),
@@ -952,7 +868,6 @@ async function saveHours() {
   showToast('Hours saved ✅');
 }
 
-// Firebase merge helper — reads current settings, merges, saves back
 async function fbMerge(newData) {
   const current = (await window.TP.fbGet('settings')) || {};
   await window.TP.fbSave('settings', {...current, ...newData});
@@ -965,7 +880,6 @@ function initCharts() {
   const yellow  = 'rgba(245,200,66,';
   const opts    = { responsive:true, plugins:{ legend:{ labels:{ color:'#888', boxWidth:12 }}}, scales:{ x:{ ticks:{ color:'#555' }, grid:{ color:'rgba(255,255,255,.04)' }}, y:{ ticks:{ color:'#555' }, grid:{ color:'rgba(255,255,255,.04)' }}}};
 
-  // Revenue chart
   const days = []; const revByDay = [];
   for (let i=6; i>=0; i--) {
     const d = new Date(); d.setDate(d.getDate()-i);
@@ -976,15 +890,12 @@ function initCharts() {
   }
   buildChart('ch-rev',{ type:'bar', data:{ labels:days, datasets:[{ label:'Revenue (Rs.)', data:revByDay, backgroundColor:yellow+'.5)', borderColor:yellow+'1)', borderWidth:2, borderRadius:6 }]}, options:opts});
 
-  // Status donut
   const statCounts = {};
   orders.forEach(o => { statCounts[o.status||'pending'] = (statCounts[o.status||'pending']||0)+1; });
   buildChart('ch-stat',{ type:'doughnut', data:{ labels:Object.keys(statCounts), datasets:[{ data:Object.values(statCounts), backgroundColor:['#FFA500','#f5c842','#2196F3','#9C27B0','#4CAF50','#F44336'] }]}, options:{responsive:true,plugins:{legend:{labels:{color:'#888'}}}}});
 
-  // Orders per day
   buildChart('ch-ord',{ type:'line', data:{ labels:days, datasets:[{ label:'Orders', data:days.map((_,i) => { const d=new Date(); d.setDate(d.getDate()-(6-i)); return orders.filter(o=>new Date(o.timestamp||0).toDateString()===d.toDateString()).length; }), borderColor:yellow+'1)', backgroundColor:yellow+'.1)', tension:.4, fill:true }]}, options:opts});
 
-  // Top items
   const itemCounts = {};
   orders.forEach(o => (o.items||[]).forEach(i => { itemCounts[i.name] = (itemCounts[i.name]||0)+i.qty; }));
   const sorted = Object.entries(itemCounts).sort((a,b)=>b[1]-a[1]).slice(0,6);
@@ -1026,10 +937,8 @@ function unlockDev(){if(document.getElementById('dev-pw').value===gDP()){documen
 function savePWs(){const a=document.getElementById('np-admin').value,d=document.getElementById('np-dev').value;if(a)localStorage.setItem('tp_apw',a);if(d)localStorage.setItem('tp_dpw',d);showToast('Passwords updated ✅');}
 function applyCSS(){const css=document.getElementById('custom-css').value;let s=document.getElementById('cust-sty');if(!s){s=document.createElement('style');s.id='cust-sty';document.head.appendChild(s);}s.textContent=css;showToast('CSS injected ✅');}
 async function clearAllOrders(){await window.TP.fbDelete('orders');allOrders={};renderDash();renderAllOrders();showToast('Orders cleared ✅');}
-async function clearAllRiders(){await window.TP.fbDelete('riders');allRiders={};renderRidersTable();showToast('Riders cleared ✅');}
 async function resetAllSettings(){await window.TP.fbDelete('settings');showToast('Settings reset ✅');}
 
-// ── Console log ──
 function logC(msg, type) {
   const c = document.getElementById('err-con'); if (!c) return;
   const d = document.createElement('div'); d.className = type||'dbg';
