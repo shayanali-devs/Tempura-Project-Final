@@ -158,8 +158,7 @@ textarea.fi{resize:vertical;min-height:74px;}
 </footer>
 
 <!-- Parse SDK FIRST, then main.js -->
-<script src="https://unpkg.com/parse/dist/parse.min.js"></script>
-<script src="main.js"></script>
+<script type="module" src="main.js"></script>
 <script>
 // ============================================================
 //  CHECKOUT PAGE — FULLY FIXED
@@ -351,29 +350,16 @@ window.placeOrder = async function() {
   // Show placing overlay
   document.getElementById('placing-overlay').classList.add('show');
 
-  // Wait for Parse to be ready
-  const ready = await TP.waitForParse(8000);
-  if (!ready) {
-    document.getElementById('placing-overlay').classList.remove('show');
-    TP.showToast('Server error. Please use WhatsApp order instead.', 'error');
-    return;
-  }
-
   try {
-    const result = await TP.b4aSave('Orders', order);
-    if (!result) throw new Error('Save returned null');
-    console.log('[Checkout] Order saved:', result.id, 'orderId:', order.orderId);
-
-    // Clear cart ONLY after successful save
+    await TP.saveOrder(order);
+    console.log('[Checkout] Order saved to Firebase. orderId:', order.orderId);
     TP.clearCart();
     document.getElementById('placing-overlay').classList.remove('show');
-
-    // Redirect to tracking with our orderId
     location.href = 'tracking.html?order=' + order.orderId;
   } catch(e) {
     document.getElementById('placing-overlay').classList.remove('show');
-    console.error('[Checkout] Save error:', e.message);
-    TP.showToast('Could not place order. Try WhatsApp option.', 'error');
+    console.error('[Checkout] Firebase save error:', e.message);
+    TP.showToast('Could not save order. Try WhatsApp option.', 'error');
   }
 };
 
@@ -384,10 +370,8 @@ window.orderWA = function() {
   const cart  = TP.getCart();
   const order = buildOrderData(cart);
 
-  // Save to Back4App silently in background
-  TP.waitForParse(5000).then(ready => {
-    if (ready) TP.b4aSave('Orders', order).catch(() => {});
-  });
+  // Save to Firebase silently in background
+  TP.saveOrder(order).catch(() => {});
 
   // Build WhatsApp message
   const name  = document.getElementById('inp-name').value.trim();
@@ -413,7 +397,12 @@ window.orderWA = function() {
 
 // ─── INIT ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  renderAuth();
+  // Listen for Firebase auth state
+  TP.initAuth(user => {
+    if (user) currentUser = { name:user.displayName, uid:user.uid, email:user.email, photo:user.photoURL };
+    else currentUser = null;
+    renderAuth();
+  });
   renderCart();
 
   // Scroll nav handler
