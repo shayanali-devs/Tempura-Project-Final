@@ -22,12 +22,31 @@ body{cursor:auto!important;}#tp-cur{display:none!important;}
 .fi{width:100%;background:var(--black4);border:1px solid rgba(255,255,255,.1);color:var(--white);padding:12px 14px;border-radius:var(--radius-s);font-size:15px;font-family:Barlow,sans-serif;outline:none;transition:border-color .3s;}
 .fi:focus{border-color:var(--yellow);}
 .fi::placeholder{color:var(--gray2);}
-textarea.fi{resize:vertical;min-height:74px;}
+textarea.fi{resize:vertical;min-height:80px;}
 .del-toggle{display:flex;gap:10px;margin-bottom:6px;}
 .del-opt{flex:1;padding:12px;background:var(--black4);border:2px solid rgba(255,255,255,.1);border-radius:var(--radius-s);text-align:center;cursor:pointer;font-weight:700;font-size:15px;color:var(--white);transition:var(--tr);}
 .del-opt.active{border-color:var(--yellow);color:var(--yellow);background:rgba(245,200,66,.06);}
 .loc-btn{width:100%;margin-top:8px;padding:11px;background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.24);color:var(--yellow);border-radius:var(--radius-s);font-weight:700;font-size:14px;cursor:pointer;transition:var(--tr);}
 .loc-btn:hover{background:rgba(245,200,66,.15);}
+/* ── GOOGLE AUTH SECTION ── */
+.auth-panel{background:var(--black3);border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);padding:20px 26px;margin-bottom:18px;}
+.auth-panel h2{font-family:var(--font);font-size:20px;color:var(--white);letter-spacing:1px;margin-bottom:4px;}
+.auth-panel p{font-size:13px;color:var(--gray);margin-bottom:16px;}
+.btn-google{display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;color:#333;padding:12px 20px;border-radius:28px;font-weight:700;font-size:14px;border:none;cursor:pointer;width:100%;transition:var(--tr);box-shadow:0 2px 8px rgba(0,0,0,.3);}
+.btn-google:hover{transform:scale(1.02);box-shadow:0 4px 16px rgba(0,0,0,.4);}
+.btn-google img{width:20px;height:20px;}
+.user-card{display:flex;align-items:center;gap:14px;background:rgba(245,200,66,.06);border:1px solid rgba(245,200,66,.2);border-radius:var(--radius-s);padding:12px 16px;}
+.user-avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--yellow);}
+.user-avatar-fallback{width:44px;height:44px;border-radius:50%;background:var(--yellow);color:var(--black);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;flex-shrink:0;}
+.user-info{flex:1;min-width:0;}
+.user-name{font-weight:700;font-size:14px;color:var(--white);}
+.user-email{font-size:12px;color:var(--gray);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.user-benefit{font-size:11px;color:#4CAF50;margin-top:3px;}
+.btn-signout{background:none;border:1px solid rgba(255,255,255,.1);color:var(--gray);padding:6px 14px;border-radius:16px;font-size:12px;cursor:pointer;white-space:nowrap;transition:var(--tr);}
+.btn-signout:hover{border-color:var(--yellow);color:var(--yellow);}
+/* SIGN-IN BENEFITS (no discount claim) */
+.auth-benefits{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+.auth-benefit{font-size:12px;color:var(--gray);display:flex;align-items:center;gap:4px;}
 /* ORDER SUMMARY */
 .co-summary{background:var(--black3);border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);padding:26px;position:sticky;top:84px;}
 .co-summary h2{font-family:var(--font);font-size:22px;color:var(--white);letter-spacing:1px;margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:11px;}
@@ -51,7 +70,9 @@ textarea.fi{resize:vertical;min-height:74px;}
 .totrow.disc{color:#4CAF50;}
 .promo-row{display:flex;gap:8px;margin-bottom:14px;}
 .promo-row input{flex:1;font-size:13px;padding:8px 11px;}
-.pa-btn{padding:0 16px;background:var(--yellow);color:var(--black);border:none;border-radius:var(--radius-s);font-weight:700;cursor:pointer;font-size:13px;}
+.pa-btn{padding:0 16px;background:var(--yellow);color:var(--black);border:none;border-radius:var(--radius-s);font-weight:700;cursor:pointer;font-size:13px;transition:var(--tr);}
+.pa-btn:hover{background:var(--yellow-d);}
+.promo-hint{font-size:11px;color:var(--gray2);margin-bottom:8px;}
 .co-btns{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
 .btn-wa{display:flex;align-items:center;justify-content:center;gap:10px;background:#25D366;color:#fff;padding:13px;border-radius:28px;font-weight:700;font-size:15px;border:none;cursor:pointer;width:100%;transition:var(--tr);}
 .btn-wa:hover{background:#128C7E;transform:translateY(-2px);}
@@ -63,7 +84,7 @@ textarea.fi{resize:vertical;min-height:74px;}
 @keyframes spin2{to{transform:rotate(360deg);}}
 .placing-text{font-family:var(--font);font-size:24px;color:var(--yellow);letter-spacing:1px;}
 /* ── LIVE CHAT ── */
-.chat-panel{background:var(--black3);border:1px solid rgba(245,200,66,.2);border-radius:var(--radius);margin-top:18px;overflow:hidden;}
+.chat-panel{background:var(--black3);border:1px solid rgba(245,200,66,.2);border-radius:var(--radius);margin-top:0;overflow:hidden;}
 .chat-header{background:rgba(245,200,66,.08);border-bottom:1px solid rgba(245,200,66,.15);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;}
 .chat-header-left{display:flex;align-items:center;gap:10px;}
 .chat-avatar{width:36px;height:36px;background:var(--yellow);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
@@ -78,17 +99,13 @@ textarea.fi{resize:vertical;min-height:74px;}
 .chat-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;}
 .chat-msgs::-webkit-scrollbar{width:3px;}
 .chat-msgs::-webkit-scrollbar-thumb{background:var(--yellow);}
-/* Message bubbles */
 .msg{display:flex;flex-direction:column;max-width:78%;}
 .msg.sent{align-self:flex-end;align-items:flex-end;}
 .msg.recv{align-self:flex-start;align-items:flex-start;}
 .msg-bubble{padding:9px 13px;border-radius:16px;font-size:13px;line-height:1.5;word-break:break-word;}
-.msg.sent .msg-bubble{background:var(--yellow);color:var(--black);border-bottom-right-radius:4px;}
+.msg.sent .msg-bubble{background:var(--yellow);color:var(--black);border-bottom-right-radius:4px;font-weight:600;}
 .msg.recv .msg-bubble{background:var(--black4);color:var(--white);border-bottom-left-radius:4px;border:1px solid rgba(255,255,255,.07);}
 .msg-meta{display:flex;align-items:center;gap:4px;margin-top:3px;font-size:10px;color:var(--gray);}
-.msg-time{color:var(--gray);}
-/* Read receipts: ✓ sent, ✓✓ delivered/read */
-.msg-tick{font-size:11px;}
 .msg-tick.sent-only{color:var(--gray);}
 .msg-tick.read{color:#53bdeb;}
 .chat-typing{font-size:11px;color:var(--gray);padding:0 14px 6px;min-height:18px;font-style:italic;}
@@ -97,8 +114,6 @@ textarea.fi{resize:vertical;min-height:74px;}
 .chat-input-row input:focus{border-color:var(--yellow);}
 .chat-send{background:var(--yellow);color:var(--black);border:none;width:38px;height:38px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:var(--tr);}
 .chat-send:hover{background:var(--yellow-d);}
-.chat-locked{padding:18px;text-align:center;}
-.chat-locked p{font-size:13px;color:var(--gray);margin-bottom:12px;}
 </style>
 </head>
 <body>
@@ -128,8 +143,18 @@ textarea.fi{resize:vertical;min-height:74px;}
   </div>
 
   <div class="co-wrap">
-    <!-- LEFT: FORM -->
+    <!-- LEFT -->
     <div>
+
+      <!-- GOOGLE AUTH PANEL -->
+      <div class="auth-panel" id="auth-panel">
+        <h2>Sign In</h2>
+        <p>Sign in to save your details for faster checkout next time.</p>
+        <div id="auth-content">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
       <div class="co-panel">
         <h2>Delivery Type</h2>
         <div class="del-toggle">
@@ -143,7 +168,10 @@ textarea.fi{resize:vertical;min-height:74px;}
         <div class="fg"><label class="fl">Full Name *</label><input class="fi" id="inp-name" placeholder="Your name"/></div>
         <div class="fg"><label class="fl">Phone Number *</label><input class="fi" id="inp-phone" type="tel" placeholder="+92 3xx xxxxxxx"/></div>
         <div id="del-fields">
-          <div class="fg"><label class="fl">Delivery Address *</label><textarea class="fi" id="inp-addr" rows="3" placeholder="House #, Street, Area, Landmark — be specific!"></textarea></div>
+          <div class="fg">
+            <label class="fl">Delivery Address *</label>
+            <textarea class="fi" id="inp-addr" rows="3" placeholder="House #, Street, Area, Landmark — be specific!"></textarea>
+          </div>
           <div class="fg">
             <label class="fl">Live Location (optional)</label>
             <button class="loc-btn" id="loc-btn" onclick="getLocation()">📍 Share My Live Location</button>
@@ -160,14 +188,14 @@ textarea.fi{resize:vertical;min-height:74px;}
             <div class="chat-avatar">🥔</div>
             <div>
               <div class="chat-title">Chat with Us</div>
-              <div class="chat-online"><div class="chat-dot"></div><span id="chat-status-lbl">Online</span></div>
+              <div class="chat-online"><div class="chat-dot"></div><span>Online</span></div>
             </div>
           </div>
           <button class="chat-toggle" id="chat-toggle-btn" onclick="toggleChat()">Open Chat</button>
         </div>
         <div class="chat-body" id="chat-body">
           <div class="chat-msgs" id="chat-msgs">
-            <div class="msg recv"><div class="msg-bubble">👋 Hi! Need help with your order? Ask us anything!</div><div class="msg-meta"><span class="msg-time">just now</span></div></div>
+            <div class="msg recv"><div class="msg-bubble">👋 Hi! Need help with your order? Ask us anything!</div><div class="msg-meta"><span>just now</span></div></div>
           </div>
           <div class="chat-typing" id="chat-typing"></div>
           <div class="chat-input-row">
@@ -178,14 +206,16 @@ textarea.fi{resize:vertical;min-height:74px;}
       </div>
     </div>
 
-    <!-- RIGHT: SUMMARY -->
+    <!-- RIGHT: ORDER SUMMARY -->
     <div class="co-summary">
       <h2>Order Summary</h2>
       <div class="cart-list" id="cart-list"></div>
+      <p class="promo-hint">Have a promo code? Enter it below. Codes are created by admin.</p>
       <div class="promo-row">
-        <input class="fi" id="promo-inp" placeholder="Promo code (APP20, FIRSTORDER)" style="font-size:13px;padding:8px 10px"/>
-        <button class="pa-btn" onclick="applyPromo()">Apply</button>
+        <input class="fi" id="promo-inp" placeholder="Enter promo code" style="font-size:13px;padding:8px 10px;text-transform:uppercase"/>
+        <button class="pa-btn" id="promo-btn" onclick="applyPromo()">Apply</button>
       </div>
+      <div id="promo-applied" style="display:none;font-size:12px;color:#4CAF50;margin-bottom:8px;"></div>
       <div>
         <div class="totrow"><span>Subtotal</span><span id="t-sub">Rs. 0</span></div>
         <div class="totrow disc" id="disc-row" style="display:none"><span>Discount</span><span id="t-disc">-Rs. 0</span></div>
@@ -209,6 +239,7 @@ textarea.fi{resize:vertical;min-height:74px;}
   <div class="footer-bottom" style="justify-content:center"><span>© <span id="yr"></span> Tempura Potato · Milad Chock, Lahore</span></div>
 </footer>
 
+<div id="tp-toast"></div>
 <script type="module" src="main.js"></script>
 <script>
 document.getElementById('yr').textContent = new Date().getFullYear();
@@ -217,19 +248,105 @@ const WA_NUM         = '923044888775';
 const BASE_DEL_FEE   = 60;
 const FREE_DEL_ABOVE = 1200;
 
-let delType  = 'delivery';
-let discount = 0;
-let userLoc  = null;
+let delType     = 'delivery';
+let discount    = 0;
+let promoCode   = '';   // active promo code string
+let userLoc     = null;
+let firebaseUser = null; // actual Firebase user object
 
 // ── NAV ──
-document.getElementById('nav-ham').addEventListener('click',()=>{
+document.getElementById('nav-ham').addEventListener('click', () => {
   document.getElementById('mobile-menu').classList.toggle('open');
   document.body.classList.toggle('no-scroll');
 });
-window.closeMenu = ()=>{ document.getElementById('mobile-menu').classList.remove('open'); document.body.classList.remove('no-scroll'); };
+window.closeMenu = () => { document.getElementById('mobile-menu').classList.remove('open'); document.body.classList.remove('no-scroll'); };
+
+// ─────────────────────────────────────────────
+//  GOOGLE AUTH — Real Firebase authentication
+// ─────────────────────────────────────────────
+function renderAuth(user) {
+  const content = document.getElementById('auth-content');
+  if (user) {
+    // User is signed in — show profile card
+    const avatarHtml = user.photoURL
+      ? `<img class="user-avatar" src="${user.photoURL}" alt="${user.displayName}" onerror="this.style.display='none'">`
+      : `<div class="user-avatar-fallback">${(user.displayName||'?')[0].toUpperCase()}</div>`;
+    content.innerHTML = `
+      <div class="user-card">
+        ${avatarHtml}
+        <div class="user-info">
+          <div class="user-name">${user.displayName || 'Customer'}</div>
+          <div class="user-email">${user.email || ''}</div>
+          <div class="user-benefit">✅ Details auto-filled below</div>
+        </div>
+        <button class="btn-signout" onclick="doSignOut()">Sign out</button>
+      </div>`;
+    // Auto-fill name and load saved profile
+    loadUserProfile(user);
+  } else {
+    // Not signed in
+    content.innerHTML = `
+      <button class="btn-google" onclick="doSignIn()">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google"/>
+        Continue with Google
+      </button>
+      <div class="auth-benefits">
+        <div class="auth-benefit">⚡ Faster checkout next time</div>
+        <div class="auth-benefit">📍 Save your address</div>
+        <div class="auth-benefit">📦 Track all your orders</div>
+      </div>`;
+  }
+}
+
+async function doSignIn() {
+  const btn = document.getElementById('auth-content').querySelector('.btn-google');
+  if (btn) { btn.textContent = 'Signing in...'; btn.disabled = true; }
+  // Wait for TP to be ready
+  let tries = 0;
+  while (!window.TP?.signInGoogle && tries < 40) { await new Promise(r => setTimeout(r,150)); tries++; }
+  if (!window.TP?.signInGoogle) { showFallbackToast('Still loading — please wait a moment', 'error'); return; }
+  try {
+    await window.TP.signInGoogle();
+    // Auth state listener in initAuth will trigger renderAuth automatically
+  } catch(e) {
+    console.error('Sign in error:', e);
+    showFallbackToast('Sign in failed: ' + (e.message||'try again'), 'error');
+    renderAuth(null);
+  }
+}
+
+async function doSignOut() {
+  if (!window.TP?.signOutUser) return;
+  await window.TP.signOutUser();
+  firebaseUser = null;
+  // Don't reset name/phone fields — let user keep what they typed
+  showFallbackToast('Signed out');
+}
+
+async function loadUserProfile(user) {
+  if (!user || !window.TP?.getUserProfile) return;
+  try {
+    const profile = await window.TP.getUserProfile(user.uid);
+    // Auto-fill name
+    const nameEl = document.getElementById('inp-name');
+    if (nameEl && !nameEl.value) nameEl.value = profile?.name || user.displayName || '';
+    // Auto-fill phone
+    const phoneEl = document.getElementById('inp-phone');
+    if (phoneEl && !phoneEl.value && profile?.phone) phoneEl.value = profile.phone;
+    // Auto-fill address
+    const addrEl = document.getElementById('inp-addr');
+    if (addrEl && !addrEl.value && profile?.lastAddress) addrEl.value = profile.lastAddress;
+    // Auto-fill location
+    if (profile?.lastLocation) {
+      userLoc = { lat: profile.lastLocation.lat, lng: profile.lastLocation.lng };
+      const locEl = document.getElementById('loc-status');
+      if (locEl) { locEl.textContent = '📍 Saved location loaded'; locEl.style.color = 'var(--yellow)'; }
+    }
+  } catch(e) {}
+}
 
 // ── DELIVERY TOGGLE ──
-window.setDel = function(t){
+window.setDel = function(t) {
   delType = t;
   document.getElementById('opt-del').classList.toggle('active', t==='delivery');
   document.getElementById('opt-pick').classList.toggle('active', t==='pickup');
@@ -238,17 +355,19 @@ window.setDel = function(t){
 };
 
 // ── CART ──
-function renderCart(){
+function renderCart() {
   const cart = window.TP?.getCart() || JSON.parse(localStorage.getItem('tp_cart_v4')||'[]');
   const list = document.getElementById('cart-list');
-  if(!cart.length){
-    list.innerHTML=`<div class="empty-cart"><div class="ec-icon">🛒</div><p style="color:var(--gray);margin-bottom:14px">Your cart is empty</p><a href="index.html#menu" class="btn-p" style="display:inline-block;font-size:14px;padding:10px 22px">Browse Menu</a></div>`;
-    document.getElementById('t-sub').textContent='Rs. 0'; document.getElementById('t-total').textContent='Rs. 0';
-    document.getElementById('t-fee').textContent=delType==='delivery'?'Rs. '+BASE_DEL_FEE:'Free';
-    document.getElementById('disc-row').style.display='none'; document.getElementById('free-note').style.display='none';
+  if (!cart.length) {
+    list.innerHTML = `<div class="empty-cart"><div class="ec-icon">🛒</div><p style="color:var(--gray);margin-bottom:14px">Your cart is empty</p><a href="index.html#menu" class="btn-p" style="display:inline-block;font-size:14px;padding:10px 22px">Browse Menu</a></div>`;
+    document.getElementById('t-sub').textContent   = 'Rs. 0';
+    document.getElementById('t-total').textContent = 'Rs. 0';
+    document.getElementById('t-fee').textContent   = delType==='delivery' ? 'Rs. '+BASE_DEL_FEE : 'Free';
+    document.getElementById('disc-row').style.display = 'none';
+    document.getElementById('free-note').style.display = 'none';
     return;
   }
-  list.innerHTML=cart.map(item=>`
+  list.innerHTML = cart.map(item => `
     <div class="ci">
       <img class="ci-img" src="${item.img||'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=100&q=60'}" alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=100&q=60'"/>
       <div class="ci-info">
@@ -265,267 +384,282 @@ function renderCart(){
   calcTotals(cart);
 }
 
-function calcTotals(cart){
-  const sub=cart.reduce((s,c)=>s+c.price*c.qty,0);
-  const disc=Math.round(sub*discount);
-  const fee=delType==='delivery'?(sub>=FREE_DEL_ABOVE?0:BASE_DEL_FEE):0;
-  document.getElementById('t-sub').textContent='Rs. '+sub;
-  document.getElementById('t-fee').textContent=fee?'Rs. '+fee:'Free 🎉';
-  document.getElementById('t-total').textContent='Rs. '+(sub-disc+fee);
-  const dr=document.getElementById('disc-row');
-  if(disc){dr.style.display=''; document.getElementById('t-disc').textContent='-Rs. '+disc;}else dr.style.display='none';
-  const fn=document.getElementById('free-note');
-  if(delType==='delivery'&&sub<FREE_DEL_ABOVE&&sub>0){fn.style.display='block';fn.textContent=`Add Rs. ${FREE_DEL_ABOVE-sub} more for FREE delivery!`;}else fn.style.display='none';
+function calcTotals(cart) {
+  const sub  = cart.reduce((s,c) => s+c.price*c.qty, 0);
+  const disc = Math.round(sub * discount);
+  const fee  = delType==='delivery' ? (sub>=FREE_DEL_ABOVE ? 0 : BASE_DEL_FEE) : 0;
+  document.getElementById('t-sub').textContent   = 'Rs. '+sub;
+  document.getElementById('t-fee').textContent   = fee ? 'Rs. '+fee : 'Free 🎉';
+  document.getElementById('t-total').textContent = 'Rs. '+(sub-disc+fee);
+  const dr = document.getElementById('disc-row');
+  if (disc) { dr.style.display=''; document.getElementById('t-disc').textContent='-Rs. '+disc; }
+  else dr.style.display='none';
+  const fn = document.getElementById('free-note');
+  if (delType==='delivery'&&sub<FREE_DEL_ABOVE&&sub>0) { fn.style.display='block'; fn.textContent=`Add Rs. ${FREE_DEL_ABOVE-sub} more for FREE delivery!`; }
+  else fn.style.display='none';
 }
 
-// ── PROMO ──
-window.applyPromo = async function(){
-  if(!window.TP?.validatePromo){showFallbackToast('Not connected yet, try again','error');return;}
-  const code=document.getElementById('promo-inp').value.trim().toUpperCase();
-  const result=await window.TP.validatePromo(code);
-  if(!result){window.TP.showToast('Invalid promo code','error');return;}
-  if(result.expired){window.TP.showToast(result.msg||'Code expired','error');return;}
-  discount=result.discount||0;
-  window.TP.showToast('Discount applied: '+(result.label||Math.round(discount*100)+'% off')+' 🎉');
-  renderCart();
+// ─────────────────────────────────────────────
+//  PROMO CODES — fetches from Firebase
+//  Admin creates codes in admin panel → promoCodes/{code}
+// ─────────────────────────────────────────────
+let promoApplied = false;
+window.applyPromo = async function() {
+  const code = document.getElementById('promo-inp').value.trim().toUpperCase();
+  if (!code) { showFallbackToast('Please enter a promo code', 'error'); return; }
+
+  // Wait for TP
+  let tries = 0;
+  while (!window.TP?.validatePromo && tries < 40) { await new Promise(r => setTimeout(r,150)); tries++; }
+  if (!window.TP?.validatePromo) { showFallbackToast('Not connected — try again', 'error'); return; }
+
+  const btn = document.getElementById('promo-btn');
+  const origText = btn.textContent;
+  btn.textContent = '...'; btn.disabled = true;
+
+  try {
+    const result = await window.TP.validatePromo(code);
+    btn.textContent = origText; btn.disabled = false;
+
+    if (!result) {
+      showFallbackToast('❌ Invalid promo code — check with admin', 'error');
+      return;
+    }
+    if (result.expired) {
+      showFallbackToast('⏰ ' + (result.msg||'This code has expired'), 'error');
+      return;
+    }
+    // Valid!
+    discount     = result.discount || 0;
+    promoCode    = code;
+    promoApplied = true;
+    const label  = result.label || Math.round(discount*100)+'% off';
+    document.getElementById('promo-applied').style.display = 'block';
+    document.getElementById('promo-applied').innerHTML = `✅ <strong>${code}</strong> applied — ${label}`;
+    document.getElementById('promo-inp').disabled = true;
+    btn.textContent = 'Applied ✓'; btn.disabled = true; btn.style.opacity = '.6';
+    showFallbackToast('🎉 '+label+' applied!');
+    renderCart();
+  } catch(e) {
+    btn.textContent = origText; btn.disabled = false;
+    showFallbackToast('Error checking promo code', 'error');
+    console.error('Promo error:', e);
+  }
 };
 
 // ── LOCATION ──
-window.getLocation=function(){
-  const s=document.getElementById('loc-status'),b=document.getElementById('loc-btn');
-  s.textContent='Getting location...'; b.textContent='📍 Getting...';
+window.getLocation = function() {
+  const s = document.getElementById('loc-status'), b = document.getElementById('loc-btn');
+  s.textContent = 'Getting location...'; b.textContent = '📍 Getting...';
   navigator.geolocation?.getCurrentPosition(
-    p=>{userLoc={lat:p.coords.latitude,lng:p.coords.longitude};s.textContent='✅ Location captured!';s.style.color='var(--yellow)';b.textContent='✅ Location Added';},
-    ()=>{s.textContent='Location denied. Enter address manually.';b.textContent='📍 Share My Live Location';}
+    p => {
+      userLoc = { lat:p.coords.latitude, lng:p.coords.longitude };
+      s.textContent = '✅ Location captured!'; s.style.color='var(--yellow)'; b.textContent='✅ Location Added';
+      // Save to Firebase profile if logged in
+      if (firebaseUser && window.TP?.saveUserLocation) window.TP.saveUserLocation(firebaseUser.uid, userLoc.lat, userLoc.lng);
+    },
+    () => { s.textContent='Location denied. Enter address manually.'; b.textContent='📍 Share My Live Location'; }
   );
 };
 
 // ── FORM VALIDATION ──
-function validateForm(){
-  const cart=window.TP?.getCart()||JSON.parse(localStorage.getItem('tp_cart_v4')||'[]');
-  if(!cart.length){toast('Your cart is empty!','error');return false;}
-  if(!document.getElementById('inp-name').value.trim()){toast('Please enter your name','error');return false;}
-  if(!document.getElementById('inp-phone').value.trim()){toast('Please enter your phone number','error');return false;}
-  if(delType==='delivery'&&!document.getElementById('inp-addr').value.trim()){toast('Please enter your delivery address','error');return false;}
+function validateForm() {
+  const cart = window.TP?.getCart() || JSON.parse(localStorage.getItem('tp_cart_v4')||'[]');
+  if (!cart.length) { showFallbackToast('Your cart is empty!', 'error'); return false; }
+  if (!document.getElementById('inp-name').value.trim()) { showFallbackToast('Please enter your name', 'error'); return false; }
+  if (!document.getElementById('inp-phone').value.trim()) { showFallbackToast('Please enter your phone number', 'error'); return false; }
+  if (delType==='delivery' && !document.getElementById('inp-addr').value.trim()) { showFallbackToast('Please enter your delivery address', 'error'); return false; }
   return true;
 }
 
-function buildOrderData(cart){
-  const name=document.getElementById('inp-name').value.trim();
-  const phone=document.getElementById('inp-phone').value.trim();
-  const addr=document.getElementById('inp-addr')?.value.trim()||'PICKUP';
-  const notes=document.getElementById('inp-notes').value.trim();
-  const sub=cart.reduce((s,c)=>s+c.price*c.qty,0);
-  const disc=Math.round(sub*discount);
-  const fee=delType==='delivery'?(sub>=FREE_DEL_ABOVE?0:BASE_DEL_FEE):0;
+function buildOrderData(cart) {
+  const name  = document.getElementById('inp-name').value.trim();
+  const phone = document.getElementById('inp-phone').value.trim();
+  const addr  = document.getElementById('inp-addr')?.value.trim()||'PICKUP';
+  const notes = document.getElementById('inp-notes').value.trim();
+  const sub   = cart.reduce((s,c) => s+c.price*c.qty, 0);
+  const disc  = Math.round(sub*discount);
+  const fee   = delType==='delivery' ? (sub>=FREE_DEL_ABOVE ? 0 : BASE_DEL_FEE) : 0;
   return {
-    orderId:Date.now().toString(),
-    customerName:name, phone,
-    address:delType==='delivery'?addr:'PICKUP',
-    location:userLoc||null,
-    items:cart, notes,
-    subtotal:sub, discountAmount:disc, fee,
-    total:sub-disc+fee,
-    deliveryType:delType,
-    status:'pending',
-    timestamp:Date.now(), via:'web',
+    orderId:      Date.now().toString(),
+    customerName: name, phone,
+    userUid:      firebaseUser?.uid || null,
+    address:      delType==='delivery' ? addr : 'PICKUP',
+    location:     userLoc || null,
+    items:        cart, notes,
+    subtotal:     sub, discountAmount:disc, promoCode:promoCode||null, fee,
+    total:        sub-disc+fee,
+    deliveryType: delType,
+    status:       'pending',
+    timestamp:    Date.now(), via:'web',
   };
 }
 
 // ── PLACE ORDER ──
-window.placeOrder=async function(){
-  if(!validateForm())return;
-  if(!window.TP?.saveOrder){toast('Still connecting — please wait a moment','error');return;}
-  const cart=window.TP.getCart(); const order=buildOrderData(cart);
+window.placeOrder = async function() {
+  if (!validateForm()) return;
+  if (!window.TP?.saveOrder) { showFallbackToast('Still connecting — try again in a moment', 'error'); return; }
+  const cart = window.TP.getCart(); const order = buildOrderData(cart);
   document.getElementById('placing-overlay').classList.add('show');
-  try{
+  try {
     await window.TP.saveOrder(order);
+    // Record promo use
+    if (promoCode) window.TP.recordPromoUse?.(promoCode).catch(()=>{});
+    // Save address to Firebase user profile
+    if (firebaseUser && order.address !== 'PICKUP') {
+      window.TP.fbUpdate('users/'+firebaseUser.uid, { phone:order.phone, lastAddress:order.address, name:order.customerName }).catch(()=>{});
+    }
     window.TP.clearCart();
     document.getElementById('placing-overlay').classList.remove('show');
-    location.href='tracking.html?order='+order.orderId;
-  }catch(e){
+    location.href = 'tracking.html?order=' + order.orderId;
+  } catch(e) {
     document.getElementById('placing-overlay').classList.remove('show');
-    toast('Could not place order — try WhatsApp below','error');
+    showFallbackToast('Could not place order — try WhatsApp below', 'error');
+    console.error(e);
   }
 };
 
 // ── WHATSAPP ORDER ──
-window.orderWA=function(){
-  if(!validateForm())return;
-  const cart=window.TP?.getCart()||JSON.parse(localStorage.getItem('tp_cart_v4')||'[]');
-  const order=buildOrderData(cart);
+window.orderWA = function() {
+  if (!validateForm()) return;
+  const cart = window.TP?.getCart() || JSON.parse(localStorage.getItem('tp_cart_v4')||'[]');
+  const order = buildOrderData(cart);
   window.TP?.saveOrder(order).catch(()=>{});
-  const name=document.getElementById('inp-name').value.trim();
-  const phone=document.getElementById('inp-phone').value.trim();
-  const addr=document.getElementById('inp-addr')?.value.trim()||'';
-  const notes=document.getElementById('inp-notes').value.trim();
-  let msg=`🥔 *TEMPURA POTATO ORDER*\n\n👤 *Name:* ${name}\n📞 *Phone:* ${phone}\n🚚 *Type:* ${delType==='delivery'?'Delivery':'Pickup'}\n`;
-  if(delType==='delivery')msg+=`📍 *Address:* ${addr}\n`;
-  if(userLoc)msg+=`🗺️ *Map:* https://maps.google.com/?q=${userLoc.lat},${userLoc.lng}\n`;
-  msg+=`\n🛒 *Items:*\n`;
-  cart.forEach(i=>{msg+=`  • ${i.name} ×${i.qty} — Rs. ${i.price*i.qty}\n`;});
-  if(order.discountAmount)msg+=`\n💸 *Discount:* -Rs. ${order.discountAmount}\n`;
-  msg+=`\n💰 *Total: Rs. ${order.total}*`;
-  if(notes)msg+=`\n📝 *Notes:* ${notes}`;
-  msg+=`\n\n*Order ID: #${order.orderId.slice(-6)}*`;
-  window.open(`https://wa.me/${WA_NUM}?text=${encodeURIComponent(msg)}`,'_blank');
+  if (promoCode) window.TP?.recordPromoUse?.(promoCode).catch(()=>{});
+  if (firebaseUser && order.address !== 'PICKUP') window.TP?.fbUpdate('users/'+firebaseUser.uid,{phone:order.phone,lastAddress:order.address,name:order.customerName}).catch(()=>{});
+  const name  = order.customerName, phone = order.phone, addr = order.address, notes = order.notes;
+  let msg = `🥔 *TEMPURA POTATO ORDER*\n\n👤 *Name:* ${name}\n📞 *Phone:* ${phone}\n🚚 *Type:* ${delType==='delivery'?'Delivery':'Pickup'}\n`;
+  if (delType==='delivery') msg += `📍 *Address:* ${addr}\n`;
+  if (userLoc) msg += `🗺️ *Map:* https://maps.google.com/?q=${userLoc.lat},${userLoc.lng}\n`;
+  msg += `\n🛒 *Items:*\n`;
+  cart.forEach(i => { msg += `  • ${i.name} ×${i.qty} — Rs. ${i.price*i.qty}\n`; });
+  if (order.discountAmount) msg += `\n💸 *Discount (${promoCode||''}):* -Rs. ${order.discountAmount}\n`;
+  msg += `\n💰 *Total: Rs. ${order.total}*`;
+  if (notes) msg += `\n📝 *Notes:* ${notes}`;
+  msg += `\n\n*Order ID: #${order.orderId.slice(-6)}*`;
+  window.open(`https://wa.me/${WA_NUM}?text=${encodeURIComponent(msg)}`, '_blank');
 };
 
-function toast(msg,type){window.TP?.showToast?.(msg,type)||showFallbackToast(msg,type);}
-function showFallbackToast(msg,type){
-  let t=document.getElementById('tp-toast');
-  if(!t){t=document.createElement('div');t.id='tp-toast';document.body.appendChild(t);}
-  t.textContent=msg; t.style.cssText=`position:fixed;bottom:80px;left:50%;transform:translateX(-50%);padding:12px 26px;border-radius:30px;font-weight:700;font-size:14px;z-index:999999;opacity:1;background:${type==='error'?'#ff4444':'var(--yellow)'};color:${type==='error'?'#fff':'var(--black)'};white-space:nowrap;`;
-  clearTimeout(t._t); t._t=setTimeout(()=>t.style.opacity='0',3000);
-}
+// ─────────────────────────────────────────────
+//  LIVE CHAT
+// ─────────────────────────────────────────────
+let chatOpen = false, chatSessionId = null, unsubChat = null, chatReady = false;
 
-// ════════════════════════════════════════════════
-//  LIVE CHAT — Customer ↔ Admin
-//  Firebase: chats/{sessionId}/messages/{msgId}
-//  sessionId = stored in localStorage, unique per browser
-// ════════════════════════════════════════════════
-let chatOpen      = false;
-let chatSessionId = null;
-let unsubChat     = null;
-let chatReady     = false;
-
-function getChatSession(){
+function getChatSession() {
   let id = localStorage.getItem('tp_chat_session');
-  if(!id){ id='chat_'+Date.now()+'_'+Math.random().toString(36).slice(2,7); localStorage.setItem('tp_chat_session',id); }
+  if (!id) { id='chat_'+Date.now()+'_'+Math.random().toString(36).slice(2,7); localStorage.setItem('tp_chat_session',id); }
   return id;
 }
 
-function toggleChat(){
+function toggleChat() {
   chatOpen = !chatOpen;
   document.getElementById('chat-body').classList.toggle('open', chatOpen);
   document.getElementById('chat-toggle-btn').textContent = chatOpen ? 'Close' : 'Open Chat';
-  if(chatOpen) initChat();
+  if (chatOpen) initChat();
 }
 
-async function initChat(){
-  if(chatReady) return;
+async function initChat() {
+  if (chatReady) return;
   chatSessionId = getChatSession();
-
-  // Wait for TP
-  let tries=0;
-  while(!window.TP?.fbListen && tries<40){ await new Promise(r=>setTimeout(r,150)); tries++; }
-  if(!window.TP?.fbListen){ document.getElementById('chat-msgs').innerHTML='<p style="color:var(--gray);font-size:13px;text-align:center;padding:20px">Chat unavailable — try WhatsApp.</p>'; return; }
-
+  let tries = 0;
+  while (!window.TP?.fbListen && tries < 40) { await new Promise(r=>setTimeout(r,150)); tries++; }
+  if (!window.TP?.fbListen) { document.getElementById('chat-msgs').innerHTML='<p style="color:var(--gray);font-size:13px;text-align:center;padding:20px">Chat unavailable — try WhatsApp.</p>'; return; }
   chatReady = true;
-
-  // Mark all admin messages as read when customer opens chat
   await markAdminMsgsRead();
-
-  // Listen to messages in real-time
-  unsubChat = window.TP.fbListen('chats/'+chatSessionId+'/messages', data=>{
+  unsubChat = window.TP.fbListen('chats/'+chatSessionId+'/messages', data => {
     renderChatMsgs(data ? Object.entries(data).map(([k,v])=>({...v,_key:k})).sort((a,b)=>a.ts-b.ts) : []);
   });
-
-  // Listen to admin typing indicator
-  window.TP.fbListen('chats/'+chatSessionId+'/adminTyping', val=>{
+  window.TP.fbListen('chats/'+chatSessionId+'/adminTyping', val => {
     document.getElementById('chat-typing').textContent = val ? '🥔 Tempura Potato is typing...' : '';
   });
-
-  // Save session info so admin can see this chat
-  await window.TP.fbUpdate('chats/'+chatSessionId+'/info',{
-    sessionId:chatSessionId,
-    name: document.getElementById('inp-name')?.value.trim()||'Customer',
-    phone: document.getElementById('inp-phone')?.value.trim()||'',
-    startedAt: Date.now(),
-    lastActivity: Date.now(),
-  });
+  const name  = document.getElementById('inp-name')?.value.trim()||firebaseUser?.displayName||'Customer';
+  const phone = document.getElementById('inp-phone')?.value.trim()||firebaseUser?.phoneNumber||'';
+  await window.TP.fbUpdate('chats/'+chatSessionId+'/info', { sessionId:chatSessionId, name, phone, startedAt:Date.now(), lastActivity:Date.now() });
 }
 
-function renderChatMsgs(msgs){
-  const container = document.getElementById('chat-msgs');
-  if(!msgs.length){
-    container.innerHTML='<div class="msg recv"><div class="msg-bubble">👋 Hi! Need help with your order? Ask us anything!</div><div class="msg-meta"><span class="msg-time">just now</span></div></div>';
+function renderChatMsgs(msgs) {
+  const c = document.getElementById('chat-msgs');
+  if (!msgs.length) {
+    c.innerHTML='<div class="msg recv"><div class="msg-bubble">👋 Hi! Need help with your order? Ask us anything!</div><div class="msg-meta"><span>just now</span></div></div>';
     return;
   }
-  container.innerHTML = msgs.map(m=>{
+  c.innerHTML = msgs.map(m => {
     const isSent = m.from==='customer';
     const time   = m.ts ? new Date(m.ts).toLocaleTimeString('en-PK',{hour:'2-digit',minute:'2-digit'}) : '';
-    let tickHtml = '';
-    if(isSent){
-      if(m.read)       tickHtml=`<span class="msg-tick read" title="Read">✓✓</span>`;
-      else if(m.delivered) tickHtml=`<span class="msg-tick sent-only" title="Delivered">✓✓</span>`;
-      else             tickHtml=`<span class="msg-tick sent-only" title="Sent">✓</span>`;
-    }
-    return `<div class="msg ${isSent?'sent':'recv'}">
-      <div class="msg-bubble">${escHtml(m.text)}</div>
-      <div class="msg-meta"><span class="msg-time">${time}</span>${tickHtml}</div>
-    </div>`;
+    let tick = '';
+    if (isSent) tick = m.read ? `<span class="msg-tick read" title="Read">✓✓</span>` : m.delivered ? `<span class="msg-tick sent-only" title="Delivered">✓✓</span>` : `<span class="msg-tick sent-only" title="Sent">✓</span>`;
+    return `<div class="msg ${isSent?'sent':'recv'}"><div class="msg-bubble">${escHtml(m.text)}</div><div class="msg-meta"><span>${time}</span>${tick}</div></div>`;
   }).join('');
-  container.scrollTop = container.scrollHeight;
-
-  // Mark admin messages as read
+  c.scrollTop = c.scrollHeight;
   markAdminMsgsRead();
 }
 
-async function markAdminMsgsRead(){
-  if(!chatSessionId||!window.TP?.fbGet) return;
-  try{
+async function markAdminMsgsRead() {
+  if (!chatSessionId||!window.TP?.fbGet) return;
+  try {
     const msgs = await window.TP.fbGet('chats/'+chatSessionId+'/messages');
-    if(!msgs)return;
-    const updates = {};
-    Object.entries(msgs).forEach(([k,v])=>{
-      if(v.from==='admin'&&!v.read) updates['chats/'+chatSessionId+'/messages/'+k+'/read']=true;
-    });
-    if(Object.keys(updates).length) await window.TP.fbUpdate('',updates).catch(()=>{
-      Object.entries(updates).forEach(([path,val])=>window.TP.fbUpdate(path.split('/').slice(0,-1).join('/'),{[path.split('/').pop()]:val}).catch(()=>{}));
-    });
-  }catch(e){}
+    if (!msgs) return;
+    for (const [k,v] of Object.entries(msgs)) {
+      if (v.from==='admin'&&!v.read) await window.TP.fbUpdate('chats/'+chatSessionId+'/messages/'+k,{read:true}).catch(()=>{});
+    }
+  } catch(e) {}
 }
 
-async function sendMsg(){
+async function sendMsg() {
   const input = document.getElementById('chat-input');
-  const text  = input.value.trim();
-  if(!text) return;
-  if(!chatSessionId) await initChat();
-  if(!chatSessionId||!window.TP?.fbPush){showFallbackToast('Chat not ready — try again','error');return;}
-
+  const text  = input.value.trim(); if (!text) return;
+  if (!chatSessionId) await initChat();
+  if (!window.TP?.fbPush) { showFallbackToast('Chat not ready', 'error'); return; }
   input.value = '';
-  const msgData={text, from:'customer', ts:Date.now(), delivered:false, read:false};
-
-  try{
-    await window.TP.fbPush('chats/'+chatSessionId+'/messages', msgData);
-    // Update session info so admin sees latest message
-    await window.TP.fbUpdate('chats/'+chatSessionId+'/info',{
-      lastMessage:text, lastActivity:Date.now(),
-      name:document.getElementById('inp-name')?.value.trim()||'Customer',
-      phone:document.getElementById('inp-phone')?.value.trim()||'',
-      unreadByAdmin:true,
-    });
-    // Mark as delivered after 500ms
-    setTimeout(()=>markDelivered(msgData.ts),500);
-  }catch(e){showFallbackToast('Failed to send','error');}
+  const msgData = { text, from:'customer', ts:Date.now(), delivered:false, read:false };
+  try {
+    const pushed = await window.TP.fbPush('chats/'+chatSessionId+'/messages', msgData);
+    const name  = document.getElementById('inp-name')?.value.trim()||firebaseUser?.displayName||'Customer';
+    const phone = document.getElementById('inp-phone')?.value.trim()||'';
+    await window.TP.fbUpdate('chats/'+chatSessionId+'/info',{lastMessage:text,lastActivity:Date.now(),name,phone,unreadByAdmin:true});
+    // Mark delivered after 600ms
+    setTimeout(async()=>{
+      if(pushed?.id) await window.TP.fbUpdate('chats/'+chatSessionId+'/messages/'+pushed.id,{delivered:true}).catch(()=>{});
+    },600);
+  } catch(e) { showFallbackToast('Failed to send','error'); }
 }
 
-async function markDelivered(ts){
-  if(!chatSessionId||!window.TP?.fbGet)return;
-  try{
-    const msgs=await window.TP.fbGet('chats/'+chatSessionId+'/messages');
-    if(!msgs)return;
-    const entry=Object.entries(msgs).find(([k,v])=>v.ts===ts&&v.from==='customer');
-    if(entry) await window.TP.fbUpdate('chats/'+chatSessionId+'/messages/'+entry[0],{delivered:true});
-  }catch(e){}
-}
+function escHtml(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
 
-function escHtml(s){ const d=document.createElement('div');d.textContent=s;return d.innerHTML; }
+function showFallbackToast(msg,type){
+  if(window.TP?.showToast){window.TP.showToast(msg,type);return;}
+  let t=document.getElementById('tp-toast');
+  if(!t){t=document.createElement('div');t.id='tp-toast';document.body.appendChild(t);}
+  t.textContent=msg;
+  t.style.cssText=`position:fixed;bottom:80px;left:50%;transform:translateX(-50%);padding:12px 26px;border-radius:30px;font-weight:700;font-size:14px;z-index:999999;opacity:1;background:${type==='error'?'#ff4444':'var(--yellow)'};color:${type==='error'?'#fff':'var(--black)'};white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.4);`;
+  clearTimeout(t._t);t._t=setTimeout(()=>t.style.opacity='0',3200);
+}
 
 // ── INIT ──
-document.addEventListener('DOMContentLoaded',()=>{
+document.addEventListener('DOMContentLoaded', () => {
   renderCart();
   window.addEventListener('scroll',()=>{ document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>10); },{passive:true});
   document.getElementById('navbar').classList.add('scrolled');
-  // Auto-update session name when customer fills in their name
-  document.getElementById('inp-name')?.addEventListener('input', e=>{
-    if(chatSessionId&&window.TP?.fbUpdate) window.TP.fbUpdate('chats/'+chatSessionId+'/info',{name:e.target.value.trim()}).catch(()=>{});
+
+  // Init Google Auth listener — fires immediately with current state
+  (async () => {
+    let tries = 0;
+    while (!window.TP?.initAuth && tries < 40) { await new Promise(r=>setTimeout(r,150)); tries++; }
+    if (!window.TP?.initAuth) { renderAuth(null); return; }
+    window.TP.initAuth(user => {
+      firebaseUser = user;
+      renderAuth(user);
+    });
+  })();
+
+  // Update chat session when name changes
+  document.getElementById('inp-name')?.addEventListener('change', e => {
+    if (chatSessionId&&window.TP?.fbUpdate) window.TP.fbUpdate('chats/'+chatSessionId+'/info',{name:e.target.value.trim()}).catch(()=>{});
   });
 });
 
-// Wait for TP module then re-render
-setTimeout(()=>{ if(window.TP) renderCart(); }, 800);
+// Re-render cart once TP loads
+setTimeout(()=>{ if(window.TP) renderCart(); }, 600);
 </script>
 </body>
 </html>
