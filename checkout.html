@@ -13,8 +13,8 @@ body{cursor:auto!important;}#tp-cur{display:none!important;}
 .co-hero{background:var(--black2);border-bottom:1px solid rgba(255,255,255,.06);padding:100px 24px 36px;text-align:center;}
 .co-hero h1{font-family:var(--font);font-size:clamp(38px,7vw,76px);color:var(--white);}
 .co-hero h1 span{color:var(--yellow);}
-.co-wrap{max-width:1080px;margin:0 auto;padding:28px 22px 80px;display:grid;grid-template-columns:1fr 390px;gap:26px;}
-@media(max-width:880px){.co-wrap{grid-template-columns:1fr;}}
+.co-wrap{max-width:1120px;margin:0 auto;padding:28px 22px 80px;display:grid;grid-template-columns:1fr 400px;gap:26px;}
+@media(max-width:900px){.co-wrap{grid-template-columns:1fr;}}
 .co-panel{background:var(--black3);border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);padding:26px;margin-bottom:18px;}
 .co-panel h2{font-family:var(--font);font-size:22px;color:var(--white);letter-spacing:1px;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:11px;}
 .fg{margin-bottom:15px;}
@@ -28,19 +28,20 @@ textarea.fi{resize:vertical;min-height:74px;}
 .del-opt.active{border-color:var(--yellow);color:var(--yellow);background:rgba(245,200,66,.06);}
 .loc-btn{width:100%;margin-top:8px;padding:11px;background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.24);color:var(--yellow);border-radius:var(--radius-s);font-weight:700;font-size:14px;cursor:pointer;transition:var(--tr);}
 .loc-btn:hover{background:rgba(245,200,66,.15);}
+/* ORDER SUMMARY */
 .co-summary{background:var(--black3);border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);padding:26px;position:sticky;top:84px;}
 .co-summary h2{font-family:var(--font);font-size:22px;color:var(--white);letter-spacing:1px;margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:11px;}
-.cart-list{max-height:320px;overflow-y:auto;margin-bottom:14px;}
+.cart-list{max-height:280px;overflow-y:auto;margin-bottom:14px;}
 .ci{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05);}
-.ci-img{width:42px;height:42px;border-radius:7px;object-fit:cover;flex-shrink:0;}
+.ci-img{width:44px;height:44px;border-radius:8px;object-fit:cover;flex-shrink:0;}
 .ci-info{flex:1;min-width:0;}
 .ci-name{font-size:13px;font-weight:600;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .ci-qrow{display:flex;align-items:center;gap:6px;margin-top:3px;}
-.ci-qbtn{width:20px;height:20px;background:var(--black5);border:1px solid rgba(255,255,255,.1);color:var(--white);border-radius:50%;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--tr);}
+.ci-qbtn{width:22px;height:22px;background:var(--black5);border:1px solid rgba(255,255,255,.1);color:var(--white);border-radius:50%;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--tr);}
 .ci-qbtn:hover{background:var(--yellow);color:var(--black);}
-.ci-qnum{font-size:12px;color:var(--gray);min-width:14px;text-align:center;}
+.ci-qnum{font-size:12px;color:var(--gray);min-width:16px;text-align:center;font-weight:700;}
 .ci-price{font-family:var(--font);font-size:18px;color:var(--yellow);white-space:nowrap;}
-.ci-del{background:none;border:none;color:var(--gray2);cursor:pointer;font-size:15px;padding:3px;flex-shrink:0;}
+.ci-del{background:none;border:none;color:var(--gray2);cursor:pointer;font-size:16px;padding:4px;flex-shrink:0;}
 .ci-del:hover{color:#ff4444;}
 .empty-cart{text-align:center;padding:30px 16px;}
 .ec-icon{font-size:46px;margin-bottom:10px;}
@@ -54,24 +55,54 @@ textarea.fi{resize:vertical;min-height:74px;}
 .co-btns{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
 .btn-wa{display:flex;align-items:center;justify-content:center;gap:10px;background:#25D366;color:#fff;padding:13px;border-radius:28px;font-weight:700;font-size:15px;border:none;cursor:pointer;width:100%;transition:var(--tr);}
 .btn-wa:hover{background:#128C7E;transform:translateY(-2px);}
-.auth-box{background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.17);border-radius:var(--radius-s);padding:15px;margin-bottom:16px;text-align:center;}
-.auth-box p{font-size:13px;color:var(--gray);margin-bottom:10px;}
-.btn-google{display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;color:#333;padding:10px 16px;border-radius:24px;font-weight:700;font-size:14px;border:none;cursor:pointer;width:100%;transition:var(--tr);}
-.btn-google:hover{transform:scale(1.02);}
-.user-bar{background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.17);border-radius:var(--radius-s);padding:10px 13px;display:flex;align-items:center;justify-content:space-between;margin-bottom:15px;}
-.user-bar-name{font-size:13px;color:var(--white);font-weight:600;}
-.btn-so{background:none;border:none;color:var(--gray);font-size:11px;cursor:pointer;text-decoration:underline;}
 .free-note{font-size:12px;color:#4CAF50;text-align:center;margin-top:5px;display:none;}
+/* PLACING OVERLAY */
 .placing-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;flex-direction:column;gap:16px;}
 .placing-overlay.show{display:flex;}
 .placing-spinner{width:48px;height:48px;border:4px solid rgba(245,200,66,.2);border-top-color:var(--yellow);border-radius:50%;animation:spin2 .8s linear infinite;}
 @keyframes spin2{to{transform:rotate(360deg);}}
 .placing-text{font-family:var(--font);font-size:24px;color:var(--yellow);letter-spacing:1px;}
+/* ── LIVE CHAT ── */
+.chat-panel{background:var(--black3);border:1px solid rgba(245,200,66,.2);border-radius:var(--radius);margin-top:18px;overflow:hidden;}
+.chat-header{background:rgba(245,200,66,.08);border-bottom:1px solid rgba(245,200,66,.15);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;}
+.chat-header-left{display:flex;align-items:center;gap:10px;}
+.chat-avatar{width:36px;height:36px;background:var(--yellow);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.chat-title{font-family:var(--font);font-size:16px;color:var(--white);letter-spacing:.5px;}
+.chat-online{font-size:11px;color:#4CAF50;display:flex;align-items:center;gap:4px;}
+.chat-dot{width:6px;height:6px;background:#4CAF50;border-radius:50%;animation:chatBlink 2s ease-in-out infinite;}
+@keyframes chatBlink{0%,100%{opacity:1;}50%{opacity:.3;}}
+.chat-toggle{background:none;border:1px solid rgba(255,255,255,.12);color:var(--gray);padding:5px 12px;border-radius:16px;font-size:12px;cursor:pointer;transition:var(--tr);}
+.chat-toggle:hover{border-color:var(--yellow);color:var(--yellow);}
+.chat-body{display:none;flex-direction:column;height:320px;}
+.chat-body.open{display:flex;}
+.chat-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;}
+.chat-msgs::-webkit-scrollbar{width:3px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--yellow);}
+/* Message bubbles */
+.msg{display:flex;flex-direction:column;max-width:78%;}
+.msg.sent{align-self:flex-end;align-items:flex-end;}
+.msg.recv{align-self:flex-start;align-items:flex-start;}
+.msg-bubble{padding:9px 13px;border-radius:16px;font-size:13px;line-height:1.5;word-break:break-word;}
+.msg.sent .msg-bubble{background:var(--yellow);color:var(--black);border-bottom-right-radius:4px;}
+.msg.recv .msg-bubble{background:var(--black4);color:var(--white);border-bottom-left-radius:4px;border:1px solid rgba(255,255,255,.07);}
+.msg-meta{display:flex;align-items:center;gap:4px;margin-top:3px;font-size:10px;color:var(--gray);}
+.msg-time{color:var(--gray);}
+/* Read receipts: ✓ sent, ✓✓ delivered/read */
+.msg-tick{font-size:11px;}
+.msg-tick.sent-only{color:var(--gray);}
+.msg-tick.read{color:#53bdeb;}
+.chat-typing{font-size:11px;color:var(--gray);padding:0 14px 6px;min-height:18px;font-style:italic;}
+.chat-input-row{display:flex;gap:8px;padding:10px 14px;border-top:1px solid rgba(255,255,255,.06);}
+.chat-input-row input{flex:1;background:var(--black4);border:1px solid rgba(255,255,255,.1);color:var(--white);padding:10px 13px;border-radius:20px;font-size:13px;font-family:Barlow,sans-serif;outline:none;transition:border-color .3s;}
+.chat-input-row input:focus{border-color:var(--yellow);}
+.chat-send{background:var(--yellow);color:var(--black);border:none;width:38px;height:38px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:var(--tr);}
+.chat-send:hover{background:var(--yellow-d);}
+.chat-locked{padding:18px;text-align:center;}
+.chat-locked p{font-size:13px;color:var(--gray);margin-bottom:12px;}
 </style>
 </head>
 <body>
 
-<!-- Placing order overlay -->
 <div class="placing-overlay" id="placing-overlay">
   <div class="placing-spinner"></div>
   <div class="placing-text">Placing Your Order...</div>
@@ -99,8 +130,6 @@ textarea.fi{resize:vertical;min-height:74px;}
   <div class="co-wrap">
     <!-- LEFT: FORM -->
     <div>
-      <div id="auth-section"></div>
-
       <div class="co-panel">
         <h2>Delivery Type</h2>
         <div class="del-toggle">
@@ -114,21 +143,44 @@ textarea.fi{resize:vertical;min-height:74px;}
         <div class="fg"><label class="fl">Full Name *</label><input class="fi" id="inp-name" placeholder="Your name"/></div>
         <div class="fg"><label class="fl">Phone Number *</label><input class="fi" id="inp-phone" type="tel" placeholder="+92 3xx xxxxxxx"/></div>
         <div id="del-fields">
-          <div class="fg"><label class="fl">Delivery Address *</label><textarea class="fi" id="inp-addr" placeholder="Full address, area, landmark..."></textarea></div>
+          <div class="fg"><label class="fl">Delivery Address *</label><textarea class="fi" id="inp-addr" rows="3" placeholder="House #, Street, Area, Landmark — be specific!"></textarea></div>
           <div class="fg">
             <label class="fl">Live Location (optional)</label>
-            <button class="loc-btn" onclick="getLocation()">📍 Share My Live Location</button>
+            <button class="loc-btn" id="loc-btn" onclick="getLocation()">📍 Share My Live Location</button>
             <p id="loc-status" style="font-size:12px;color:var(--gray);margin-top:7px"></p>
           </div>
         </div>
         <div class="fg"><label class="fl">Special Instructions</label><textarea class="fi" id="inp-notes" placeholder="Extra spicy? No onions? Tell us!"></textarea></div>
+      </div>
+
+      <!-- LIVE CHAT -->
+      <div class="chat-panel" id="chat-panel">
+        <div class="chat-header">
+          <div class="chat-header-left">
+            <div class="chat-avatar">🥔</div>
+            <div>
+              <div class="chat-title">Chat with Us</div>
+              <div class="chat-online"><div class="chat-dot"></div><span id="chat-status-lbl">Online</span></div>
+            </div>
+          </div>
+          <button class="chat-toggle" id="chat-toggle-btn" onclick="toggleChat()">Open Chat</button>
+        </div>
+        <div class="chat-body" id="chat-body">
+          <div class="chat-msgs" id="chat-msgs">
+            <div class="msg recv"><div class="msg-bubble">👋 Hi! Need help with your order? Ask us anything!</div><div class="msg-meta"><span class="msg-time">just now</span></div></div>
+          </div>
+          <div class="chat-typing" id="chat-typing"></div>
+          <div class="chat-input-row">
+            <input id="chat-input" placeholder="Type a message..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg();}"/>
+            <button class="chat-send" onclick="sendMsg()">➤</button>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- RIGHT: SUMMARY -->
     <div class="co-summary">
       <h2>Order Summary</h2>
-      <div id="user-bar-slot"></div>
       <div class="cart-list" id="cart-list"></div>
       <div class="promo-row">
         <input class="fi" id="promo-inp" placeholder="Promo code (APP20, FIRSTORDER)" style="font-size:13px;padding:8px 10px"/>
@@ -154,263 +206,326 @@ textarea.fi{resize:vertical;min-height:74px;}
 </div>
 
 <footer class="footer">
-  <div class="footer-bottom" style="justify-content:center"><span>© 2026 Tempura Potato · Milad Chock, Lahore</span></div>
+  <div class="footer-bottom" style="justify-content:center"><span>© <span id="yr"></span> Tempura Potato · Milad Chock, Lahore</span></div>
 </footer>
 
-<!-- Parse SDK FIRST, then main.js -->
 <script type="module" src="main.js"></script>
 <script>
-// ============================================================
-//  CHECKOUT PAGE — FULLY FIXED
-//  FIX 1: Cart reads from localStorage — never reinitializes
-//  FIX 2: Order saved to Back4App with correct orderId field
-//  FIX 3: Cart cleared ONLY after successful order save
-//  FIX 4: WhatsApp order ALSO saves to Back4App
-// ============================================================
+document.getElementById('yr').textContent = new Date().getFullYear();
 
-const WA_NUM        = '923044888775';
-const BASE_DEL_FEE  = 60;
+const WA_NUM         = '923044888775';
+const BASE_DEL_FEE   = 60;
 const FREE_DEL_ABOVE = 1200;
 
-let delType     = 'delivery';
-let discount    = 0;
-let userLoc     = null;
-let currentUser = null;
+let delType  = 'delivery';
+let discount = 0;
+let userLoc  = null;
 
-// NAV
-document.getElementById('nav-ham').addEventListener('click', () => {
+// ── NAV ──
+document.getElementById('nav-ham').addEventListener('click',()=>{
   document.getElementById('mobile-menu').classList.toggle('open');
   document.body.classList.toggle('no-scroll');
 });
+window.closeMenu = ()=>{ document.getElementById('mobile-menu').classList.remove('open'); document.body.classList.remove('no-scroll'); };
 
-// AUTH — simplified (no Google OAuth needed for Back4App in this build)
-function renderAuth() {
-  const section = document.getElementById('auth-section');
-  const ubSlot  = document.getElementById('user-bar-slot');
-  if (currentUser) {
-    section.innerHTML = '';
-    ubSlot.innerHTML  = `<div class="user-bar"><span class="user-bar-name">👤 ${currentUser.name||'Customer'}</span><button class="btn-so" onclick="doSO()">Sign out</button></div>`;
-    const ni = document.getElementById('inp-name');
-    if (ni && !ni.value && currentUser.name) ni.value = currentUser.name;
-  } else {
-    ubSlot.innerHTML = '';
-    section.innerHTML = `<div class="co-panel"><div class="auth-box"><p>🎉 Sign in to get <strong>20% OFF</strong> your first order!</p><button class="btn-google" onclick="doSI()"><img src="https://developers.google.com/identity/images/g-logo.png" width="18" alt="G"/> Sign in with Google</button></div></div>`;
-  }
-}
-
-function doSI() {
-  // Simple demo sign-in — in production connect Google OAuth to Back4App
-  currentUser = { name: 'Customer', uid: 'demo_' + Date.now() };
-  discount = 0.20;
-  TP.showToast('Signed in! 20% discount applied 🎉');
-  renderAuth(); renderCart();
-}
-
-function doSO() {
-  currentUser = null; discount = 0;
-  renderAuth(); renderCart();
-}
-
-// DELIVERY TOGGLE
-window.setDel = function(t) {
+// ── DELIVERY TOGGLE ──
+window.setDel = function(t){
   delType = t;
-  document.getElementById('opt-del').classList.toggle('active',  t === 'delivery');
-  document.getElementById('opt-pick').classList.toggle('active', t === 'pickup');
-  document.getElementById('del-fields').style.display = t === 'delivery' ? '' : 'none';
+  document.getElementById('opt-del').classList.toggle('active', t==='delivery');
+  document.getElementById('opt-pick').classList.toggle('active', t==='pickup');
+  document.getElementById('del-fields').style.display = t==='delivery' ? '' : 'none';
   renderCart();
 };
 
-// ─── CART RENDER ───────────────────────────────────────────
-// CRITICAL FIX: Always reads fresh from localStorage via TP.getCart()
-// Never caches cart in a variable at page load
-function renderCart() {
-  const cart = TP.getCart();  // Fresh read every time
+// ── CART ──
+function renderCart(){
+  const cart = window.TP?.getCart() || JSON.parse(localStorage.getItem('tp_cart_v4')||'[]');
   const list = document.getElementById('cart-list');
-
-  if (!cart.length) {
-    list.innerHTML = `<div class="empty-cart"><div class="ec-icon">🛒</div><p style="color:var(--gray);margin-bottom:14px">Your cart is empty</p><a href="index.html#menu" class="btn-p" style="display:inline-block;font-size:14px;padding:10px 22px">Browse Menu</a></div>`;
-    document.getElementById('t-sub').textContent   = 'Rs. 0';
-    document.getElementById('t-total').textContent = 'Rs. 0';
-    document.getElementById('t-fee').textContent   = delType === 'delivery' ? 'Rs. ' + BASE_DEL_FEE : 'Free';
-    document.getElementById('disc-row').style.display = 'none';
-    document.getElementById('free-note').style.display = 'none';
+  if(!cart.length){
+    list.innerHTML=`<div class="empty-cart"><div class="ec-icon">🛒</div><p style="color:var(--gray);margin-bottom:14px">Your cart is empty</p><a href="index.html#menu" class="btn-p" style="display:inline-block;font-size:14px;padding:10px 22px">Browse Menu</a></div>`;
+    document.getElementById('t-sub').textContent='Rs. 0'; document.getElementById('t-total').textContent='Rs. 0';
+    document.getElementById('t-fee').textContent=delType==='delivery'?'Rs. '+BASE_DEL_FEE:'Free';
+    document.getElementById('disc-row').style.display='none'; document.getElementById('free-note').style.display='none';
     return;
   }
-
-  list.innerHTML = cart.map(item => `
+  list.innerHTML=cart.map(item=>`
     <div class="ci">
-      <img class="ci-img" src="${item.img || 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=100&q=60'}" alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=100&q=60'"/>
+      <img class="ci-img" src="${item.img||'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=100&q=60'}" alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=100&q=60'"/>
       <div class="ci-info">
         <div class="ci-name">${item.name}</div>
         <div class="ci-qrow">
-          <button class="ci-qbtn" onclick="TP.updateCartQty('${item.id}',${item.qty - 1});renderCart()">−</button>
+          <button class="ci-qbtn" onclick="window.TP?.updateCartQty('${item.id}',${item.qty-1});renderCart()">−</button>
           <span class="ci-qnum">${item.qty}</span>
-          <button class="ci-qbtn" onclick="TP.updateCartQty('${item.id}',${item.qty + 1});renderCart()">+</button>
+          <button class="ci-qbtn" onclick="window.TP?.updateCartQty('${item.id}',${item.qty+1});renderCart()">+</button>
         </div>
       </div>
-      <div class="ci-price">Rs.${item.price * item.qty}</div>
-      <button class="ci-del" onclick="TP.removeFromCart('${item.id}');renderCart()">✕</button>
+      <div class="ci-price">Rs.${item.price*item.qty}</div>
+      <button class="ci-del" onclick="window.TP?.removeFromCart('${item.id}');renderCart()">✕</button>
     </div>`).join('');
-
   calcTotals(cart);
 }
 
-function calcTotals(cart) {
-  const sub  = cart.reduce((s,c) => s + c.price * c.qty, 0);
-  const disc = Math.round(sub * discount);
-  const fee  = delType === 'delivery' ? (sub >= FREE_DEL_ABOVE ? 0 : BASE_DEL_FEE) : 0;
-  const total = sub - disc + fee;
-
-  document.getElementById('t-sub').textContent   = 'Rs. ' + sub;
-  document.getElementById('t-fee').textContent   = fee ? 'Rs. ' + fee : 'Free 🎉';
-  document.getElementById('t-total').textContent = 'Rs. ' + total;
-
-  const dr = document.getElementById('disc-row');
-  if (disc) { dr.style.display = ''; document.getElementById('t-disc').textContent = '-Rs. ' + disc; }
-  else dr.style.display = 'none';
-
-  const fn = document.getElementById('free-note');
-  if (delType === 'delivery' && sub < FREE_DEL_ABOVE && sub > 0) {
-    fn.style.display = 'block';
-    fn.textContent   = `Add Rs. ${FREE_DEL_ABOVE - sub} more for FREE delivery!`;
-  } else fn.style.display = 'none';
+function calcTotals(cart){
+  const sub=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const disc=Math.round(sub*discount);
+  const fee=delType==='delivery'?(sub>=FREE_DEL_ABOVE?0:BASE_DEL_FEE):0;
+  document.getElementById('t-sub').textContent='Rs. '+sub;
+  document.getElementById('t-fee').textContent=fee?'Rs. '+fee:'Free 🎉';
+  document.getElementById('t-total').textContent='Rs. '+(sub-disc+fee);
+  const dr=document.getElementById('disc-row');
+  if(disc){dr.style.display=''; document.getElementById('t-disc').textContent='-Rs. '+disc;}else dr.style.display='none';
+  const fn=document.getElementById('free-note');
+  if(delType==='delivery'&&sub<FREE_DEL_ABOVE&&sub>0){fn.style.display='block';fn.textContent=`Add Rs. ${FREE_DEL_ABOVE-sub} more for FREE delivery!`;}else fn.style.display='none';
 }
 
-// PROMO
-window.applyPromo = async function() {
-  const code   = document.getElementById('promo-inp').value.trim().toUpperCase();
-  const result = await TP.validatePromo(code);
-  if (!result)         { TP.showToast('Invalid promo code', 'error'); return; }
-  if (result.expired)  { TP.showToast(result.msg || 'Code expired', 'error'); return; }
-  discount = result.discount || 0;
-  TP.showToast('Discount applied: ' + (result.label || Math.round(discount * 100) + '% off') + ' 🎉');
+// ── PROMO ──
+window.applyPromo = async function(){
+  if(!window.TP?.validatePromo){showFallbackToast('Not connected yet, try again','error');return;}
+  const code=document.getElementById('promo-inp').value.trim().toUpperCase();
+  const result=await window.TP.validatePromo(code);
+  if(!result){window.TP.showToast('Invalid promo code','error');return;}
+  if(result.expired){window.TP.showToast(result.msg||'Code expired','error');return;}
+  discount=result.discount||0;
+  window.TP.showToast('Discount applied: '+(result.label||Math.round(discount*100)+'% off')+' 🎉');
   renderCart();
 };
 
-// LOCATION
-window.getLocation = function() {
-  const s = document.getElementById('loc-status'); s.textContent = 'Getting location...';
-  navigator.geolocation.getCurrentPosition(
-    p => { userLoc = { lat:p.coords.latitude, lng:p.coords.longitude }; s.textContent = '📍 Location captured!'; s.style.color = 'var(--yellow)'; },
-    () => { s.textContent = 'Location denied. Enter address manually.'; s.style.color = 'var(--gray)'; }
+// ── LOCATION ──
+window.getLocation=function(){
+  const s=document.getElementById('loc-status'),b=document.getElementById('loc-btn');
+  s.textContent='Getting location...'; b.textContent='📍 Getting...';
+  navigator.geolocation?.getCurrentPosition(
+    p=>{userLoc={lat:p.coords.latitude,lng:p.coords.longitude};s.textContent='✅ Location captured!';s.style.color='var(--yellow)';b.textContent='✅ Location Added';},
+    ()=>{s.textContent='Location denied. Enter address manually.';b.textContent='📍 Share My Live Location';}
   );
 };
 
-// ─── VALIDATE FORM ─────────────────────────────────────────
-function validateForm() {
-  const cart = TP.getCart();
-  if (!cart.length) { TP.showToast('Your cart is empty!', 'error'); return false; }
-  const name  = document.getElementById('inp-name').value.trim();
-  const phone = document.getElementById('inp-phone').value.trim();
-  if (!name)  { TP.showToast('Please enter your name', 'error'); return false; }
-  if (!phone) { TP.showToast('Please enter your phone number', 'error'); return false; }
-  if (delType === 'delivery' && !document.getElementById('inp-addr').value.trim()) {
-    TP.showToast('Please enter your delivery address', 'error'); return false;
-  }
+// ── FORM VALIDATION ──
+function validateForm(){
+  const cart=window.TP?.getCart()||JSON.parse(localStorage.getItem('tp_cart_v4')||'[]');
+  if(!cart.length){toast('Your cart is empty!','error');return false;}
+  if(!document.getElementById('inp-name').value.trim()){toast('Please enter your name','error');return false;}
+  if(!document.getElementById('inp-phone').value.trim()){toast('Please enter your phone number','error');return false;}
+  if(delType==='delivery'&&!document.getElementById('inp-addr').value.trim()){toast('Please enter your delivery address','error');return false;}
   return true;
 }
 
-function buildOrderData(cart) {
-  const name  = document.getElementById('inp-name').value.trim();
-  const phone = document.getElementById('inp-phone').value.trim();
-  const addr  = document.getElementById('inp-addr')?.value.trim() || 'PICKUP';
-  const notes = document.getElementById('inp-notes').value.trim();
-  const sub   = cart.reduce((s,c) => s + c.price * c.qty, 0);
-  const disc  = Math.round(sub * discount);
-  const fee   = delType === 'delivery' ? (sub >= FREE_DEL_ABOVE ? 0 : BASE_DEL_FEE) : 0;
-  const orderId = Date.now().toString();
-
+function buildOrderData(cart){
+  const name=document.getElementById('inp-name').value.trim();
+  const phone=document.getElementById('inp-phone').value.trim();
+  const addr=document.getElementById('inp-addr')?.value.trim()||'PICKUP';
+  const notes=document.getElementById('inp-notes').value.trim();
+  const sub=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const disc=Math.round(sub*discount);
+  const fee=delType==='delivery'?(sub>=FREE_DEL_ABOVE?0:BASE_DEL_FEE):0;
   return {
-    orderId,                    // Our custom field — used to look up order in tracking
-    customerName: name,
-    phone,
-    customer:     { name, phone, uid: currentUser?.uid || null },
-    address:      delType === 'delivery' ? addr : 'PICKUP',
-    location:     userLoc || null,
-    items:        cart,
-    notes,
-    subtotal:     sub,
-    discountAmount: disc,
-    fee,
-    total:        sub - disc + fee,
-    deliveryType: delType,
-    status:       'pending',    // Always starts as pending — admin must accept
-    timestamp:    Date.now(),
-    via:          'web',
+    orderId:Date.now().toString(),
+    customerName:name, phone,
+    address:delType==='delivery'?addr:'PICKUP',
+    location:userLoc||null,
+    items:cart, notes,
+    subtotal:sub, discountAmount:disc, fee,
+    total:sub-disc+fee,
+    deliveryType:delType,
+    status:'pending',
+    timestamp:Date.now(), via:'web',
   };
 }
 
-// ─── PLACE ORDER ───────────────────────────────────────────
-window.placeOrder = async function() {
-  if (!validateForm()) return;
-
-  const cart  = TP.getCart();
-  const order = buildOrderData(cart);
-
-  // Show placing overlay
+// ── PLACE ORDER ──
+window.placeOrder=async function(){
+  if(!validateForm())return;
+  if(!window.TP?.saveOrder){toast('Still connecting — please wait a moment','error');return;}
+  const cart=window.TP.getCart(); const order=buildOrderData(cart);
   document.getElementById('placing-overlay').classList.add('show');
-
-  try {
-    await TP.saveOrder(order);
-    console.log('[Checkout] Order saved to Firebase. orderId:', order.orderId);
-    TP.clearCart();
+  try{
+    await window.TP.saveOrder(order);
+    window.TP.clearCart();
     document.getElementById('placing-overlay').classList.remove('show');
-    location.href = 'tracking.html?order=' + order.orderId;
-  } catch(e) {
+    location.href='tracking.html?order='+order.orderId;
+  }catch(e){
     document.getElementById('placing-overlay').classList.remove('show');
-    console.error('[Checkout] Firebase save error:', e.message);
-    TP.showToast('Could not save order. Try WhatsApp option.', 'error');
+    toast('Could not place order — try WhatsApp below','error');
   }
 };
 
-// ─── WHATSAPP ORDER ────────────────────────────────────────
-window.orderWA = function() {
-  if (!validateForm()) return;
-
-  const cart  = TP.getCart();
-  const order = buildOrderData(cart);
-
-  // Save to Firebase silently in background
-  TP.saveOrder(order).catch(() => {});
-
-  // Build WhatsApp message
-  const name  = document.getElementById('inp-name').value.trim();
-  const phone = document.getElementById('inp-phone').value.trim();
-  const addr  = document.getElementById('inp-addr')?.value.trim() || '';
-  const notes = document.getElementById('inp-notes').value.trim();
-
-  let msg = `🥔 *TEMPURA POTATO ORDER*\n\n`;
-  msg += `👤 *Name:* ${name}\n`;
-  msg += `📞 *Phone:* ${phone}\n`;
-  msg += `🚚 *Type:* ${delType === 'delivery' ? 'Delivery' : 'Pickup'}\n`;
-  if (delType === 'delivery') msg += `📍 *Address:* ${addr}\n`;
-  if (userLoc) msg += `🗺️ *Map:* https://maps.google.com/?q=${userLoc.lat},${userLoc.lng}\n`;
-  msg += `\n🛒 *Items:*\n`;
-  cart.forEach(i => { msg += `  • ${i.name} ×${i.qty} — Rs. ${i.price * i.qty}\n`; });
-  if (order.discountAmount) msg += `\n💸 *Discount:* -Rs. ${order.discountAmount}\n`;
-  msg += `\n💰 *Total: Rs. ${order.total}*`;
-  if (notes) msg += `\n📝 *Notes:* ${notes}`;
-  msg += `\n\n*Order ID: #${order.orderId.slice(-6)}*`;
-
-  window.open(`https://wa.me/${WA_NUM}?text=${encodeURIComponent(msg)}`, '_blank');
+// ── WHATSAPP ORDER ──
+window.orderWA=function(){
+  if(!validateForm())return;
+  const cart=window.TP?.getCart()||JSON.parse(localStorage.getItem('tp_cart_v4')||'[]');
+  const order=buildOrderData(cart);
+  window.TP?.saveOrder(order).catch(()=>{});
+  const name=document.getElementById('inp-name').value.trim();
+  const phone=document.getElementById('inp-phone').value.trim();
+  const addr=document.getElementById('inp-addr')?.value.trim()||'';
+  const notes=document.getElementById('inp-notes').value.trim();
+  let msg=`🥔 *TEMPURA POTATO ORDER*\n\n👤 *Name:* ${name}\n📞 *Phone:* ${phone}\n🚚 *Type:* ${delType==='delivery'?'Delivery':'Pickup'}\n`;
+  if(delType==='delivery')msg+=`📍 *Address:* ${addr}\n`;
+  if(userLoc)msg+=`🗺️ *Map:* https://maps.google.com/?q=${userLoc.lat},${userLoc.lng}\n`;
+  msg+=`\n🛒 *Items:*\n`;
+  cart.forEach(i=>{msg+=`  • ${i.name} ×${i.qty} — Rs. ${i.price*i.qty}\n`;});
+  if(order.discountAmount)msg+=`\n💸 *Discount:* -Rs. ${order.discountAmount}\n`;
+  msg+=`\n💰 *Total: Rs. ${order.total}*`;
+  if(notes)msg+=`\n📝 *Notes:* ${notes}`;
+  msg+=`\n\n*Order ID: #${order.orderId.slice(-6)}*`;
+  window.open(`https://wa.me/${WA_NUM}?text=${encodeURIComponent(msg)}`,'_blank');
 };
 
-// ─── INIT ──────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  // Listen for Firebase auth state
-  TP.initAuth(user => {
-    if (user) currentUser = { name:user.displayName, uid:user.uid, email:user.email, photo:user.photoURL };
-    else currentUser = null;
-    renderAuth();
-  });
-  renderCart();
+function toast(msg,type){window.TP?.showToast?.(msg,type)||showFallbackToast(msg,type);}
+function showFallbackToast(msg,type){
+  let t=document.getElementById('tp-toast');
+  if(!t){t=document.createElement('div');t.id='tp-toast';document.body.appendChild(t);}
+  t.textContent=msg; t.style.cssText=`position:fixed;bottom:80px;left:50%;transform:translateX(-50%);padding:12px 26px;border-radius:30px;font-weight:700;font-size:14px;z-index:999999;opacity:1;background:${type==='error'?'#ff4444':'var(--yellow)'};color:${type==='error'?'#fff':'var(--black)'};white-space:nowrap;`;
+  clearTimeout(t._t); t._t=setTimeout(()=>t.style.opacity='0',3000);
+}
 
-  // Scroll nav handler
-  window.addEventListener('scroll', () => {
-    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
-  }, { passive:true });
+// ════════════════════════════════════════════════
+//  LIVE CHAT — Customer ↔ Admin
+//  Firebase: chats/{sessionId}/messages/{msgId}
+//  sessionId = stored in localStorage, unique per browser
+// ════════════════════════════════════════════════
+let chatOpen      = false;
+let chatSessionId = null;
+let unsubChat     = null;
+let chatReady     = false;
+
+function getChatSession(){
+  let id = localStorage.getItem('tp_chat_session');
+  if(!id){ id='chat_'+Date.now()+'_'+Math.random().toString(36).slice(2,7); localStorage.setItem('tp_chat_session',id); }
+  return id;
+}
+
+function toggleChat(){
+  chatOpen = !chatOpen;
+  document.getElementById('chat-body').classList.toggle('open', chatOpen);
+  document.getElementById('chat-toggle-btn').textContent = chatOpen ? 'Close' : 'Open Chat';
+  if(chatOpen) initChat();
+}
+
+async function initChat(){
+  if(chatReady) return;
+  chatSessionId = getChatSession();
+
+  // Wait for TP
+  let tries=0;
+  while(!window.TP?.fbListen && tries<40){ await new Promise(r=>setTimeout(r,150)); tries++; }
+  if(!window.TP?.fbListen){ document.getElementById('chat-msgs').innerHTML='<p style="color:var(--gray);font-size:13px;text-align:center;padding:20px">Chat unavailable — try WhatsApp.</p>'; return; }
+
+  chatReady = true;
+
+  // Mark all admin messages as read when customer opens chat
+  await markAdminMsgsRead();
+
+  // Listen to messages in real-time
+  unsubChat = window.TP.fbListen('chats/'+chatSessionId+'/messages', data=>{
+    renderChatMsgs(data ? Object.entries(data).map(([k,v])=>({...v,_key:k})).sort((a,b)=>a.ts-b.ts) : []);
+  });
+
+  // Listen to admin typing indicator
+  window.TP.fbListen('chats/'+chatSessionId+'/adminTyping', val=>{
+    document.getElementById('chat-typing').textContent = val ? '🥔 Tempura Potato is typing...' : '';
+  });
+
+  // Save session info so admin can see this chat
+  await window.TP.fbUpdate('chats/'+chatSessionId+'/info',{
+    sessionId:chatSessionId,
+    name: document.getElementById('inp-name')?.value.trim()||'Customer',
+    phone: document.getElementById('inp-phone')?.value.trim()||'',
+    startedAt: Date.now(),
+    lastActivity: Date.now(),
+  });
+}
+
+function renderChatMsgs(msgs){
+  const container = document.getElementById('chat-msgs');
+  if(!msgs.length){
+    container.innerHTML='<div class="msg recv"><div class="msg-bubble">👋 Hi! Need help with your order? Ask us anything!</div><div class="msg-meta"><span class="msg-time">just now</span></div></div>';
+    return;
+  }
+  container.innerHTML = msgs.map(m=>{
+    const isSent = m.from==='customer';
+    const time   = m.ts ? new Date(m.ts).toLocaleTimeString('en-PK',{hour:'2-digit',minute:'2-digit'}) : '';
+    let tickHtml = '';
+    if(isSent){
+      if(m.read)       tickHtml=`<span class="msg-tick read" title="Read">✓✓</span>`;
+      else if(m.delivered) tickHtml=`<span class="msg-tick sent-only" title="Delivered">✓✓</span>`;
+      else             tickHtml=`<span class="msg-tick sent-only" title="Sent">✓</span>`;
+    }
+    return `<div class="msg ${isSent?'sent':'recv'}">
+      <div class="msg-bubble">${escHtml(m.text)}</div>
+      <div class="msg-meta"><span class="msg-time">${time}</span>${tickHtml}</div>
+    </div>`;
+  }).join('');
+  container.scrollTop = container.scrollHeight;
+
+  // Mark admin messages as read
+  markAdminMsgsRead();
+}
+
+async function markAdminMsgsRead(){
+  if(!chatSessionId||!window.TP?.fbGet) return;
+  try{
+    const msgs = await window.TP.fbGet('chats/'+chatSessionId+'/messages');
+    if(!msgs)return;
+    const updates = {};
+    Object.entries(msgs).forEach(([k,v])=>{
+      if(v.from==='admin'&&!v.read) updates['chats/'+chatSessionId+'/messages/'+k+'/read']=true;
+    });
+    if(Object.keys(updates).length) await window.TP.fbUpdate('',updates).catch(()=>{
+      Object.entries(updates).forEach(([path,val])=>window.TP.fbUpdate(path.split('/').slice(0,-1).join('/'),{[path.split('/').pop()]:val}).catch(()=>{}));
+    });
+  }catch(e){}
+}
+
+async function sendMsg(){
+  const input = document.getElementById('chat-input');
+  const text  = input.value.trim();
+  if(!text) return;
+  if(!chatSessionId) await initChat();
+  if(!chatSessionId||!window.TP?.fbPush){showFallbackToast('Chat not ready — try again','error');return;}
+
+  input.value = '';
+  const msgData={text, from:'customer', ts:Date.now(), delivered:false, read:false};
+
+  try{
+    await window.TP.fbPush('chats/'+chatSessionId+'/messages', msgData);
+    // Update session info so admin sees latest message
+    await window.TP.fbUpdate('chats/'+chatSessionId+'/info',{
+      lastMessage:text, lastActivity:Date.now(),
+      name:document.getElementById('inp-name')?.value.trim()||'Customer',
+      phone:document.getElementById('inp-phone')?.value.trim()||'',
+      unreadByAdmin:true,
+    });
+    // Mark as delivered after 500ms
+    setTimeout(()=>markDelivered(msgData.ts),500);
+  }catch(e){showFallbackToast('Failed to send','error');}
+}
+
+async function markDelivered(ts){
+  if(!chatSessionId||!window.TP?.fbGet)return;
+  try{
+    const msgs=await window.TP.fbGet('chats/'+chatSessionId+'/messages');
+    if(!msgs)return;
+    const entry=Object.entries(msgs).find(([k,v])=>v.ts===ts&&v.from==='customer');
+    if(entry) await window.TP.fbUpdate('chats/'+chatSessionId+'/messages/'+entry[0],{delivered:true});
+  }catch(e){}
+}
+
+function escHtml(s){ const d=document.createElement('div');d.textContent=s;return d.innerHTML; }
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded',()=>{
+  renderCart();
+  window.addEventListener('scroll',()=>{ document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>10); },{passive:true});
   document.getElementById('navbar').classList.add('scrolled');
+  // Auto-update session name when customer fills in their name
+  document.getElementById('inp-name')?.addEventListener('input', e=>{
+    if(chatSessionId&&window.TP?.fbUpdate) window.TP.fbUpdate('chats/'+chatSessionId+'/info',{name:e.target.value.trim()}).catch(()=>{});
+  });
 });
+
+// Wait for TP module then re-render
+setTimeout(()=>{ if(window.TP) renderCart(); }, 800);
 </script>
 </body>
 </html>
