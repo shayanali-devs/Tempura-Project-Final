@@ -1,11 +1,13 @@
 // ============================================================
-//  TEMPURA POTATO — main.js  (Firebase Edition)
-//  Back4App / Parse completely removed.
-//  Every function that existed in the original is preserved.
+//  TEMPURA POTATO — main.js  (Firebase Edition v3)
+//  ✅ Google Auth fully wired
+//  ✅ Promo codes: Firebase-first, no hardcoded bypass
+//  ✅ User profile saved to Firebase on login
+//  ✅ PWA 20% off only — no sign-in discount
 // ============================================================
 
 import { initializeApp }              from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getDatabase, ref, set, get, push, update, remove, onValue, query, orderByChild, limitToLast }
+import { getDatabase, ref, set, get, push, update, remove, onValue }
   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged }
   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
@@ -22,10 +24,11 @@ const FB_CFG = {
   measurementId:     'G-5DC9S4321L',
 };
 
-const fbApp  = initializeApp(FB_CFG);
-const db     = getDatabase(fbApp);
-const auth   = getAuth(fbApp);
-const WA_NUM = '923044888775';
+const fbApp = initializeApp(FB_CFG);
+const db    = getDatabase(fbApp);
+const auth  = getAuth(fbApp);
+
+const WA_NUM    = '923044888775';
 const IMGBB_KEY = 'ab7a51eaed988c67582fc8bcc877df5a';
 
 // ─── MENU DATA ──────────────────────────────────────────────
@@ -72,8 +75,7 @@ export function addToCart(item, qty=1) {
   const idx  = cart.findIndex(c => c.id === item.id);
   if (idx >= 0) cart[idx].qty += qty;
   else cart.push({ id:item.id, name:item.name, price:item.price, img:item.img||'', cat:item.cat||'', qty });
-  saveCart(cart);
-  updateBadge();
+  saveCart(cart); updateBadge();
   showToast(item.name + ' added to cart 🛒');
   flyToCart();
 }
@@ -91,77 +93,56 @@ export function updateBadge() {
   if (f) f.classList.toggle('show', total > 0);
 }
 
-// ─── FIREBASE DB HELPERS (replacing Parse) ─────────────────
-
-// Save any object to a Firebase path
-export async function fbSave(path, data) {
-  await set(ref(db, path), data);
-  return data;
-}
-
-// Push (auto-ID) to a list path
-export async function fbPush(path, data) {
-  const r = await push(ref(db, path), data);
-  return { id: r.key, ...data };
-}
-
-// Read once
-export async function fbGet(path) {
-  const snap = await get(ref(db, path));
-  return snap.exists() ? snap.val() : null;
-}
-
-// Update (partial)
-export async function fbUpdate(path, data) {
-  await update(ref(db, path), data);
-}
-
-// Delete
-export async function fbDelete(path) {
-  await remove(ref(db, path));
-}
-
-// Listen in real-time
-export function fbListen(path, cb) {
-  return onValue(ref(db, path), snap => cb(snap.exists() ? snap.val() : null));
-}
+// ─── FIREBASE HELPERS ───────────────────────────────────────
+export async function fbSave(path, data)   { await set(ref(db, path), data); return data; }
+export async function fbPush(path, data)   { const r = await push(ref(db, path), data); return { id:r.key, ...data }; }
+export async function fbGet(path)          { const s = await get(ref(db, path)); return s.exists() ? s.val() : null; }
+export async function fbUpdate(path, data) { await update(ref(db, path), data); }
+export async function fbDelete(path)       { await remove(ref(db, path)); }
+export function fbListen(path, cb)         { return onValue(ref(db, path), s => cb(s.exists() ? s.val() : null)); }
 
 // ─── ORDER HELPERS ──────────────────────────────────────────
 export async function saveOrder(order) {
-  // Use orderId as key so tracking can find it directly
   await set(ref(db, 'orders/' + order.orderId), order);
   return order;
 }
-
 export async function getOrder(orderId) {
-  const snap = await get(ref(db, 'orders/' + orderId));
-  return snap.exists() ? snap.val() : null;
+  const s = await get(ref(db, 'orders/' + orderId));
+  return s.exists() ? s.val() : null;
 }
-
 export async function updateOrderStatus(orderId, status, extra={}) {
-  const updates = {
-    status,
-    [`statusLog/${status}`]: Date.now(),
-    ...extra,
-  };
-  await update(ref(db, 'orders/' + orderId), updates);
+  await update(ref(db, 'orders/' + orderId), { status, [`statusLog/${status}`]: Date.now(), ...extra });
 }
-
 export function listenOrder(orderId, cb) {
-  return onValue(ref(db, 'orders/' + orderId), snap => cb(snap.exists() ? snap.val() : null));
+  return onValue(ref(db, 'orders/' + orderId), s => cb(s.exists() ? s.val() : null));
 }
 
-// ─── PROMO CODES ────────────────────────────────────────────
-const PROMOS = { APP20:{ discount:.20, label:'20% off' }, FIRSTORDER:{ discount:.15, label:'15% off' }, TP10:{ discount:.10, label:'10% off' } };
+// ─── PROMO CODES — Firebase only, no hardcoded bypass ──────
+// Admin creates codes in admin panel → saved to Firebase promoCodes/
+// validatePromo fetches ONLY from Firebase so admin changes apply instantly
 export async function validatePromo(code) {
   if (!code) return null;
-  // Check local first
-  if (PROMOS[code]) return PROMOS[code];
-  // Check Firebase
-  const data = await fbGet('promoCodes/' + code);
-  if (!data) return null;
-  if (data.expiry && Date.now() > data.expiry) return { expired:true, msg:'Code has expired' };
-  return data;
+  try {
+    const data = await fbGet('promoCodes/' + code.toUpperCase());
+    if (!data) return null;
+    // Check expiry
+    if (data.expiry && Date.now() > data.expiry) return { expired:true, msg:'This promo code has expired' };
+    // Check uses limit
+    if (data.maxUses && (data.usedCount||0) >= data.maxUses) return { expired:true, msg:'Promo code usage limit reached' };
+    return { discount: data.discount, label: data.label || Math.round(data.discount*100)+'% off' };
+  } catch(e) {
+    console.error('[TP] validatePromo error:', e);
+    return null;
+  }
+}
+
+// Increment promo use count after order placed
+export async function recordPromoUse(code) {
+  if (!code) return;
+  try {
+    const data = await fbGet('promoCodes/' + code.toUpperCase());
+    if (data) await fbUpdate('promoCodes/' + code.toUpperCase(), { usedCount: (data.usedCount||0)+1 });
+  } catch(e) {}
 }
 
 // ─── SETTINGS ───────────────────────────────────────────────
@@ -170,34 +151,71 @@ export async function loadSettings() {
   if (s) applySettings(s);
   return s || {};
 }
-
 export function applySettings(s) {
   if (!s) return;
-  if (s.announcement) {
+  if (s.announcementBar && s.annShow) {
     const bar = document.getElementById('ann-bar');
-    if (bar) { bar.textContent = s.announcement; bar.style.display = 'block'; }
+    if (bar) { bar.textContent = s.announcementBar; bar.style.display = 'block'; }
   }
-  if (s.primaryColor) document.documentElement.style.setProperty('--yellow', s.primaryColor);
-  if (s.logo)         document.querySelectorAll('.tp-logo').forEach(e => e.textContent = s.logo);
-  if (s.brandName)    document.querySelectorAll('.tp-brand').forEach(e => e.textContent = s.brandName);
-  if (s.tagline)      document.querySelectorAll('.tp-tagline').forEach(e => e.textContent = s.tagline);
+  if (s.accentColor)    document.documentElement.style.setProperty('--yellow', s.accentColor);
+  if (s.bgColor)        document.documentElement.style.setProperty('--black',  s.bgColor);
+  if (s.logoEmoji)      document.querySelectorAll('.tp-logo').forEach(e => e.textContent = s.logoEmoji);
+  if (s.restaurantName) document.querySelectorAll('.tp-brand').forEach(e => e.textContent = s.restaurantName);
+  if (s.tagline)        document.querySelectorAll('.tp-tagline').forEach(e => e.textContent = s.tagline);
 }
 
-// ─── AUTH ───────────────────────────────────────────────────
+// ─── GOOGLE AUTH ────────────────────────────────────────────
 export let currentUser = null;
+
 export function initAuth(onUser) {
-  onAuthStateChanged(auth, user => {
+  onAuthStateChanged(auth, async user => {
     currentUser = user;
+    if (user) {
+      // Save/update user profile in Firebase on every login
+      await fbUpdate('users/' + user.uid, {
+        uid:         user.uid,
+        name:        user.displayName || 'Customer',
+        email:       user.email       || '',
+        photo:       user.photoURL    || '',
+        lastLogin:   Date.now(),
+      }).catch(() => {});
+    }
     if (onUser) onUser(user);
   });
 }
+
 export async function signInGoogle() {
   const provider = new GoogleAuthProvider();
-  const result   = await signInWithPopup(auth, provider);
-  return result.user;
+  provider.addScope('profile');
+  provider.addScope('email');
+  try {
+    const result = await signInWithPopup(auth, provider);
+    return result.user;
+  } catch(e) {
+    // Fallback: redirect if popup blocked
+    if (e.code === 'auth/popup-blocked') {
+      const { signInWithRedirect } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js');
+      await signInWithRedirect(auth, provider);
+    }
+    throw e;
+  }
 }
+
 export async function signOutUser() {
   await signOut(auth);
+  currentUser = null;
+}
+
+// Save user location to Firebase profile
+export async function saveUserLocation(uid, lat, lng) {
+  if (!uid) return;
+  await fbUpdate('users/' + uid, { lastLocation: { lat, lng, ts: Date.now() } }).catch(() => {});
+}
+
+// Get saved user profile from Firebase
+export async function getUserProfile(uid) {
+  if (!uid) return null;
+  return await fbGet('users/' + uid);
 }
 
 // ─── IMGBB UPLOAD ───────────────────────────────────────────
@@ -220,7 +238,7 @@ export function showToast(msg, type='success') {
   t.style.opacity    = '1';
   t.style.transform  = 'translateX(-50%) translateY(0)';
   clearTimeout(t._t);
-  t._t = setTimeout(() => { t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(20px)'; }, 3000);
+  t._t = setTimeout(() => { t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(20px)'; }, 3200);
 }
 
 // ─── FLY TO CART ────────────────────────────────────────────
@@ -232,9 +250,9 @@ export function flyToCart() {
   dot.style.cssText = `position:fixed;left:${window._lastClick.x}px;top:${window._lastClick.y}px;width:10px;height:10px;background:var(--yellow);border-radius:50%;pointer-events:none;z-index:99999;transition:all .6s cubic-bezier(.4,0,.2,1);`;
   document.body.appendChild(dot);
   requestAnimationFrame(() => {
-    dot.style.left   = (cr.left + cr.width/2)  + 'px';
-    dot.style.top    = (cr.top  + cr.height/2) + 'px';
-    dot.style.opacity = '0';
+    dot.style.left      = (cr.left + cr.width/2)  + 'px';
+    dot.style.top       = (cr.top  + cr.height/2) + 'px';
+    dot.style.opacity   = '0';
     dot.style.transform = 'scale(0)';
   });
   setTimeout(() => dot.remove(), 700);
@@ -253,17 +271,10 @@ export function initNav() {
     nav.classList.toggle('nav-show', y < lastY - 5);
     lastY = y;
   }, { passive:true });
-
   const ham  = document.getElementById('nav-ham');
   const menu = document.getElementById('mobile-menu');
-  ham?.addEventListener('click', () => {
-    menu?.classList.toggle('open');
-    document.body.classList.toggle('no-scroll');
-  });
-  window.closeMenu = () => {
-    menu?.classList.remove('open');
-    document.body.classList.remove('no-scroll');
-  };
+  ham?.addEventListener('click', () => { menu?.classList.toggle('open'); document.body.classList.toggle('no-scroll'); });
+  window.closeMenu = () => { menu?.classList.remove('open'); document.body.classList.remove('no-scroll'); };
   document.addEventListener('keydown', e => { if (e.key==='Escape') window.closeMenu?.(); });
 }
 
@@ -302,15 +313,10 @@ export function initCounters() {
     es.forEach(e => {
       if (!e.isIntersecting) return;
       const el = e.target;
-      const end = parseInt(el.dataset.count);
-      const suf = el.dataset.suf || '';
+      const end = parseInt(el.dataset.count); const suf = el.dataset.suf || '';
       if (isNaN(end)) return;
       let n = 0; const step = end / 60;
-      const t = setInterval(() => {
-        n = Math.min(n + step, end);
-        el.textContent = Math.floor(n) + suf;
-        if (n >= end) clearInterval(t);
-      }, 16);
+      const t = setInterval(() => { n = Math.min(n+step,end); el.textContent=Math.floor(n)+suf; if(n>=end) clearInterval(t); }, 16);
       obs.unobserve(el);
     });
   }, { threshold:.5 });
@@ -321,11 +327,7 @@ export function initCounters() {
 export function initCursor() {
   if (window.matchMedia('(pointer:coarse)').matches) return;
   const cur = document.getElementById('tp-cur'); if (!cur) return;
-  document.addEventListener('mousemove', e => {
-    cur.style.opacity = '1';
-    cur.style.left = e.clientX + 'px';
-    cur.style.top  = e.clientY + 'px';
-  });
+  document.addEventListener('mousemove', e => { cur.style.opacity='1'; cur.style.left=e.clientX+'px'; cur.style.top=e.clientY+'px'; });
   document.querySelectorAll('a,button,[onclick],.menu-card,.deal-card').forEach(el => {
     el.addEventListener('mouseenter', () => cur.classList.add('hover'));
     el.addEventListener('mouseleave', () => cur.classList.remove('hover'));
@@ -338,9 +340,7 @@ export function initTilt() {
   document.querySelectorAll('.tilt').forEach(el => {
     el.addEventListener('mousemove', e => {
       const r = el.getBoundingClientRect();
-      const x = ((e.clientX - r.left) / r.width  - .5) * 12;
-      const y = ((e.clientY - r.top)  / r.height - .5) * -12;
-      el.style.transform = `perspective(600px) rotateX(${y}deg) rotateY(${x}deg) scale(1.02)`;
+      el.style.transform = `perspective(600px) rotateX(${((e.clientY-r.top)/r.height-.5)*-12}deg) rotateY(${((e.clientX-r.left)/r.width-.5)*12}deg) scale(1.02)`;
     });
     el.addEventListener('mouseleave', () => { el.style.transform = ''; });
   });
@@ -348,13 +348,8 @@ export function initTilt() {
 
 // ─── TYPING ANIMATION ───────────────────────────────────────
 export function initTyping(el, text, speed=45) {
-  if (!el) return;
-  el.textContent = '';
-  let i = 0;
-  const t = setInterval(() => {
-    el.textContent += text[i++];
-    if (i >= text.length) clearInterval(t);
-  }, speed);
+  if (!el) return; el.textContent = ''; let i = 0;
+  const t = setInterval(() => { el.textContent += text[i++]; if (i >= text.length) clearInterval(t); }, speed);
 }
 window.initTyping = initTyping;
 
@@ -364,12 +359,6 @@ export function initPWA() {
   window.addEventListener('beforeinstallprompt', e => {
     e.preventDefault(); _dip = e;
     setTimeout(() => document.getElementById('pwa-banner')?.classList.add('show'), 3500);
-    if (!localStorage.getItem('tp_pwa')) {
-      setTimeout(() => {
-        document.getElementById('pwa-overlay')?.classList.add('show');
-        localStorage.setItem('tp_pwa', '1');
-      }, 12000);
-    }
   });
   document.getElementById('pwa-close')?.addEventListener('click', () => document.getElementById('pwa-banner')?.classList.remove('show'));
   document.querySelectorAll('.pwa-btn').forEach(b => b.addEventListener('click', doPWA));
@@ -377,9 +366,18 @@ export function initPWA() {
 }
 async function doPWA() {
   if (_dip) {
-    _dip.prompt();
-    const { outcome } = await _dip.userChoice; _dip = null;
-    if (outcome === 'accepted') { showToast('App installed! 20% off applied 🎉'); document.getElementById('pwa-banner')?.classList.remove('show'); window.closePWA?.(); }
+    _dip.prompt(); const { outcome } = await _dip.userChoice; _dip = null;
+    if (outcome === 'accepted') {
+      // 20% off only on app install for first time
+      if (!localStorage.getItem('tp_app_disc')) {
+        localStorage.setItem('tp_app_disc', '1');
+        showToast('App installed! Use code APP20 for 20% off your first order 🎉');
+      } else {
+        showToast('App installed! 🎉');
+      }
+      document.getElementById('pwa-banner')?.classList.remove('show');
+      window.closePWA?.();
+    }
   } else {
     const m = document.getElementById('pwa-manual'); if (m) m.style.display = 'block';
     document.getElementById('pwa-overlay')?.classList.add('show');
@@ -419,7 +417,7 @@ export function renderDeals() {
       <div class="deal-img"><img src="${d.img}" alt="${d.name}" loading="lazy"/><div class="deal-img-ov"></div></div>
       <div class="deal-body">
         <div class="deal-name">${d.name}</div>
-        <div class="deal-inc">${(d.includes||[]).map(x => `<span>✦ ${x}</span>`).join('')}</div>
+        <div class="deal-inc">${(d.includes||[]).map(x=>`<span>✦ ${x}</span>`).join('')}</div>
         <div class="deal-foot">
           <div class="deal-price">Rs. ${d.price}</div>
           <button class="btn-p" style="padding:9px 18px;font-size:13px" onclick="event.stopPropagation();window.TP.addToCart({id:'${d.id}',name:'${d.name.replace(/'/g,"\\'")}',price:${d.price},img:'${d.img}',cat:'deals'},1)">Add</button>
@@ -444,46 +442,31 @@ export function initTabs() {
 // ─── ITEM MODAL ─────────────────────────────────────────────
 let _mi = null, _mq = 1;
 export function openModal(id) {
-  _mi = MENU.find(m => m.id === id); if (!_mi) return;
-  _mq = 1;
+  _mi = MENU.find(m => m.id === id); if (!_mi) return; _mq = 1;
   const modal = document.getElementById('item-modal'); if (!modal) return;
-  document.getElementById('m-img').src       = _mi.img;
+  document.getElementById('m-img').src           = _mi.img;
   document.getElementById('m-name').textContent  = _mi.name;
   document.getElementById('m-desc').textContent  = _mi.desc;
   document.getElementById('m-price').textContent = 'Rs. ' + _mi.price;
   document.getElementById('m-qty').textContent   = '1';
   const inc = document.getElementById('m-includes');
   if (inc) inc.innerHTML = (_mi.includes||[]).map(x=>`<span>✦ ${x}</span><br/>`).join('');
-  modal.classList.add('show');
-  document.body.style.overflow = 'hidden';
+  modal.classList.add('show'); document.body.style.overflow = 'hidden';
 }
-window.openModal = openModal;
-window.closeModal = function() {
-  document.getElementById('item-modal')?.classList.remove('show');
-  document.body.style.overflow = '';
-};
-window.mQty = function(d) {
-  _mq = Math.max(1, _mq + d);
-  document.getElementById('m-qty').textContent  = _mq;
-  if (_mi) document.getElementById('m-price').textContent = 'Rs. ' + (_mi.price * _mq);
-};
-window.addModal = function() { if (_mi) { addToCart(_mi, _mq); window.closeModal(); } };
+window.openModal  = openModal;
+window.closeModal = function() { document.getElementById('item-modal')?.classList.remove('show'); document.body.style.overflow = ''; };
+window.mQty       = function(d) { _mq=Math.max(1,_mq+d); document.getElementById('m-qty').textContent=_mq; if(_mi) document.getElementById('m-price').textContent='Rs. '+(_mi.price*_mq); };
+window.addModal   = function() { if(_mi){addToCart(_mi,_mq);window.closeModal();} };
 document.addEventListener('click', e => {
-  if (e.target.id === 'item-modal') window.closeModal?.();
-  if (e.target.id === 'pwa-overlay') window.closePWA?.();
+  if (e.target.id==='item-modal') window.closeModal?.();
+  if (e.target.id==='pwa-overlay') window.closePWA?.();
 });
 
 // ─── GLOBAL INIT ────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   updateBadge();
   await loadSettings();
-  initNav();
-  initParticles();
-  initReveal();
-  initParallax();
-  initCounters();
-  initCursor();
-  initPWA();
+  initNav(); initParticles(); initReveal(); initParallax(); initCounters(); initCursor(); initPWA();
   if (document.getElementById('menu-grid'))  { renderMenu('all'); initTabs(); }
   if (document.getElementById('deals-grid')) renderDeals();
   setTimeout(initTilt, 400);
@@ -491,27 +474,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // ─── EXPORTS ────────────────────────────────────────────────
 window.TP = {
-  // Cart
   getCart, addToCart, removeFromCart, updateCartQty, clearCart, saveCart,
-  // Menu
-  MENU, renderMenu, renderDeals, initTabs,
-  // Modal
-  openModal,
-  // Firebase (replacing Parse API)
+  MENU, renderMenu, renderDeals, initTabs, openModal,
   fbSave, fbPush, fbGet, fbUpdate, fbDelete, fbListen,
-  // Orders
   saveOrder, getOrder, updateOrderStatus, listenOrder,
-  // Auth
   currentUser: () => currentUser,
-  initAuth, signInGoogle, signOutUser,
-  // Promo
-  validatePromo,
-  // Settings
+  initAuth, signInGoogle, signOutUser, saveUserLocation, getUserProfile,
+  validatePromo, recordPromoUse,
   loadSettings, applySettings,
-  // Utils
   showToast, updateBadge, uploadToImgBB, flyToCart,
-  // UI
   initReveal, initTilt, initCursor, initParticles, initTyping,
-  // Constants
   WA_NUM, db, auth,
 };
