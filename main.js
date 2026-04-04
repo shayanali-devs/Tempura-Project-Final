@@ -159,9 +159,37 @@ export function applySettings(s) {
   }
   if (s.accentColor)    document.documentElement.style.setProperty('--yellow', s.accentColor);
   if (s.bgColor)        document.documentElement.style.setProperty('--black',  s.bgColor);
-  if (s.logoEmoji)      document.querySelectorAll('.tp-logo').forEach(e => e.textContent = s.logoEmoji);
   if (s.restaurantName) document.querySelectorAll('.tp-brand').forEach(e => e.textContent = s.restaurantName);
   if (s.tagline)        document.querySelectorAll('.tp-tagline').forEach(e => e.textContent = s.tagline);
+  // Logo: image takes priority over emoji
+  applyLogoSettings(s);
+}
+
+export function applyLogoSettings(s) {
+  if (!s) return;
+  const imgUrl   = s.logoUrl   || '';
+  const emoji    = s.logoEmoji || '🥔';
+  // Nav logo (index.html has split elements)
+  const navImg   = document.getElementById('nav-logo-img');
+  const navEmoji = document.getElementById('nav-logo-emoji');
+  if (imgUrl) {
+    if (navImg)   { navImg.src = imgUrl; navImg.style.display = 'block'; }
+    if (navEmoji) navEmoji.style.display = 'none';
+    // All other .tp-logo spans become images
+    document.querySelectorAll('.tp-logo').forEach(el => {
+      el.innerHTML = `<img src="${imgUrl}" style="width:32px;height:32px;object-fit:contain;border-radius:6px;" alt="Logo" onerror="this.parentElement.textContent='${emoji}'"/>`;
+    });
+    // Favicon
+    try {
+      let fav = document.querySelector('link[rel="icon"]');
+      if (!fav) { fav = document.createElement('link'); fav.rel='icon'; document.head.appendChild(fav); }
+      fav.href = imgUrl;
+    } catch(e) {}
+  } else {
+    if (navImg)   navImg.style.display = 'none';
+    if (navEmoji) { navEmoji.style.display = 'inline'; navEmoji.textContent = emoji; }
+    document.querySelectorAll('.tp-logo').forEach(el => { el.textContent = emoji; });
+  }
 }
 
 // ─── GOOGLE AUTH ────────────────────────────────────────────
@@ -481,7 +509,7 @@ window.TP = {
   currentUser: () => currentUser,
   initAuth, signInGoogle, signOutUser, saveUserLocation, getUserProfile,
   validatePromo, recordPromoUse,
-  loadSettings, applySettings,
+  loadSettings, applySettings, applyLogoSettings,
   showToast, updateBadge, uploadToImgBB, flyToCart,
   initReveal, initTilt, initCursor, initParticles, initTyping,
   WA_NUM, db, auth,
