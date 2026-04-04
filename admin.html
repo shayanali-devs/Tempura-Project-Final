@@ -420,7 +420,20 @@ input:checked+.tog-sl:before{transform:translateX(22px);background:var(--black);
           <h3>Restaurant Identity</h3>
           <div class="fr"><label>Restaurant Name</label><input class="fi" id="b-name" placeholder="Tempura Potato"/></div>
           <div class="fr"><label>Tagline</label><input class="fi" id="b-tag" placeholder="Lahore's Finest"/></div>
-          <div class="fr"><label>Logo Emoji</label><input class="fi" id="b-logo" placeholder="🥔" maxlength="8"/></div>
+          <div class="fr"><label>Logo — Upload Image</label>
+            <div class="upbox" onclick="document.getElementById('logo-file').click()" style="padding:14px;margin-bottom:8px;">
+              <div id="logo-prev-wrap" style="text-align:center;">
+                <img id="logo-preview" src="" alt="Logo" style="max-width:120px;max-height:80px;object-fit:contain;display:none;border-radius:8px;margin-bottom:8px;"/>
+                <div id="logo-prev-emoji" style="font-size:40px;margin-bottom:6px;">🥔</div>
+                <div style="font-size:13px;color:var(--gray)">📷 Click to upload logo image</div>
+              </div>
+              <input type="file" id="logo-file" accept="image/*" style="display:none" onchange="uploadLogo(this)"/>
+              <div class="up-prog" id="logo-prog"></div>
+            </div>
+            <input class="fi" id="b-logo-url" placeholder="Or paste logo image URL here" style="margin-bottom:6px;" oninput="previewLogoUrl()"/>
+            <div style="font-size:11px;color:var(--gray);margin-bottom:8px;">— OR use an emoji instead —</div>
+            <input class="fi" id="b-logo" placeholder="🥔 Emoji fallback (used if no image)" maxlength="8"/>
+          </div>
           <div class="fr"><label>Phone Number</label><input class="fi" id="b-phone" placeholder="+92-304-4888775"/></div>
           <div class="fr"><label>Address</label><input class="fi" id="b-addr" placeholder="Milad Chock, Lahore"/></div>
           <button class="sbtn" onclick="saveBrand()">💾 Save Brand</button>
@@ -638,24 +651,54 @@ function waitTP() {
   });
 }
 
-// ── Loud Alert Sound (Web Audio API) ──
+// ══════════════════════════════════════════════════════
+//  CONTINUOUS ALERT SOUND
+//  Loops every 4 seconds until admin accepts or declines
+// ══════════════════════════════════════════════════════
+let _alertLoop = null;   // interval handle for the looping sound
+let _alertCtx  = null;   // shared AudioContext
+
+function _getAudioCtx() {
+  if (!_alertCtx || _alertCtx.state === 'closed') {
+    _alertCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  // Resume if suspended (browser autoplay policy)
+  if (_alertCtx.state === 'suspended') _alertCtx.resume();
+  return _alertCtx;
+}
+
 function playOrderAlert() {
+  // Play a loud, attention-grabbing 3-beep pattern
   try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    // Play 3 rising beeps
-    [0, 0.18, 0.36].forEach((delay, i) => {
+    const ctx = _getAudioCtx();
+    const pattern = [
+      { freq:900, start:0,    dur:0.18, vol:0.7 },
+      { freq:700, start:0.22, dur:0.18, vol:0.7 },
+      { freq:900, start:0.44, dur:0.28, vol:0.9 },
+    ];
+    pattern.forEach(({ freq, start, dur, vol }) => {
       const osc  = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.connect(gain); gain.connect(ctx.destination);
       osc.type = 'square';
-      osc.frequency.value = 520 + i * 200;
-      gain.gain.setValueAtTime(0, ctx.currentTime + delay);
-      gain.gain.linearRampToValueAtTime(0.6, ctx.currentTime + delay + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.28);
-      osc.start(ctx.currentTime + delay);
-      osc.stop(ctx.currentTime + delay + 0.3);
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0, ctx.currentTime + start);
+      gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + start + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
+      osc.start(ctx.currentTime + start);
+      osc.stop(ctx.currentTime + start + dur + 0.05);
     });
-  } catch(e) {}
+  } catch(e) { console.warn('Audio failed:', e); }
+}
+
+function startAlertLoop() {
+  stopAlertLoop();                 // clear any existing loop first
+  playOrderAlert();                // play immediately
+  _alertLoop = setInterval(playOrderAlert, 4000); // then every 4 seconds
+}
+
+function stopAlertLoop() {
+  if (_alertLoop) { clearInterval(_alertLoop); _alertLoop = null; }
 }
 
 // ── Start admin ──
@@ -709,6 +752,11 @@ async function startAdmin() {
     if (!s) return;
     const set = (id, val) => { const el = document.getElementById(id); if(el && val!=null) el.value = val; };
     set('b-name', s.restaurantName); set('b-tag', s.tagline); set('b-logo', s.logoEmoji);
+    if (s.logoUrl) {
+      const urlEl = document.getElementById('b-logo-url'); if(urlEl) urlEl.value = s.logoUrl;
+      const prev = document.getElementById('logo-preview');
+      if(prev) { prev.src=s.logoUrl; prev.style.display='block'; document.getElementById('logo-prev-emoji').style.display='none'; }
+    }
     set('b-phone', s.phone); set('b-addr', s.address); set('wa', s.waNumber);
     set('delfee', s.deliveryFee); set('freedel', s.freeDeliveryAbove);
     set('ann', s.announcementBar); set('h-l1', s.heroLine1); set('h-l2', s.heroLine2); set('h-sub', s.heroSub);
@@ -836,13 +884,11 @@ function triggerOrderAlert(id, order) {
   document.getElementById('oa-items').innerHTML   = (order.items||[]).map(i=>`${i.name} ×${i.qty}`).join('<br/>');
   document.getElementById('oa-total').textContent = 'Rs. '+(order.total||0);
   document.getElementById('oa-ov').classList.add('show');
-  // LOUD alert — play multiple times
-  playOrderAlert();
-  setTimeout(playOrderAlert, 800);
-  setTimeout(playOrderAlert, 1600);
+  startAlertLoop();   // keeps ringing every 4s until accepted/declined
   logC('🔔 NEW ORDER from '+order.customerName+' — Rs.'+order.total, 'info');
 }
 async function doOAOrder(status) {
+  stopAlertLoop();   // stop the sound immediately
   document.getElementById('oa-ov').classList.remove('show');
   if(alertOId) await setOStatus(alertOId, status);
   alertOId = null;
@@ -1042,7 +1088,48 @@ async function deleteReview(k){if(!confirm('Delete review?'))return;await window
 
 // ── Branding & Content (Firebase merge) ──
 async function fbMerge(d){const c=(await window.TP.fbGet('settings'))||{};await window.TP.fbSave('settings',{...c,...d});}
-async function saveBrand(){await fbMerge({restaurantName:document.getElementById('b-name').value.trim(),tagline:document.getElementById('b-tag').value.trim(),logoEmoji:document.getElementById('b-logo').value.trim(),phone:document.getElementById('b-phone').value.trim(),address:document.getElementById('b-addr').value.trim()});showToast('Brand saved ✅ — main site updated live!');}
+
+async function uploadLogo(input) {
+  const file = input.files[0]; if(!file)return;
+  const prog = document.getElementById('logo-prog'); prog.style.display='block'; prog.textContent='Uploading...';
+  try {
+    const url = await window.TP.uploadToImgBB(file);
+    document.getElementById('b-logo-url').value = url;
+    document.getElementById('logo-preview').src = url;
+    document.getElementById('logo-preview').style.display = 'block';
+    document.getElementById('logo-prev-emoji').style.display = 'none';
+    prog.textContent = '✅ Uploaded!';
+    showToast('Logo uploaded ✅ — click Save Brand to apply');
+  } catch(e) { prog.textContent = 'Upload failed: '+e.message; }
+}
+function previewLogoUrl() {
+  const url = document.getElementById('b-logo-url').value.trim();
+  const prev = document.getElementById('logo-preview');
+  const emoji = document.getElementById('logo-prev-emoji');
+  if (url) { prev.src=url; prev.style.display='block'; emoji.style.display='none'; }
+  else { prev.style.display='none'; emoji.style.display='block'; }
+}
+async function saveBrand(){
+  const logoUrl = document.getElementById('b-logo-url')?.value.trim()||'';
+  await fbMerge({
+    restaurantName: document.getElementById('b-name').value.trim(),
+    tagline:        document.getElementById('b-tag').value.trim(),
+    logoEmoji:      document.getElementById('b-logo').value.trim(),
+    logoUrl:        logoUrl,
+    phone:          document.getElementById('b-phone').value.trim(),
+    address:        document.getElementById('b-addr').value.trim(),
+  });
+  // Apply logo live in admin sidebar too
+  if (logoUrl) {
+    document.getElementById('logo-preview').src = logoUrl;
+    document.getElementById('logo-preview').style.display = 'block';
+    document.getElementById('logo-prev-emoji').style.display = 'none';
+    document.querySelectorAll('.sb-logoicon').forEach(e => {
+      e.innerHTML = `<img src="${logoUrl}" style="width:32px;height:32px;object-fit:contain;border-radius:6px;" alt="Logo"/>`;
+    });
+  }
+  showToast('Brand saved ✅ — main site updated live!');
+}
 async function saveColors(){const a=document.getElementById('b-col').value,b=document.getElementById('b-bg').value;document.documentElement.style.setProperty('--yellow',a);document.documentElement.style.setProperty('--black',b);await fbMerge({accentColor:a,bgColor:b});showToast('Colors saved ✅ — all pages updated live!');}
 async function uploadHero(input){const file=input.files[0];if(!file)return;const prog=document.getElementById('h1prog');prog.style.display='block';prog.textContent='Uploading...';try{const url=await window.TP.uploadToImgBB(file);document.getElementById('h1url').value=url;document.getElementById('h1p').src=url;document.getElementById('h1p').style.display='block';prog.textContent='✅ Done!';}catch(e){prog.textContent='Failed: '+e.message;}}
 async function saveHeroImg(){const url=document.getElementById('h1url').value.trim();if(!url){showToast('No URL','error');return;}await fbMerge({heroBg:url});showToast('Hero image saved ✅');}
